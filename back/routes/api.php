@@ -53,6 +53,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/messages/users', [MessageController::class, 'getMessagedUsers']);
     Route::get('/messages/{followingId}', [MessageController::class, 'index']);
     Route::post('/messages', [MessageController::class, 'store']);
+    Route::patch('messages/{messageId}/read', [MessageController::class, 'markAsRead']);
+    Route::patch('messages/{messageId}/unread', [MessageController::class, 'markAsUnread']);
+
+    Route::get('notifications', [NotificationController::class, 'index']);
+    Route::patch('notifications/{notificationId}/read', [NotificationController::class, 'markAsRead']);
+    Route::delete('/notifications/conversation/{senderId}', [NotificationController::class, 'deleteConversationNotifications']);
 });
 
 // User routes
@@ -60,6 +66,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'search']);
     Route::put('/users/{id}', [UserController::class, 'update']);
 });
+
+
+
 
 
 // //Friend routes

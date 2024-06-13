@@ -1,7 +1,127 @@
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+
+// const Profile = () => {
+//   const [user, setUser] = useState(null);
+//   const [editing, setEditing] = useState(false);
+//   const [formData, setFormData] = useState({
+//     first_name: '',
+//     last_name: '',
+//     address: '',
+//     birthdate: '',
+//     gender: '',
+//   });
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const storedUser = localStorage.getItem('user');
+
+//     if (storedUser) {
+//       const parsedUser = JSON.parse(storedUser);
+//       setUser(parsedUser);
+//       setFormData(parsedUser);
+//     } else {
+//       navigate('/login');
+//     }
+//   }, [navigate]);
+
+//   const handledashboard = () => {
+//     navigate('/dashboard');
+//   };
+
+//   const handleEditToggle = () => {
+//     setEditing(!editing);
+//   };
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({
+//       ...formData,
+//       [name]: value,
+//     });
+//   };
+
+//   const handleFormSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       const response = await axios.put(`http://localhost:8000/api/users/${user.id}`, formData, {
+//         headers: {
+//           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+//         },
+//       });
+
+//       if (response.status === 200) {
+//         const updatedUser = response.data;
+//         setUser(updatedUser);
+//         localStorage.setItem('user', JSON.stringify(updatedUser));
+//         setEditing(false);
+//       }
+//     } catch (error) {
+//       console.error('Error updating user information:', error);
+//     }
+//   };
+
+//   if (!user) {
+//     return <div>Loading...</div>;
+//   }
+
+//   return (
+//     <div>
+//       <h1>Profile</h1>
+//       <h2>User Information</h2>
+//       {editing ? (
+//         <form onSubmit={handleFormSubmit}>
+//           <div>
+//             <label>First Name:</label>
+//             <input type="text" name="first_name" value={formData.first_name} onChange={handleInputChange} />
+//           </div>
+//           <div>
+//             <label>Last Name:</label>
+//             <input type="text" name="last_name" value={formData.last_name} onChange={handleInputChange} />
+//           </div>
+//           <div>
+//             <label>Address:</label>
+//             <input type="text" name="address" value={formData.address} onChange={handleInputChange} />
+//           </div>
+//           <div>
+//             <label>Birth Date:</label>
+//             <input type="date" name="birthdate" value={formData.birthdate} onChange={handleInputChange} />
+//           </div>
+//           <div>
+//             <label>Gender:</label>
+//             <select name="gender" value={formData.gender} onChange={handleInputChange}>
+//               <option value="male">Male</option>
+//               <option value="female">Female</option>
+//               <option value="other">Other</option>
+//             </select>
+//           </div>
+//           <button type="submit">Save</button>
+//           <button type="button" onClick={handleEditToggle}>Cancel</button>
+//         </form>
+//       ) : (
+//         <div>
+//           <p><strong>First Name:</strong> {user.first_name}</p>
+//           <p><strong>Last Name:</strong> {user.last_name}</p>
+//           <p><strong>Address:</strong> {user.address}</p>
+//           <p><strong>Birth Date:</strong> {user.birthdate}</p>
+//           <p><strong>Gender:</strong> {user.gender}</p>
+//           <button onClick={handleEditToggle}>Edit</button>
+//         </div>
+//       )}
+//       <div>
+//         <button onClick={handledashboard}>GoToDashboard</button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Profile;
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -13,6 +133,7 @@ const Profile = () => {
     birthdate: '',
     gender: '',
   });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,10 +147,6 @@ const Profile = () => {
       navigate('/login');
     }
   }, [navigate]);
-
-  const handleEditProfile = () => {
-    navigate('/editprofile');
-  };
 
   const handledashboard = () => {
     navigate('/dashboard');
@@ -64,6 +181,10 @@ const Profile = () => {
       }
     } catch (error) {
       console.error('Error updating user information:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        setError(error.response.data.message || 'An error occurred');
+      }
     }
   };
 
@@ -72,47 +193,87 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <Helmet>
-        <title>Profile</title>
-      </Helmet>
-
-      <div className="mx-auto flex h-screen w-full items-start justify-center bg-white text-sm text-gray-900 p-5">
-  <div className="w-[40rem] shadow mt-24 p-8 ">
-    <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
-      <img 
-        className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-cyan-300 dark:ring-cyan-500 mr-5"
-        src="https://xsgames.co/randomusers/avatar.php?g=male"
-        alt="Bordered avatar"
-      />
-
-      <div className="mt-2 text-center sm:text-left">
-        <h2 className="text-xl font-bold tracking-tight">{user.first_name} {user.last_name}</h2>
-
-        <div className="flex items-center space-x-4 mt-1 mb-5">
-          <div className="cursor-pointer hover:underline">
-            <span className="text-gray-700 dark:text-gray-400">Following</span>
-            <span className="font-bold"> {user.following}</span>
+    <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+      <div className="w-full max-w-lg p-8 border border-gray-700 rounded">
+        <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
+        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">User Information</h2>
+        {error && <p className="text-red-500">{error}</p>}
+        {editing ? (
+          <form onSubmit={handleFormSubmit} className="space-y-4">
+            <div>
+              <label className="block text-gray-400">First Name:</label>
+              <input
+                type="text"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleInputChange}
+                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-400">Last Name:</label>
+              <input
+                type="text"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleInputChange}
+                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-400">Address:</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-400">Birth Date:</label>
+              <input
+                type="date"
+                name="birthdate"
+                value={formData.birthdate}
+                onChange={handleInputChange}
+                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-400">Gender:</label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="space-x-4">
+              <button type="submit" className="bg-blue-500 px-4 py-2 rounded">Save</button>
+              <button type="button" onClick={handleEditToggle} className="bg-gray-500 px-4 py-2 rounded">Cancel</button>
+            </div>
+          </form>
+        ) : (
+          <div className="space-y-4 border border-gray-700 p-4 rounded">
+            <p><strong>First Name:</strong> {user.first_name}</p>
+            <p><strong>Last Name:</strong> {user.last_name}</p>
+            <p><strong>Address:</strong> {user.address}</p>
+            <p><strong>Birth Date:</strong> {user.birthdate}</p>
+            <p><strong>Gender:</strong> {user.gender}</p>
+            <button onClick={handleEditToggle} className="bg-yellow-500 px-4 py-2 rounded">Edit</button>
           </div>
-          <div className="cursor-pointer hover:underline">
-            <span className="text-gray-700 dark:text-gray-400">Followers</span>
-            <span className="font-bold"> {user.followers}</span>
-          </div>
-        </div>
-
-        <div className="mt-10">
-          <span>bio</span>
+        )}
+        <div className="mt-6 text-center">
+          <button onClick={handledashboard} className="bg-gray-700 px-4 py-2 rounded">GoToDashboard</button>
         </div>
       </div>
-
-    <div className="flex items-start justify-between py-3 px-4 mr-10">                
-      <button onClick={handleEditProfile} className="w-[8rem] h-10  m-2 ml-20 font-bold px-5 py-1.5 font-boldhover:bg-cyan-200 dark:border-cyan-500  transition duration-150 ease-in-out focus:outline-none bg-white rounded-lg border  border-cyan-500 text-cyan-500 hover:text-white dark:hover:bg-cyan-500" >Edit Profile</button>
     </div>
-
-  </div>
-</div>
-</div>
-</div>
   );
 };
 

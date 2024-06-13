@@ -64,34 +64,45 @@
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
-
+  
 //     const user = JSON.parse(localStorage.getItem('user'));
-
+  
 //     if (!user) {
 //       setError('User not logged in');
 //       return;
 //     }
-
+  
 //     const postData = {
 //       user_id: user.id,
 //       content,
 //     };
-
+  
 //     try {
+//       let response;
 //       if (editingPost) {
-//         await axios.put(`http://localhost:8000/api/posts/${editingPost.id}`, postData, {
+//         response = await axios.put(`http://localhost:8000/api/posts/${editingPost.id}`, postData, {
 //           headers: {
 //             Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //           }
 //         });
+//         // Update the specific post in the state and retain comments
+//         setPosts((prevPosts) =>
+//           prevPosts.map((post) =>
+//             post.id === editingPost.id ? { ...response.data, user, comments: post.comments, likes: post.likes, userHasLiked: post.userHasLiked } : post
+//           )
+//         );
 //       } else {
-//         await axios.post('http://localhost:8000/api/posts', postData, {
+//         response = await axios.post('http://localhost:8000/api/posts', postData, {
 //           headers: {
 //             Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //           }
 //         });
+//         // Add the new post to the state
+//         setPosts((prevPosts) => [
+//           { ...response.data, user, comments: [], likes: 0, userHasLiked: false },
+//           ...prevPosts,
+//         ]);
 //       }
-//       fetchPosts();
 //       setContent('');
 //       setEditingPost(null);
 //       setError('');
@@ -112,7 +123,7 @@
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       setPosts((prevPosts) => prevPosts.filter((p) => p.id !== post.id));
 //     } catch (error) {
 //       setError('Error deleting post');
 //     }
@@ -130,12 +141,17 @@
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       // Update the specific post in the state
+//       setPosts((prevPosts) =>
+//         prevPosts.map((post) =>
+//           post.id === postId ? { ...post, likes: post.likes + 1, userHasLiked: true } : post
+//         )
+//       );
 //     } catch (error) {
 //       setError('Error liking post');
 //     }
 //   };
-
+  
 //   const handleUnlike = async (postId) => {
 //     try {
 //       await axios.post(`http://localhost:8000/api/posts/${postId}/unlike`, {}, {
@@ -143,7 +159,12 @@
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       // Update the specific post in the state
+//       setPosts((prevPosts) =>
+//         prevPosts.map((post) =>
+//           post.id === postId ? { ...post, likes: post.likes - 1, userHasLiked: false } : post
+//         )
+//       );
 //     } catch (error) {
 //       setError('Error unliking post');
 //     }
@@ -156,31 +177,44 @@
 //         setError('User not logged in');
 //         return;
 //       }
-//       await axios.post(`http://localhost:8000/api/posts/${postId}/comments`, { comment }, {
+//       const response = await axios.post(`http://localhost:8000/api/posts/${postId}/comments`, { comment, post_id: postId }, {
 //         headers: {
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       const newComment = response.data;
+//       setPosts((prevPosts) =>
+//         prevPosts.map((post) =>
+//           post.id === postId ? { ...post, comments: [...post.comments, newComment] } : post
+//         )
+//       );
 //     } catch (error) {
 //       setError('Error submitting comment');
 //     }
 //   };
-
+  
 //   const handleCommentEdit = async (commentId, newContent) => {
 //     try {
 //       const commentData = { comment: newContent };
-//       await axios.put(`http://localhost:8000/api/comments/${commentId}`, commentData, {
+//       const response = await axios.put(`http://localhost:8000/api/comments/${commentId}`, commentData, {
 //         headers: {
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       const updatedComment = response.data;
+//       setPosts((prevPosts) =>
+//         prevPosts.map((post) => ({
+//           ...post,
+//           comments: post.comments.map((comment) =>
+//             comment.id === commentId ? updatedComment : comment
+//           )
+//         }))
+//       );
 //     } catch (error) {
 //       setError(error.response?.data?.message || 'Error editing comment');
 //     }
 //   };
-
+  
 //   const handleCommentDelete = async (commentId) => {
 //     try {
 //       await axios.delete(`http://localhost:8000/api/comments/${commentId}`, {
@@ -188,7 +222,12 @@
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       fetchPosts();
+//       setPosts((prevPosts) =>
+//         prevPosts.map((post) => ({
+//           ...post,
+//           comments: post.comments.filter((comment) => comment.id !== commentId)
+//         }))
+//       );
 //     } catch (error) {
 //       setError('Error deleting comment');
 //     }
@@ -237,6 +276,7 @@
 // };
 
 // export default PostForm;
+
 
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
@@ -474,12 +514,12 @@ const PostForm = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 bg-gray-900 text-white min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="mb-4">
         <textarea
-          className="w-full p-2 mb-2 border rounded"
+          className="w-full p-2 mb-2 border border-gray-700 bg-gray-800 rounded"
           placeholder="Content"
           value={content}
           onChange={handleContentChange}
@@ -494,7 +534,7 @@ const PostForm = () => {
         <p>Loading posts...</p>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className="mb-4 p-4 border rounded shadow-sm">
+          <div key={post.id} className="mb-4 p-4 border border-gray-700 rounded shadow-sm bg-gray-800">
             {post.user && <p className="font-bold">{post.user.first_name} {post.user.last_name}</p>}
             <Post
               post={post}
