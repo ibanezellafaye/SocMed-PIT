@@ -148,16 +148,24 @@ const Notification = () => {
       {notifications.length > 0 ? (
         <ul>
           {notifications.map((notification) => (
-            <li key={notification.id} className="mb-2 p-4 border border-gray-700 rounded shadow-sm bg-gray-800">
-              <p>
-                <strong>{notification.message.sender.first_name} {notification.message.sender.last_name}</strong> sent you a message
-              </p>
-              <button
-                onClick={() => markAsReadAndNavigate(notification.id)}
-                className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-400 transition"
-              >
-                Mark as Read
-              </button>
+            <li key={notification.id} className="mb-2 p-4 border border-gray-700 rounded shadow-sm bg-gray-800 flex items-center space-x-4">
+              <img
+                src={`http://localhost:8000/storage/${notification.message.sender.profile_picture}`}
+                alt={`${notification.message.sender.first_name} ${notification.message.sender.last_name}`}
+                className="w-12 h-12 rounded-full object-cover"
+                onError={(e) => e.target.src = 'https://via.placeholder.com/150'} // Fallback image
+              />
+              <div>
+                <p>
+                  <strong>{notification.message.sender.first_name} {notification.message.sender.last_name}</strong> sent you a message
+                </p>
+                <button
+                  onClick={() => markAsReadAndNavigate(notification.id)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded mt-2 hover:bg-blue-400 transition"
+                >
+                  Mark as Read
+                </button>
+              </div>
             </li>
           ))}
         </ul>

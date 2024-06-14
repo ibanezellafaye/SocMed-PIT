@@ -150,6 +150,17 @@ const FollowingList = ({ updateFollowing, following }) => {
     navigate(`/message/${followingId}`);
   };
 
+  const calculateAge = (birthdate) => {
+    const birthDate = new Date(birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <h2 className="text-2xl font-bold mb-4">Following List</h2>
@@ -158,31 +169,39 @@ const FollowingList = ({ updateFollowing, following }) => {
           onClick={handledashboard}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
         >
-          GoToDashboard
+          Go To Dashboard
         </button>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       {followingDetails.length > 0 ? (
         <ul className="space-y-4">
           {followingDetails.map((item) => (
-            <li key={item.id} className="p-4 border border-gray-700 rounded-md bg-gray-800">
-              <p><strong>Name:</strong> {item.following.first_name} {item.following.last_name}</p>
-              <p><strong>Address:</strong> {item.following.address}</p>
-              <p><strong>Gender:</strong> {item.following.gender}</p>
-              <p><strong>Age:</strong> {calculateAge(item.following.birthdate)}</p>
-              <div className="mt-4">
-                <button
-                  onClick={() => handleUnfollow(item.following.id)}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mr-2"
-                >
-                  Unfollow
-                </button>
-                <button
-                  onClick={() => handleMessage(item.following.id)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-                >
-                  Message
-                </button>
+            <li key={item.id} className="p-4 border border-gray-700 rounded-md bg-gray-800 flex items-center space-x-4">
+              <img
+                src={`http://localhost:8000/storage/${item.following.profile_picture}`}
+                alt={`${item.following.first_name} ${item.following.last_name}`}
+                className="w-16 h-16 rounded-full object-cover"
+                onError={(e) => e.target.src = 'https://via.placeholder.com/150'} // Fallback image
+              />
+              <div>
+                <p><strong>Name:</strong> {item.following.first_name} {item.following.last_name}</p>
+                <p><strong>Address:</strong> {item.following.address}</p>
+                <p><strong>Gender:</strong> {item.following.gender}</p>
+                <p><strong>Age:</strong> {calculateAge(item.following.birthdate)}</p>
+                <div className="mt-4">
+                  <button
+                    onClick={() => handleUnfollow(item.following.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mr-2"
+                  >
+                    Unfollow
+                  </button>
+                  <button
+                    onClick={() => handleMessage(item.following.id)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+                  >
+                    Message
+                  </button>
+                </div>
               </div>
             </li>
           ))}
@@ -194,15 +213,5 @@ const FollowingList = ({ updateFollowing, following }) => {
   );
 };
 
-const calculateAge = (birthdate) => {
-  const birthDate = new Date(birthdate);
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDifference = today.getMonth() - birthDate.getMonth();
-  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-};
-
 export default FollowingList;
+

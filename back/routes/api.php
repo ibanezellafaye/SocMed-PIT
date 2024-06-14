@@ -65,6 +65,8 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'search']);
     Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::post('/users/{id}/upload-profile-picture', [UserController::class, 'uploadProfilePicture']);
+
 });
 
 

@@ -138,23 +138,31 @@ const MessageList = () => {
         {users.length > 0 ? (
           <ul>
             {users.map((user) => (
-              <li key={user.id} className="mb-2 p-2 border rounded shadow-sm bg-gray-800">
-                <p><strong>{user.first_name} {user.last_name}</strong></p>
-                {user.has_unread_messages ? (
-                  <button
-                    onClick={() => handleNavigateToMessage(user.id)}
-                    className="bg-green-500 text-white px-2 py-1 rounded mt-2"
-                  >
-                    Mark as Read
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => navigate(`/message/${user.id}`)}
-                    className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
-                  >
-                    Message
-                  </button>
-                )}
+              <li key={user.id} className="mb-2 p-2 border rounded shadow-sm bg-gray-800 flex items-center space-x-4">
+                <img
+                  src={`http://localhost:8000/storage/${user.profile_picture}`}
+                  alt={`${user.first_name} ${user.last_name}`}
+                  className="w-12 h-12 rounded-full object-cover"
+                  onError={(e) => e.target.src = 'https://via.placeholder.com/150'} // Fallback image
+                />
+                <div>
+                  <p><strong>{user.first_name} {user.last_name}</strong></p>
+                  {user.has_unread_messages ? (
+                    <button
+                      onClick={() => handleNavigateToMessage(user.id)}
+                      className="bg-green-500 text-white px-2 py-1 rounded mt-2"
+                    >
+                      Mark as Read
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate(`/message/${user.id}`)}
+                      className="bg-blue-500 text-white px-2 py-1 rounded mt-2"
+                    >
+                      Message
+                    </button>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

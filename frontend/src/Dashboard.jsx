@@ -131,7 +131,7 @@ const Dashboard = () => {
       // Redirect to login if no user data found
       navigate('/login');
     }
-  }, [navigate]);
+  }, []); // Only run once when the component mounts
 
   const handleLogout = () => {
     // Clear user data and token from local storage
@@ -140,6 +140,7 @@ const Dashboard = () => {
 
     // Redirect to the login page
     navigate('/login');
+    window.location.reload();
   };
 
   const handleSearchChange = (e) => {
@@ -194,7 +195,20 @@ const Dashboard = () => {
       <div className="fixed w-64 bg-gray-800 p-6 flex flex-col justify-between h-full">
         <div>
           <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
-          <p className="mb-6 text-center"><strong>Account:</strong> {user.first_name} {user.last_name}</p>
+          <div className="flex flex-col items-center mb-6">
+            {user.profile_picture ? (
+              <img
+                src={`http://localhost:8000/storage/${user.profile_picture}`}
+                alt="Profile"
+                className="w-20 h-20 rounded-full object-cover mb-2"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center text-gray-500 mb-2">
+                No Image
+              </div>
+            )}
+            <p className="text-center"><strong>{user.first_name} {user.last_name}</strong></p>
+          </div>
           <input 
             type="text" 
             value={searchQuery} 
@@ -249,3 +263,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+

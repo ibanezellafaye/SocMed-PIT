@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -26,7 +27,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8',
             'address' => 'nullable|string|max:255',
             'birthdate' => 'required|date',
-            'gender' => 'required|string|in:male,female,other',
+            'gender' => 'required|string|in:Male,Female,Other',
         ]);
 
         if ($validator->fails()) {
@@ -86,12 +87,36 @@ class UserController extends Controller
             'last_name' => 'sometimes|string|max:255',
             'address' => 'sometimes|string|max:255',
             'birthdate' => 'sometimes|date',
-            'gender' => 'sometimes|string|in:male,female,other',
+            'gender' => 'sometimes|string|in:Male,Female,Other',
         ]);
 
         $user->update($data);
 
         return response()->json($user);
+    }
+
+    public function uploadProfilePicture(Request $request, $id)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        if ($request->hasFile('profile_picture')) {
+            $image = $request->file('profile_picture');
+            $imagePath = $image->store('profile_pictures', 'public');
+
+            // Delete old profile picture if exists
+            if ($user->profile_picture) {
+                Storage::disk('public')->delete($user->profile_picture);
+            }
+
+            $user->profile_picture = $imagePath;
+            $user->save();
+        }
+
+        return response()->json(['message' => 'Profile picture updated successfully', 'user' => $user]);
     }
 
     

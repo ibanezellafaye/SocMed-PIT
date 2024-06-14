@@ -535,7 +535,17 @@ const PostForm = () => {
       ) : (
         posts.map((post) => (
           <div key={post.id} className="mb-4 p-4 border border-gray-700 rounded shadow-sm bg-gray-800">
-            {post.user && <p className="font-bold">{post.user.first_name} {post.user.last_name}</p>}
+            <div className="flex items-center mb-2">
+              {post.user.profile_picture && (
+                <img src={`http://localhost:8000/storage/${post.user.profile_picture}`} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
+              )}
+              <p className="font-bold">{post.user.first_name} {post.user.last_name}</p>
+            </div>
+            {post.image && (
+              <div className="my-2">
+                <img src={`http://localhost:8000/storage/${post.image}`} alt="Post" className="max-w-full h-auto" />
+              </div>
+            )}
             <Post
               post={post}
               onEdit={() => handleEdit(post)}

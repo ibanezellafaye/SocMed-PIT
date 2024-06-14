@@ -79,7 +79,9 @@ const Login = ({ onLogin }) => {
       localStorage.setItem('user', JSON.stringify(user));
 
       onLogin(); // Call the onLogin prop to update the isLoggedIn state in the App component
+      
       navigate('/dashboard'); // Redirect to the dashboard route
+      location.reload()
     } catch (error) {
       setError(error.response.data.message);
     }
