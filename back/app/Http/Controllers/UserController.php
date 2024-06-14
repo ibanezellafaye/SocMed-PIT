@@ -66,13 +66,7 @@ class UserController extends Controller
         return response()->json($users);
     }
 
-    /**
-     * Update the specified user in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
+    
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -123,6 +117,44 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         return response()->json($user);
+    }
+
+    // New methods...
+
+    /**
+     * Get authenticated user's details.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAuthenticatedUser()
+    {
+        $user = Auth::user();
+        return response()->json($user);
+    }
+
+    /**
+     * Change authenticated user's password.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function changePassword(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'password' => 'required',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => 'Current password is incorrect'], 400);
+        }
+
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json(['message' => 'Password changed successfully']);
     }
 
     

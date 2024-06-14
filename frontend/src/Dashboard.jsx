@@ -185,6 +185,10 @@ const Dashboard = () => {
     navigate('/messages');
   };
 
+  const handleSettings = () => {
+    navigate('/settings');
+  };
+
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -246,7 +250,14 @@ const Dashboard = () => {
           >
             Message
           </button>
+          <button 
+          onClick={handleSettings} 
+          className="w-full py-2 mb-2 bg-green-600 hover:bg-green-700 rounded-md transition duration-200"
+        >
+          Settings
+        </button>
         </div>
+      
         <button 
           onClick={handleLogout} 
           className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md transition duration-200 mt-6"

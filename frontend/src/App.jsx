@@ -176,6 +176,7 @@ import FollowingList from './FollowingList';
 import Message from './Message';
 import MessageList from './MessageList';
 import Notification from './Notification'; 
+import Settings from './Settings';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
@@ -219,6 +220,7 @@ const App = () => {
           <Route path="/messages" element={isLoggedIn ? <MessageList /> : <Navigate to="/login" />} />
           <Route path="/notifications" element={isLoggedIn ? <Notification /> : <Navigate to="/login" />} />
           <Route path="/viewprofile/:userId" element={<ViewProfile />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </Router>

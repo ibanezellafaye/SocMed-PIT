@@ -379,60 +379,7 @@ const Profile = () => {
         {error && <p className="text-red-500">{error}</p>}
         {editing ? (
           <form onSubmit={handleFormSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-400">First Name:</label>
-              <input
-                type="text"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleInputChange}
-                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Last Name:</label>
-              <input
-                type="text"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleInputChange}
-                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Address:</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Birth Date:</label>
-              <input
-                type="date"
-                name="birthdate"
-                value={formData.birthdate}
-                onChange={handleInputChange}
-                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-400">Gender:</label>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleInputChange}
-                className="w-full p-2 bg-gray-800 text-white border border-gray-700 rounded"
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
+            
             <div>
               <label className="block text-gray-400">Profile Picture:</label>
               <input
@@ -458,12 +405,14 @@ const Profile = () => {
                 </div>
               )}
             </div>
+            <div className='flex justify-center'>
+              <button onClick={handleEditToggle} className="bg-yellow-500 px-4 py-2 rounded just">Change Profile Picture</button>
+            </div>
             <p><strong>First Name:</strong> {user.first_name}</p>
             <p><strong>Last Name:</strong> {user.last_name}</p>
             <p><strong>Address:</strong> {user.address}</p>
             <p><strong>Birth Date:</strong> {user.birthdate}</p>
             <p><strong>Gender:</strong> {user.gender}</p>
-            <button onClick={handleEditToggle} className="bg-yellow-500 px-4 py-2 rounded">Edit</button>
           </div>
         )}
         <div className="mt-6 text-center">
