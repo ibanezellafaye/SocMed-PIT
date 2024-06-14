@@ -35,7 +35,7 @@
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       updateFollowing(followingId, false);
+//       updateFollowing(followingId, false); // Update the following list in parent component
 //     } catch (error) {
 //       setError('Error unfollowing user');
 //     }
@@ -49,33 +49,59 @@
 //     navigate(`/message/${followingId}`);
 //   };
 
+//   const calculateAge = (birthdate) => {
+//     const birthDate = new Date(birthdate);
+//     const today = new Date();
+//     let age = today.getFullYear() - birthDate.getFullYear();
+//     const monthDifference = today.getMonth() - birthDate.getMonth();
+//     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+//       age--;
+//     }
+//     return age;
+//   };
+
 //   return (
-//     <div className="container mx-auto p-4">
+//     <div className="min-h-screen bg-gray-900 text-white p-6">
 //       <h2 className="text-2xl font-bold mb-4">Following List</h2>
-//       <div>
-//         <button onClick={handledashboard}>GoToDashboard</button>
+//       <div className="mb-4">
+//         <button
+//           onClick={handledashboard}
+//           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+//         >
+//           Go To Dashboard
+//         </button>
 //       </div>
 //       {error && <p className="text-red-500">{error}</p>}
 //       {followingDetails.length > 0 ? (
-//         <ul>
+//         <ul className="space-y-4">
 //           {followingDetails.map((item) => (
-//             <li key={item.id} className="mb-2 p-2 border rounded shadow-sm">
-//               <p><strong>Name:</strong> {item.following.first_name} {item.following.last_name}</p>
-//               <p><strong>Address:</strong> {item.following.address}</p>
-//               <p><strong>Gender:</strong> {item.following.gender}</p>
-//               <p><strong>Age:</strong> {calculateAge(item.following.birthdate)}</p>
-//               <button
-//                 onClick={() => handleUnfollow(item.following.id)}
-//                 className="bg-red-500 text-white px-2 py-1 rounded ml-2"
-//               >
-//                 Unfollow
-//               </button>
-//               <button
-//                 onClick={() => handleMessage(item.following.id)}
-//                 className="bg-blue-500 text-white px-2 py-1 rounded ml-2"
-//               >
-//                 Message
-//               </button>
+//             <li key={item.id} className="p-4 border border-gray-700 rounded-md bg-gray-800 flex items-center space-x-4">
+//               <img
+//                 src={`http://localhost:8000/storage/${item.following.profile_picture}`}
+//                 alt={`${item.following.first_name} ${item.following.last_name}`}
+//                 className="w-16 h-16 rounded-full object-cover"
+//                 onError={(e) => e.target.src = 'https://via.placeholder.com/150'} // Fallback image
+//               />
+//               <div>
+//                 <p><strong>Name:</strong> {item.following.first_name} {item.following.last_name}</p>
+//                 <p><strong>Address:</strong> {item.following.address}</p>
+//                 <p><strong>Gender:</strong> {item.following.gender}</p>
+//                 <p><strong>Age:</strong> {calculateAge(item.following.birthdate)}</p>
+//                 <div className="mt-4">
+//                   <button
+//                     onClick={() => handleUnfollow(item.following.id)}
+//                     className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mr-2"
+//                   >
+//                     Unfollow
+//                   </button>
+//                   <button
+//                     onClick={() => handleMessage(item.following.id)}
+//                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+//                   >
+//                     Message
+//                   </button>
+//                 </div>
+//               </div>
 //             </li>
 //           ))}
 //         </ul>
@@ -84,17 +110,6 @@
 //       )}
 //     </div>
 //   );
-// };
-
-// const calculateAge = (birthdate) => {
-//   const birthDate = new Date(birthdate);
-//   const today = new Date();
-//   let age = today.getFullYear() - birthDate.getFullYear();
-//   const monthDifference = today.getMonth() - birthDate.getMonth();
-//   if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-//     age--;
-//   }
-//   return age;
 // };
 
 // export default FollowingList;
@@ -142,12 +157,16 @@ const FollowingList = ({ updateFollowing, following }) => {
     }
   };
 
-  const handledashboard = () => {
+  const handleDashboard = () => {
     navigate('/dashboard');
   };
 
   const handleMessage = (followingId) => {
     navigate(`/message/${followingId}`);
+  };
+
+  const handleViewProfile = (userId) => {
+    navigate(`/viewprofile/${userId}`);
   };
 
   const calculateAge = (birthdate) => {
@@ -166,7 +185,7 @@ const FollowingList = ({ updateFollowing, following }) => {
       <h2 className="text-2xl font-bold mb-4">Following List</h2>
       <div className="mb-4">
         <button
-          onClick={handledashboard}
+          onClick={handleDashboard}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
         >
           Go To Dashboard
@@ -188,10 +207,10 @@ const FollowingList = ({ updateFollowing, following }) => {
                 <p><strong>Address:</strong> {item.following.address}</p>
                 <p><strong>Gender:</strong> {item.following.gender}</p>
                 <p><strong>Age:</strong> {calculateAge(item.following.birthdate)}</p>
-                <div className="mt-4">
+                <div className="mt-4 flex space-x-2">
                   <button
                     onClick={() => handleUnfollow(item.following.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mr-2"
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
                   >
                     Unfollow
                   </button>
@@ -200,6 +219,12 @@ const FollowingList = ({ updateFollowing, following }) => {
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
                   >
                     Message
+                  </button>
+                  <button
+                    onClick={() => handleViewProfile(item.following.id)}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+                  >
+                    View Profile
                   </button>
                 </div>
               </div>
@@ -214,4 +239,3 @@ const FollowingList = ({ updateFollowing, following }) => {
 };
 
 export default FollowingList;
-

@@ -218,6 +218,7 @@ const App = () => {
           <Route path="/message/:followingId" element={isLoggedIn ? <Message /> : <Navigate to="/login" />} />
           <Route path="/messages" element={isLoggedIn ? <MessageList /> : <Navigate to="/login" />} />
           <Route path="/notifications" element={isLoggedIn ? <Notification /> : <Navigate to="/login" />} />
+          <Route path="/viewprofile/:userId" element={<ViewProfile />} />
         </Routes>
       </div>
     </Router>

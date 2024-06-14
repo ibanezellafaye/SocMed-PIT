@@ -124,5 +124,11 @@ class PostController extends Controller
         return response()->json(['message' => 'Post unliked', 'likes' => $post->likes]);
     }
 
+    public function getPostsByUser($userId)
+    {
+        $posts = Post::where('user_id', $userId)->get();
+        return response()->json($posts);
+    }
+
     
 }

@@ -119,5 +119,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Profile picture updated successfully', 'user' => $user]);
     }
 
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
+    }
+
     
 }
