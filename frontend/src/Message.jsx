@@ -360,38 +360,10 @@ const Message = () => {
   };
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex flex-col">
-      Top Container
-      <div className="p-4 bg-gray-900 w-full fixed top-0 z-10">
-        <div className="mb-4">
-          <button
-            onClick={handleBackDashboard}
-            className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
-          >
-            Go Back To Dashboard
-          </button>
-        </div>
-        <div className="mb-4">
-          <button
-            onClick={handleBackFollowing}
-            className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
-          >
-            Go Back To Following
-          </button>
-        </div>
-        <div className="mb-4">
-          <button
-            onClick={handleBackMessages}
-            className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
-          >
-            Go Back To Messages
-          </button>
-        </div>
-        <h2 className="text-2xl font-bold mb-4">Messages</h2>
-      </div>
-
+    <div className="bg-gray-900 text-white min-h-screen flex flex-col ">
+        <h2 className="fixed bg-gray-900 text-2xl font-bold p-6 w-5/6 ml-64 mt-14 flex-1">Messages</h2>
       {/* Middle Container */}
-      <div className="flex-1 overflow-y-auto pt-32 pb-24 px-4 mt-32">
+      <div className="flex-1 overflow-y-auto pt-32 pb-24 p-14 ml-64 mt-10">
         {error && <p className="text-red-500 p-4">{error}</p>}
         <div className="bg-gray-800 p-4 rounded h-full">
           {messages.map((msg) => (
@@ -406,7 +378,7 @@ const Message = () => {
       </div>
 
       {/* Bottom Container */}
-      <div className="bg-gray-900 p-4 flex items-center w-full fixed bottom-0 z-10">
+      <div className=" bg-gray-900 p-4 flex w-5/6 fixed bottom-0 ml-64">
         <textarea
           className="flex-grow p-2 mr-2 border border-gray-700 rounded bg-gray-800 text-white"
           placeholder="Type your message here"

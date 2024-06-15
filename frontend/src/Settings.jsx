@@ -36,10 +36,6 @@ const Settings = () => {
     }
   }, [navigate]);
 
-  const handledashboard = () => {
-    navigate('/dashboard');
-  };
-
   const handleEditToggle = () => {
     setEditing(!editing);
     setSuccess('');
@@ -121,7 +117,7 @@ const Settings = () => {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-lg p-8 border border-gray-700 rounded">
+      <div className="w-full max-w-lg p-8 border border-gray-700 rounded ml-64 mt-9">
         <h1 className="text-3xl font-bold mb-6 text-center">Settings</h1>
         {error && <p className="text-red-500">{error}</p>}
         {success && <p className="text-green-500">{success}</p>}

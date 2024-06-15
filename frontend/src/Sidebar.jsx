@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
+import { HiFingerPrint, HiUser, HiBell, HiUsers, HiChat, HiCog, HiSearch } from "react-icons/hi";
 
 const Sidebar = () => {
   const [user, setUser] = useState(null);
@@ -91,18 +92,19 @@ const Sidebar = () => {
             <li>
               <button 
                 onClick={handleSearch} 
-                className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200 flex items-center justify-center"
               >
-                Search
+                <HiSearch className='mr-2' /> Search
               </button>
             </li>
-            <li>
+            <li className='flex-1'>
               <NavLink 
                 to="/dashboard" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiFingerPrint className='mt-1 mr-2'/>
                 Dashboard
               </NavLink>
             </li>
@@ -110,9 +112,10 @@ const Sidebar = () => {
               <NavLink 
                 to="/profile" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiUser className='mt-1 mr-2' />
                 Profile
               </NavLink>
             </li>
@@ -120,9 +123,10 @@ const Sidebar = () => {
               <NavLink 
                 to="/notifications" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiBell className='mt-1 mr-2' />
                 Notifications
               </NavLink>
             </li>
@@ -130,9 +134,10 @@ const Sidebar = () => {
               <NavLink 
                 to="/following" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiUsers className='mt-1 mr-2' />
                 Following
               </NavLink>
             </li>
@@ -140,34 +145,28 @@ const Sidebar = () => {
               <NavLink 
                 to="/messages" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiChat className='mt-1 mr-2' />
                 Messages
               </NavLink>
             </li>
-            <li>
-              <NavLink 
-                to="/settings" 
-                className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
-                }
-              >
-                Settings
-              </NavLink>
-            </li>
+            
           </ul>
         </nav>
         <div className="mt-20">
-        <NavLink 
+          <div>
+              <NavLink 
                 to="/settings" 
                 className={({ isActive }) => 
-                  isActive ? "block py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+                  isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
                 }
               >
+                <HiCog className='mt-1 mr-2' />
                 Settings
               </NavLink>
-          
+            </div>
         </div>
       </div>
     </div>

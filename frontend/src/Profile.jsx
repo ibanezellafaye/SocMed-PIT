@@ -310,20 +310,8 @@ const Profile = () => {
     }
   }, [navigate]);
 
-  const handledashboard = () => {
-    navigate('/dashboard');
-  };
-
   const handleEditToggle = () => {
     setEditing(!editing);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
   };
 
   const handleFileChange = (e) => {
@@ -357,9 +345,10 @@ const Profile = () => {
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setEditing(false);
+        location.reload()
       }
     } catch (error) {
-      console.error('Error updating user information:', error);
+      console.error('Error changing profile picture:', error);
       if (error.response) {
         console.error('Response data:', error.response.data);
         setError(error.response.data.message || 'An error occurred');
