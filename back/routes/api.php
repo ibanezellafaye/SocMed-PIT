@@ -118,7 +118,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/{id}/unfollow', [FollowerController::class, 'unfollow']);
     Route::get('/users/{id}/follow-status', [FollowerController::class, 'followStatus']);
     Route::get('/users/{userId}/followers', [FollowerController::class, 'followers']);
-    Route::get('/users/{userId}/following', [FollowerFollowerController::class, 'following']);
+    Route::get('/users/{userId}/following', [FollowerController::class, 'following']);
 });
 
 // Message routes
