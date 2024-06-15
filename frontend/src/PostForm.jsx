@@ -1,4 +1,4 @@
-// import React, { useState, useEffect, useCallback } from 'react';
+// import React, { useState, useEffect, useCallback, useRef } from 'react';
 // import axios from 'axios';
 // import { useNavigate } from 'react-router-dom';
 // import Post from './Post';
@@ -10,27 +10,30 @@
 //   const [posts, setPosts] = useState([]);
 //   const [loading, setLoading] = useState(false);
 //   const [editingPost, setEditingPost] = useState(null);
+//   const [page, setPage] = useState(1);
+//   const [hasMore, setHasMore] = useState(true);
 //   const navigate = useNavigate();
+//   const observer = useRef();
 
 //   useEffect(() => {
-//     fetchPosts();
-//   }, []);
+//     fetchPosts(page);
+//   }, [page]);
 
-//   const fetchPosts = useCallback(debounce(async () => {
+//   const fetchPosts = useCallback(debounce(async (page) => {
 //     setLoading(true);
 //     try {
 //       const user = JSON.parse(localStorage.getItem('user'));
 //       if (!user) {
 //         throw new Error('User not logged in');
 //       }
-//       const response = await axios.get('http://localhost:8000/api/posts', {
+//       const response = await axios.get(`http://localhost:8000/api/posts?page=${page}&limit=5`, {
 //         headers: {
 //           Authorization: `Bearer ${localStorage.getItem('authToken')}`
 //         }
 //       });
-//       const sortedPosts = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+//       const fetchedPosts = response.data.posts;
 //       const postsWithCommentsAndLikes = await Promise.all(
-//         sortedPosts.map(async post => {
+//         fetchedPosts.map(async post => {
 //           const commentsResponse = await axios.get(`http://localhost:8000/api/posts/${post.id}/comments`, {
 //             headers: {
 //               Authorization: `Bearer ${localStorage.getItem('authToken')}`
@@ -49,8 +52,9 @@
 //           return post;
 //         })
 //       );
-//       setPosts(postsWithCommentsAndLikes);
+//       setPosts((prevPosts) => [...prevPosts, ...postsWithCommentsAndLikes]);
 //       setError('');
+//       setHasMore(response.data.hasMore);
 //     } catch (error) {
 //       setError(error.message || 'Error fetching posts');
 //     } finally {
@@ -233,6 +237,17 @@
 //     }
 //   };
 
+//   const lastPostElementRef = useCallback(node => {
+//     if (loading) return;
+//     if (observer.current) observer.current.disconnect();
+//     observer.current = new IntersectionObserver(entries => {
+//       if (entries[0].isIntersecting && hasMore) {
+//         setPage(prevPage => prevPage + 1);
+//       }
+//     });
+//     if (node) observer.current.observe(node);
+//   }, [loading, hasMore]);
+
 //   return (
 //     <div className="container mx-auto p-4 bg-gray-900 text-white min-h-screen">
 //       <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
@@ -250,11 +265,15 @@
 //         {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
 //       </form>
 
-//       {loading ? (
+//       {loading && page === 1 ? (
 //         <p>Loading posts...</p>
 //       ) : (
-//         posts.map((post) => (
-//           <div key={post.id} className="mb-4 p-4 border border-gray-700 rounded shadow-sm bg-gray-800">
+//         posts.map((post, index) => (
+//           <div
+//             key={post.id}
+//             ref={posts.length === index + 1 ? lastPostElementRef : null}
+//             className="mb-4 p-4 border border-gray-700 rounded shadow-sm bg-gray-800"
+//           >
 //             <div className="flex items-center mb-2">
 //               {post.user.profile_picture && (
 //                 <img src={`http://localhost:8000/storage/${post.user.profile_picture}`} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
@@ -281,12 +300,12 @@
 //           </div>
 //         ))
 //       )}
+//       {loading && page > 1 && <p>Loading more posts...</p>}
 //     </div>
 //   );
 // };
 
 // export default PostForm;
-
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
@@ -405,9 +424,21 @@ const PostForm = () => {
     }
   };
 
-  const handleEdit = (post) => {
-    setContent(post.content);
-    setEditingPost(post);
+  const handleEdit = async (postId, newContent) => {
+    try {
+      const response = await axios.put(`http://localhost:8000/api/posts/${postId}`, { content: newContent }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`
+        }
+      });
+      setPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post.id === postId ? { ...post, content: newContent } : post
+        )
+      );
+    } catch (error) {
+      setError('Error editing post');
+    }
   };
 
   const handleDelete = async (post) => {
@@ -577,7 +608,7 @@ const PostForm = () => {
             )}
             <Post
               post={post}
-              onEdit={() => handleEdit(post)}
+              onEdit={(newContent) => handleEdit(post.id, newContent)}
               onDelete={() => handleDelete(post)}
               onLike={() => handleLike(post.id)}
               onUnlike={() => handleUnlike(post.id)}

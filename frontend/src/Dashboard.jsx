@@ -195,7 +195,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen flex bg-gray-900 text-white">
-      {/* Sidebar */}
+      {/* Sidebar
       <div className="fixed w-64 bg-gray-800 p-6 flex flex-col justify-between h-full">
         <div>
           <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
@@ -226,6 +226,7 @@ const Dashboard = () => {
           >
             Search
           </button>
+
           <button 
             onClick={handleProfile} 
             className="w-full py-2 mb-2 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
@@ -263,10 +264,10 @@ const Dashboard = () => {
           className="w-full py-2 bg-red-600 hover:bg-red-700 rounded-md transition duration-200 mt-6"
         >
           Logout
-        </button>
-      </div>
+        </button> */}
+      {/* </div> */}
       {/* Main Content */}
-      <div className="flex-grow p-8 ml-64">
+      <div className="flex-grow p-8 ml-64 mt-8">
         <PostForm />
       </div>
     </div>

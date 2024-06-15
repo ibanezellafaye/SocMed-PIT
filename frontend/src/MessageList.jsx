@@ -121,19 +121,10 @@ const MessageList = () => {
     }
   };
 
-  const handledashboard = () => {
-    navigate('/dashboard');
-  };
-
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center">
-      <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Messaged Users</h2>
-        <div className="mb-4">
-          <button onClick={handledashboard} className="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
-            Go To Dashboard
-          </button>
-        </div>
+    <div className="bg-gray-900 text-white min-h-screen p-8 ml-64 mt-8">
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Message Contacts</h2>
         {error && <p className="text-red-500">{error}</p>}
         {users.length > 0 ? (
           <ul>

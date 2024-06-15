@@ -410,21 +410,7 @@ const Search = ({ updateFollowing, following }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <div className="mb-4 flex space-x-2">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Back
-        </button>
-        <button
-          onClick={handleBackFollowing}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Go to Following
-        </button>
-      </div>
+    <div className="min-h-screen bg-gray-900 text-white p-8 ml-64 mt-10">
       <h1 className="text-2xl font-bold mb-6">Search Results</h1>
       {searchResults.length > 0 ? (
         <ul className="space-y-4">

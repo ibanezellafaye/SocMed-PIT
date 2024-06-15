@@ -157,10 +157,6 @@ const FollowingList = ({ updateFollowing, following }) => {
     }
   };
 
-  const handleDashboard = () => {
-    navigate('/dashboard');
-  };
-
   const handleMessage = (followingId) => {
     navigate(`/message/${followingId}`);
   };
@@ -181,16 +177,8 @@ const FollowingList = ({ updateFollowing, following }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <h2 className="text-2xl font-bold mb-4">Following List</h2>
-      <div className="mb-4">
-        <button
-          onClick={handleDashboard}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Go To Dashboard
-        </button>
-      </div>
+    <div className="min-h-screen bg-gray-900 text-white p-8 ml-64 mt-8">
+      <h2 className="text-2xl font-bold mb-4">Following</h2>
       {error && <p className="text-red-500">{error}</p>}
       {followingDetails.length > 0 ? (
         <ul className="space-y-4">

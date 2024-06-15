@@ -254,7 +254,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
+    <div className="min-h-screen bg-gray-900 text-white p-8 ml-64 mt-10">
       {error && <p className="text-red-500">{error}</p>}
       {user ? (
         <div>

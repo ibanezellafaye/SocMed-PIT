@@ -415,9 +415,6 @@ const Profile = () => {
             <p><strong>Gender:</strong> {user.gender}</p>
           </div>
         )}
-        <div className="mt-6 text-center">
-          <button onClick={handledashboard} className="bg-gray-700 px-4 py-2 rounded">GoToDashboard</button>
-        </div>
       </div>
     </div>
   );
