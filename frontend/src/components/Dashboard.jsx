@@ -283,6 +283,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import debounce from 'lodash.debounce';
+import { Ellipsis } from "lucide-react"
+
 
 const PostForm = () => {
   const [content, setContent] = useState('');
@@ -514,32 +516,43 @@ const PostForm = () => {
   };
 
   return (
-    <div className="container mx-auto text-white min-h-screen flex flex-col h-screen overflow-y-scroll bg-white p-6">
-        <div className="w-full max-w-2xl mx-auto space-y-6">
-
-      <h2 className="text-3xl font-bold text-center text-gray-700 mb-6">Create a New Post</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="mb-4 space-y-4">
-        <textarea
-          className=" mb-2  w-full p-4 bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-          placeholder="What's on your mind?"
-          value={content}
-          onChange={handleContentChange}
-          rows="4"
-
-        />
-        <button type="submit" className="w-full py-3 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition duration-300">
-          {editingPost ? 'Update' : 'Post'}
-        </button>
-        {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
-      </form>
+    <div className="flex flex-row h-[91vh]  overflow-y-scroll ... bg-white-100 justify-center">
+      <div className="col-span-2 space-y-4 w-[50rem]">
+        <div className="bg-slate-100 p-4 rounded-lg  justify-center">
+          <div className="flex items-center space-x-4 justify-center focus:outline-none focus:ring-1 focus:ring-cyan-500  ">
+            <img
+              className="w-12 h-12 rounded-full "
+              src="https://xsgames.co/randomusers/avatar.php?g=male"
+              alt="User Avatar"
+            />
+            {error && <p className="text-red-500">{error}</p>}
+            <form onSubmit={handleSubmit} className="mb-4 space-y-4 ">
+            <input
+              className="flex-grow p-2 bg-slate-200 rounded-lg justify-center px-20 cursor-pointer hover:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-cyan-500 shadow"
+              type="text"
+              placeholder="What's on your mind?"
+              value={content}
+              onChange={handleContentChange}
+              rows="4"
+            />
+            <button type="submit" className="p-2 bg-cyan-500 text-zinc-900 rounded-lg ml-3 hover:bg-cyan-300 font-semibold">
+                {editingPost ? 'Update' : 'Post'}
+              </button>
+              {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
+            </form>
+          </div>
+            
 
       {loading ? (
         <p className='text-black'>Loading posts...</p>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className="mb-4 p-4 border bg-gray-100 rounded-lg shadow-md mt-6">
-            <div className="flex items-center mb-2">
+          <div key={post.id} className="mb-4 p-4 border bg-gray-100 rounded-lg shadow-md mt-6  ml-15 mx-auto w-[40rem]">
+            <div className="flex items-center mb-2 relative -mt-18">
+                <span className="post-date text-gray-600 absolute top-0 right-0 cursor-pointer" >
+                <Ellipsis />
+              </span>
+
               {post.user.profile_picture && (
                 <img src={`http://localhost:8000/storage/${post.user.profile_picture}`} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
               )}
@@ -565,6 +578,7 @@ const PostForm = () => {
           </div>
         ))
       )}
+    </div>
     </div>
     </div>
   );

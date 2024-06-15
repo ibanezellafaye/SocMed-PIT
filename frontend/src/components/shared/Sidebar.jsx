@@ -78,12 +78,16 @@ function SidebarItem({ item }) {
             linkClasses,
             "relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group"
         )}>
-            {item.icon}
-            <Link to={item.path} className="flex items-center gap-2 ">
-                <span className={`overflow-hidden transition-all  fill-white hover:fill-white ${expanded ? "w-52 ml-1" : "w-0"}`}>
+
+            {/* Sidebar Hidden Hover */}
+            <Link to={item.path} className="flex items-center gap-2 justify-items-center ml-2">
+                {item.icon}
+                <span className={`overflow-hidden transition-all justify-items-center ${expanded ? "w-52 ml-1" : "w-0"}`}>
                     {item.label}
                 </span>
             </Link>
+            {/* End */}
+
             {item.alert && (
                 <div className={`absolute right-2 w-2 h-2 rounded bg-cyan-400 ${expanded ? "" : "top-2"}`} />
             )}
@@ -104,7 +108,7 @@ function SidebarItem({ item }) {
 function UserProfile({ user }) {
     return (
         <div>
-            <div className="h-24 w-24 rounded-full bg-cyan-500 bg-cover bg-no-repeat bg-center mx-auto">
+            <div className="h-24 w-24 rounded-fullbg-cover bg-no-repeat bg-center mx-auto">
                 {user.profile_picture ? (
                     <img
                         src={`http://localhost:8000/storage/${user.profile_picture}`}

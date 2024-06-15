@@ -150,7 +150,8 @@ const Post = ({ post, onEdit, onDelete, onLike, onUnlike, onCommentSubmit, onCom
     <div className="post">
       <div className="post-header mb-2">
         <div className="flex items-center">
-          <span className="post-date text-gray-600">{new Date(created_at).toLocaleString()}</span>
+          
+          <span className="post-date text-gray-600 text-xs ml-12 -mt-5">{new Date(created_at).toLocaleString()}</span>
           {user && user.id === loggedInUser.id && (
             <>
               {isEditing ? (
