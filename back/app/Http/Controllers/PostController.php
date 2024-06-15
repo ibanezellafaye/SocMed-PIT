@@ -13,10 +13,26 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    // public function index()
+    // {
+    //     $posts = Post::with('user')->get();
+    //     return response()->json($posts);
+    // }
+
+    public function index(Request $request)
     {
-        $posts = Post::with('user')->get();
-        return response()->json($posts);
+        $limit = $request->get('limit', 4); // Default to 5 posts per page
+        $posts = Post::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($limit);
+
+        return response()->json([
+            'posts' => $posts->items(),
+            'current_page' => $posts->currentPage(),
+            'last_page' => $posts->lastPage(),
+            'total' => $posts->total(),
+            'hasMore' => $posts->hasMorePages()
+        ]);
     }
 
     /**
