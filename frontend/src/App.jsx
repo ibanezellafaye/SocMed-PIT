@@ -140,9 +140,9 @@ const App = () => {
             <Route path="/messages" element={isLoggedIn ? <MessageList /> : <Navigate to="/login" />} />
             <Route path="/notification" element={isLoggedIn ? <Notification /> : <Navigate to="/login" />} />
             <Route path="/viewprofile/:userId" element={<ViewProfile />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
 
-          <Route path="/settings" element={<Settings />} />
           <Route path="/" element={<LoginForm onLogin={handleLogin}/>} />
           </Route>
 
