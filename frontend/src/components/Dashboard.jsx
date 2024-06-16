@@ -535,7 +535,7 @@ const PostForm = () => {
               onChange={handleContentChange}
               rows="4"
             />
-            <button type="submit" className="p-2 bg-cyan-500 text-zinc-900 rounded-lg ml-3 hover:bg-cyan-300 font-semibold">
+            <button type="submit" className="p-2 bg-cyan-500 text-white rounded-lg ml-3 hover:bg-cyan-600 font-semibold">
                 {editingPost ? 'Update' : 'Post'}
               </button>
               {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}

@@ -1,42 +1,42 @@
-import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react"
-import { useContext, createContext, useState, useEffect } from "react"
-import classNames from 'classnames'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../lib/navigation'
-import axios from 'axios'
+import { MoreVertical, ChevronLast, ChevronFirst } from "lucide-react";
+import { useContext, createContext, useState, useEffect } from "react";
+import classNames from 'classnames';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { DASHBOARD_SIDEBAR_LINKS, DASHBOARD_SIDEBAR_BOTTOM_LINKS } from '../../lib/navigation';
+import axios from 'axios';
+import HeaderLogo from './Logo 5.png';
 
-const SidebarContext = createContext()
 
-const linkClasses = 'flex items-center gap-2 font-light px-3 py-2 hover:bg-cyan-300 hover:no-underline active:bg-cyan-500 rounded-sm text-base'
+const SidebarContext = createContext();
+
+const linkClasses = 'flex items-center gap-2 font-light px-3 py-2 hover:bg-cyan-300 hover:no-underline active:bg-cyan-500 rounded-sm text-base';
 
 export default function Sidebar() {
-    const [expanded, setExpanded] = useState(true)
-    const [user, setUser] = useState(null)
-    const navigate = useNavigate()
+    const [expanded, setExpanded] = useState(true);
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user')
+        const storedUser = localStorage.getItem('user');
 
         if (storedUser) {
-            const parsedUser = JSON.parse(storedUser)
-            setUser(parsedUser)
+            const parsedUser = JSON.parse(storedUser);
+            setUser(parsedUser);
         } else {
-            navigate('/login')
+            navigate('/login');
         }
-    }, [navigate])
+    }, [navigate]);
 
     if (!user) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
     return (
         <aside className="h-screen">
             <nav className="h-full flex flex-col bg-white border-r shadow-sm">
                 <div className="p-4 pb-2 flex justify-between items-center">
-                    <img
-                        src="https://img.logoipsum.com/243.svg"
+                    <img src={HeaderLogo} alt='Logo'
                         className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"}`}
-                        alt=""
                     />
                     <button
                         onClick={() => setExpanded((curr) => !curr)}
@@ -47,7 +47,7 @@ export default function Sidebar() {
                 </div>
 
                 <SidebarContext.Provider value={{ expanded }}>
-                    <div className='flex flex-col items-center gap-2 px-1 py-3'>
+                    <div className='flex flex-col items-center gap-2 px-1 py-3 mb-4'>
                         {expanded && <UserProfile user={user} />}
                     </div>
 
@@ -65,12 +65,12 @@ export default function Sidebar() {
                 </SidebarContext.Provider>
             </nav>
         </aside>
-    )
+    );
 }
 
 function SidebarItem({ item }) {
-    const { expanded } = useContext(SidebarContext)
-    const { pathname } = useLocation()
+    const { expanded } = useContext(SidebarContext);
+    const { pathname } = useLocation();
 
     return (
         <li className={classNames(
@@ -78,16 +78,12 @@ function SidebarItem({ item }) {
             linkClasses,
             "relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors group"
         )}>
-
-            {/* Sidebar Hidden Hover */}
-            <Link to={item.path} className="flex items-center gap-2 justify-items-center ml-2">
-                {item.icon}
-                <span className={`overflow-hidden transition-all justify-items-center ${expanded ? "w-52 ml-1" : "w-0"}`}>
+            {item.icon}
+            <Link to={item.path} className="flex items-center gap-2">
+                <span className={`overflow-hidden transition-all ${expanded ? "w-52 ml-1" : "w-0"}`}>
                     {item.label}
                 </span>
             </Link>
-            {/* End */}
-
             {item.alert && (
                 <div className={`absolute right-2 w-2 h-2 rounded bg-cyan-400 ${expanded ? "" : "top-2"}`} />
             )}
@@ -102,13 +98,13 @@ function SidebarItem({ item }) {
                 </div>
             )}
         </li>
-    )
+    );
 }
 
 function UserProfile({ user }) {
     return (
         <div>
-            <div className="h-24 w-24 rounded-fullbg-cover bg-no-repeat bg-center mx-auto">
+            <div className="h-24 w-24 rounded-full bg-cyan-500 bg-cover bg-no-repeat bg-center mx-auto">
                 {user.profile_picture ? (
                     <img
                         src={`http://localhost:8000/storage/${user.profile_picture}`}
@@ -122,12 +118,12 @@ function UserProfile({ user }) {
                 )}
             </div>
            
-            <div className={`flex justify-between items-center overflow-hidden transition-all w-52 ml-18 `}>
-              <div className="leading-4 mx-auto">
-                        <h4 className="font-semibold">{user.first_name} {user.last_name}</h4>
-                        <span className="text-xs text-gray-600">{user.email}</span>
-                    </div>
+            <div className={`flex justify-between items-center overflow-hidden transition-all w-52 ml-18`}>
+                <div className="leading-4">
+                    <h4 className="font-semibold mt-4 ml-10">{user.first_name} {user.last_name}</h4>
+                    <span className="text-xs text-gray-600 ml-10">{user.email}</span>
                 </div>
             </div>
-    )
+        </div>
+    );
 }

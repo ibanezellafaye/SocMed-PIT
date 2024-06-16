@@ -1,26 +1,22 @@
-import {
-	HiMenu,
-	HiUser,
-    HiUserGroup,
-    HiOutlineCog,
-    HiOutlineQuestionMarkCircle,
-	HiBell,
-	HiOutlineAnnotation,
-	HiLogout
-} from 'react-icons/hi'
+import {HiUserGroup } from 'react-icons/hi'
+import { RiUserSettingsFill } from "react-icons/ri";
+import { BiSolidMessageSquareDetail } from "react-icons/bi";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
+import { RiProfileLine } from "react-icons/ri";
+import { MdNotificationsActive } from "react-icons/md";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
 		path: '/Dashboard',
-		icon: <HiMenu />
+		icon: <RiDashboardHorizontalFill />
 	},
 	{
 		key: 'profile',
 		label: 'Profile',
 		path: '/profile',
-		icon: <HiUser />
+		icon: <RiProfileLine />
 	},
 	{
 		key: 'following',
@@ -33,14 +29,14 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		key: 'notification',
 		label: 'Notification',
 		path: '/notification',
-		icon: <HiBell />
+		icon: <MdNotificationsActive />
 	},
 
 	{
 		key: 'messages',
 		label: 'Messages',
 		path: '/messages',
-		icon: <HiOutlineAnnotation />
+		icon: <BiSolidMessageSquareDetail />
 	}
 
 
@@ -70,13 +66,6 @@ export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
 		key: 'settings',
 		label: 'Settings',
 		path: '/settings',
-		icon: <HiOutlineCog />
-	},
-
-	{
-		key: 'Logout',
-		label: 'Logout',
-		path: '/',
-		icon: <HiLogout />
+		icon: <RiUserSettingsFill />
 	}
 ]
