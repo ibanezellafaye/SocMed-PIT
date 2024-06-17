@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Light mode */
+.light {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --input-bg-color: #f0f0f0;
+  --input-border-color: #cccccc;
+}
+
+/* Dark mode */
+.dark {
+  --bg-color: #1a202c;
+  --text-color: #ffffff;
+  --input-bg-color: #2d3748;
+  --input-border-color: #4a5568;
+}
+
+/* Apply the variables */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+input, textarea {
+  background-color: var(--input-bg-color);
+  border-color: var(--input-border-color);
+}

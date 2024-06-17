@@ -3,148 +3,201 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the posts.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     // public function index()
     // {
-    //     $posts = Post::with('user')->get();
+    //     $user = Auth::user();
+    //     $posts = Post::with(['user', 'comments.user', 'likes'])
+    //                 ->whereIn('user_id', $user->follows()->pluck('followed_user_id'))
+    //                 ->orWhere('user_id', $user->id)
+    //                 ->orderBy('created_at', 'desc')
+    //                 ->get();
+
+    //     $posts->each(function($post) use ($user) {
+    //         $post->likes_count = $post->likes()->count();
+    //         $post->liked = $post->likes()->where('user_id', $user->id)->exists();
+    //     });
+
     //     return response()->json($posts);
+    // }
+
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'content' => 'required|string',
+    //     ]);
+
+    //     $post = Post::create([
+    //         'user_id' => Auth::id(),
+    //         'content' => $validated['content'],
+    //     ]);
+
+    //     $post->load('user');
+    //     $post->likes_count = 0; // Initial likes count
+    //     $post->liked = false;   // Initial liked state
+
+    //     return response()->json($post, 201);
+    // }
+
+    // public function update(Request $request, Post $post)
+    // {
+    //     $this->authorize('update', $post);
+
+    //     $validated = $request->validate([
+    //         'content' => 'required|string',
+    //     ]);
+
+    //     $post->update([
+    //         'content' => $validated['content'],
+    //     ]);
+
+    //     $user = Auth::user();
+    //     $post->load('user');
+    //     $post->likes_count = $post->likes()->count();
+    //     $post->liked = $post->likes()->where('user_id', $user->id)->exists();
+
+    //     return response()->json($post);
+    // }
+
+    // public function destroy(Post $post)
+    // {
+    //     $this->authorize('delete', $post);
+    //     $post->delete();
+
+    //     return response()->json(['message' => 'Post deleted successfully']);
+    // }
+
+    // public function likePost($postId)
+    // {
+    //     $post = Post::findOrFail($postId);
+    //     $user = Auth::user();
+
+    //     // Check if the user has already liked the post
+    //     if ($post->likes()->where('user_id', $user->id)->exists()) {
+    //         return response()->json(['message' => 'Already liked this post'], 200);
+    //     }
+
+    //     $post->likes()->create(['user_id' => $user->id]);
+
+    //     $post->load('likes'); // Load likes relationship
+    //     return response()->json($post);
+    // }
+
+    // public function unlikePost($postId)
+    // {
+    //     $post = Post::findOrFail($postId);
+    //     $user = Auth::user();
+
+    //     // Check if the user has liked the post
+    //     $like = $post->likes()->where('user_id', $user->id)->first();
+    //     if ($like) {
+    //         $like->delete();
+    //     }
+
+    //     $post->load('likes'); // Load likes relationship
+    //     return response()->json($post);
     // }
 
     public function index(Request $request)
     {
-        $limit = $request->get('limit', 4); // Default to 5 posts per page
-        $posts = Post::with('user')
-            ->orderBy('created_at', 'desc')
-            ->paginate($limit);
+        $user = Auth::user();
+        $perPage = $request->input('per_page', 5); // Default to 5 posts per page
+        $page = $request->input('page', 1);
 
-        return response()->json([
-            'posts' => $posts->items(),
-            'current_page' => $posts->currentPage(),
-            'last_page' => $posts->lastPage(),
-            'total' => $posts->total(),
-            'hasMore' => $posts->hasMorePages()
-        ]);
+        $posts = Post::with(['user', 'comments.user', 'likes'])
+                    ->whereIn('user_id', $user->follows()->pluck('followed_user_id'))
+                    ->orWhere('user_id', $user->id)
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($perPage, ['*'], 'page', $page);
+
+        $posts->each(function($post) use ($user) {
+            $post->likes_count = $post->likes()->count();
+            $post->liked = $post->likes()->where('user_id', $user->id)->exists();
+        });
+
+        return response()->json($posts);
     }
 
-    /**
-     * Store a newly created post in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'content' => 'required|string',
         ]);
 
         $post = Post::create([
             'user_id' => Auth::id(),
-            'content' => $request->content,
+            'content' => $validated['content'],
         ]);
+
+        $post->load('user');
+        $post->likes_count = 0; // Initial likes count
+        $post->liked = false;   // Initial liked state
 
         return response()->json($post, 201);
     }
 
-    /**
-     * Display the specified post.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function show($id)
+    public function update(Request $request, Post $post)
     {
-        $post = Post::with('user')->findOrFail($id);
-        return response()->json($post);
-    }
+        $this->authorize('update', $post);
 
-    /**
-     * Update the specified post in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
+        $validated = $request->validate([
             'content' => 'required|string',
         ]);
 
-        $post = Post::findOrFail($id);
+        $post->update([
+            'content' => $validated['content'],
+        ]);
 
-        if ($post->user_id !== Auth::id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-
-        $post->update($request->all());
+        $user = Auth::user();
+        $post->load('user');
+        $post->likes_count = $post->likes()->count();
+        $post->liked = $post->likes()->where('user_id', $user->id)->exists();
 
         return response()->json($post);
     }
 
-    /**
-     * Remove the specified post from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
-
-        if ($post->user_id !== Auth::id()) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
-
+        $this->authorize('delete', $post);
         $post->delete();
 
-        return response()->json(['message' => 'Post deleted']);
+        return response()->json(['message' => 'Post deleted successfully']);
     }
 
-    /**
-     * Like the specified post.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function like($id)
+    public function likePost($postId)
     {
-        $post = Post::findOrFail($id);
-        $post->increment('likes');
+        $post = Post::findOrFail($postId);
+        $user = Auth::user();
 
-        return response()->json(['message' => 'Post liked', 'likes' => $post->likes]);
-    }
-
-    /**
-     * Unlike the specified post.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function unlike($id)
-    {
-        $post = Post::findOrFail($id);
-        if ($post->likes > 0) {
-            $post->decrement('likes');
+        // Check if the user has already liked the post
+        if ($post->likes()->where('user_id', $user->id)->exists()) {
+            return response()->json(['message' => 'Already liked this post'], 200);
         }
 
-        return response()->json(['message' => 'Post unliked', 'likes' => $post->likes]);
+        $post->likes()->create(['user_id' => $user->id]);
+
+        $post->load('likes'); // Load likes relationship
+        return response()->json($post);
     }
 
-    public function getPostsByUser($userId)
+    public function unlikePost($postId)
     {
-        $posts = Post::where('user_id', $userId)->get();
-        return response()->json($posts);
+        $post = Post::findOrFail($postId);
+        $user = Auth::user();
+
+        // Check if the user has liked the post
+        $like = $post->likes()->where('user_id', $user->id)->first();
+        if ($like) {
+            $like->delete();
+        }
+
+        $post->load('likes'); // Load likes relationship
+        return response()->json($post);
     }
 
-    
 }

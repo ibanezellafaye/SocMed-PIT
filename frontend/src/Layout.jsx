@@ -1,16 +1,18 @@
-// Layout.jsx
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import { useTheme } from './App'; // Import the theme context
 
 const Layout = ({ onLogout }) => {
+  const { theme } = useTheme(); // Get the current theme
+
   return (
-    <div className="flex">
+    <div className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <Sidebar />
-      <div className="flex-1 flex flex-col bg-gray-900">
+      <div className="flex-1 flex flex-col">
         <Header onLogout={onLogout} />
-        <div className="flex-1 p-4">
+        <div className="flex-1 pt-24 p-20">
           <Outlet />
         </div>
       </div>

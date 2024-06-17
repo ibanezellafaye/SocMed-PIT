@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
-        'first_name',
-        'last_name',
         'email',
         'password',
+        'first_name',
+        'last_name',
         'address',
         'birthdate',
         'gender',
-        'profile_picture',
+        'role', // Include role in fillable
     ];
 
     protected $hidden = [
@@ -29,25 +30,32 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthdate' => 'date',
     ];
 
-    public function followers()
+    public function posts()
     {
-        return $this->hasMany(Follower::class, 'following_id');
+        return $this->hasMany(Post::class);
     }
 
-    public function following()
+    public function comments()
     {
-        return $this->hasMany(Follower::class, 'follower_id');
+        return $this->hasMany(Comment::class);
     }
 
-    public function sentMessages()
+    public function likes()
     {
-        return $this->hasMany(Message::class, 'sender_id');
+        return $this->hasMany(Like::class);
     }
 
-    public function receivedMessages()
+    public function follows(): BelongsToMany
     {
-        return $this->hasMany(Message::class, 'receiver_id');
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'followed_user_id');
+    }
+
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'user_id');
     }
 }
+
