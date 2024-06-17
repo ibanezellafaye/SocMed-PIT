@@ -57,7 +57,7 @@ export default function Sidebar() {
                         ))}
                     </ul>
 
-                    <ul className='flex flex-col gap-0.5 pt-2 border-t border-black-700 px-2 rounded-lg'>
+                    <ul className='flex flex-col gap-0.5 pt-2 border-t border-black-700 px-3 rounded-lg'>
                         {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map((item) => (
                             <SidebarItem key={item.key} item={item} />
                         ))}
