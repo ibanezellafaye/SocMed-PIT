@@ -12,7 +12,7 @@ const Layout = ({ onLogout }) => {
       <Sidebar />
       <div className="flex-1 flex flex-col">
         <Header onLogout={onLogout} />
-        <div className="flex-1 pt-24 p-20">
+        <div className="flex-1">
           <Outlet />
         </div>
       </div>

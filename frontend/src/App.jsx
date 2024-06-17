@@ -5,6 +5,8 @@ import LoginForm from './LoginForm';
 import Dashboard from './Dashboard';
 import Layout from './Layout';
 import UsersPage from './UsersPage';
+import PostDetail from './PostDetail';
+import Message from './Message';
 
 // Create a context for the theme
 const ThemeContext = createContext();
@@ -45,6 +47,8 @@ const App = () => {
           <Route element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/users" element={<UsersPage />} />
+            <Route path='/posts/:postId' element={<PostDetail />} />
+            <Route path="/messages/:userId?" element={<Message />} />
           </Route>
         </Routes>
       </Router>

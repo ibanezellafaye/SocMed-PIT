@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { HiFingerPrint, HiCog } from "react-icons/hi";
+import { HiFingerPrint, HiCog, HiChat, HiUserGroup } from "react-icons/hi"; // Import user group icon
 import { useTheme } from './App'; // Import the theme context
 
 const Sidebar = () => {
@@ -53,20 +53,42 @@ const Sidebar = () => {
               Dashboard
             </NavLink>
           </li>
-        </ul>
-      </nav>
-      <div className="mt-20">
-        <div>
+          <li className='flex-1'>
             <NavLink 
-              to="/settings" 
+              to="/messages" 
               className={({ isActive }) => 
                 isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
               }
             >
-              <HiCog className='mt-1 mr-2' />
-              Settings
+              <HiChat className='mt-1 mr-2'/>
+              Messages
             </NavLink>
-          </div>
+          </li>
+          <li className='flex-1'>
+            <NavLink 
+              to="/followed" 
+              className={({ isActive }) => 
+                isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+              }
+            >
+              <HiUserGroup className='mt-1 mr-2' />
+              Followed
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <div className="mt-20">
+        <div>
+          <NavLink 
+            to="/settings" 
+            className={({ isActive }) => 
+              isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
+            }
+          >
+            <HiCog className='mt-1 mr-2' />
+            Settings
+          </NavLink>
+        </div>
       </div>
     </div>
   );

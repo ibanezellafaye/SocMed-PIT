@@ -8,5 +8,11 @@ export default {
   theme: {
     extend: {},
   },
+  variants: {
+    extend: {
+      backgroundColor: ['dark', 'hover'],
+      borderColor: ['dark'],
+    },
+  },
   plugins: [],
 }

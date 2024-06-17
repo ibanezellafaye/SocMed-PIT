@@ -103,24 +103,32 @@ class PostController extends Controller
     //     return response()->json($post);
     // }
 
-    public function index(Request $request)
+    public function index()
     {
         $user = Auth::user();
-        $perPage = $request->input('per_page', 5); // Default to 5 posts per page
-        $page = $request->input('page', 1);
-
         $posts = Post::with(['user', 'comments.user', 'likes'])
-                    ->whereIn('user_id', $user->follows()->pluck('followed_user_id'))
-                    ->orWhere('user_id', $user->id)
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage, ['*'], 'page', $page);
+            ->whereIn('user_id', $user->follows()->pluck('followed_user_id'))
+            ->orWhere('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
 
-        $posts->each(function($post) use ($user) {
+        $posts->each(function ($post) use ($user) {
             $post->likes_count = $post->likes()->count();
             $post->liked = $post->likes()->where('user_id', $user->id)->exists();
         });
 
         return response()->json($posts);
+    }
+
+    public function show($id)
+    {
+        $post = Post::with(['user', 'comments.user'])
+            ->findOrFail($id);
+
+        $post->likes_count = $post->likes()->count();
+        $post->liked = $post->likes()->where('user_id', Auth::id())->exists();
+
+        return response()->json($post);
     }
 
     public function store(Request $request)
@@ -135,8 +143,8 @@ class PostController extends Controller
         ]);
 
         $post->load('user');
-        $post->likes_count = 0; // Initial likes count
-        $post->liked = false;   // Initial liked state
+        $post->likes_count = 0;
+        $post->liked = false;
 
         return response()->json($post, 201);
     }
@@ -153,10 +161,9 @@ class PostController extends Controller
             'content' => $validated['content'],
         ]);
 
-        $user = Auth::user();
         $post->load('user');
         $post->likes_count = $post->likes()->count();
-        $post->liked = $post->likes()->where('user_id', $user->id)->exists();
+        $post->liked = $post->likes()->where('user_id', Auth::id())->exists();
 
         return response()->json($post);
     }
@@ -174,14 +181,13 @@ class PostController extends Controller
         $post = Post::findOrFail($postId);
         $user = Auth::user();
 
-        // Check if the user has already liked the post
         if ($post->likes()->where('user_id', $user->id)->exists()) {
             return response()->json(['message' => 'Already liked this post'], 200);
         }
 
         $post->likes()->create(['user_id' => $user->id]);
 
-        $post->load('likes'); // Load likes relationship
+        $post->load('likes');
         return response()->json($post);
     }
 
@@ -190,13 +196,12 @@ class PostController extends Controller
         $post = Post::findOrFail($postId);
         $user = Auth::user();
 
-        // Check if the user has liked the post
         $like = $post->likes()->where('user_id', $user->id)->first();
         if ($like) {
             $like->delete();
         }
 
-        $post->load('likes'); // Load likes relationship
+        $post->load('likes');
         return response()->json($post);
     }
 
