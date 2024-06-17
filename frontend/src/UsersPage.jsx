@@ -205,7 +205,7 @@ const UsersPage = () => {
   const isFollowing = (userId) => following.includes(userId);
 
   return (
-    <div className={`ml-72 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-3xl font-bold mb-4">Users</h1>
       {users.length > 0 ? (
         users.map((user) => (

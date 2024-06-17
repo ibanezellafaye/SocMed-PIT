@@ -190,7 +190,7 @@ const PostDetail = () => {
   }
 
   return (
-    <div className={`flex-1 flex flex-col ml-72 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className={`flex-1 flex flex-col ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className="p-4">
         <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
           <div className="flex justify-between items-center mb-4">
