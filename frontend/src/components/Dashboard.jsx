@@ -244,7 +244,7 @@
 //           value={content}
 //           onChange={handleContentChange}
 //         />
-//         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+//         <button type="submit" className="bg-gray-500 text-white px-4 py-2 rounded">
 //           {editingPost ? 'Update' : 'Submit'}
 //         </button>
 //         {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
@@ -293,6 +293,8 @@ const PostForm = () => {
   const [loading, setLoading] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const navigate = useNavigate();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     fetchPosts();
@@ -339,6 +341,10 @@ const PostForm = () => {
       setLoading(false);
     }
   }, 300), []);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
 
   const handleContentChange = (e) => {
     setContent(e.target.value);
@@ -528,30 +534,31 @@ const PostForm = () => {
             {error && <p className="text-red-500">{error}</p>}
             <form onSubmit={handleSubmit} className="mb-4 space-y-4 ">
             <input
-              className="flex-grow p-2 bg-slate-200 rounded-lg justify-center px-20 cursor-pointer hover:bg-gray-300 focus:outline-none focus:ring-1 focus:ring-cyan-500 shadow"
+              className="flex-grow p-2 bg-slate-50 rounded-lg justify-center px-20 cursor-pointer hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-cyan-500 shadow border border-stroke bg-transparent text-dark placeholder-dark-6 outline-none focus:border-primary dark:border-dark-3 dark:placeholder-dark-5"
               type="text"
               placeholder="What's on your mind?"
               value={content}
               onChange={handleContentChange}
               rows="4"
             />
-            <button type="submit" className="p-2 bg-cyan-500 text-white rounded-lg ml-3 hover:bg-cyan-600 font-semibold">
+            <button type="submit" className="p-2 bg-cyan-500  ml-3 hover:bg-cyan-600  inline-flex items-center justify-center rounded-lg border border-primary bg-primary px-4 py-2 text-center text-base font-medium text-white">
                 {editingPost ? 'Update' : 'Post'}
               </button>
-              {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
+              {editingPost && <button onClick={handleCancel} type="button" className="bg-red-600  ml-3 hover:bg-red-700  inline-flex items-center justify-center rounded-lg border border-primary bg-primary px-4 py-2 text-center text-base font-medium text-white">Cancel</button>}
             </form>
           </div>
             
 
       {loading ? (
-        <p className='text-black'>Loading posts...</p>
+        <p className='text-gray-500 font-semibold text-base ml-[20rem] mt-10 mb-10'>Loading posts...<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 ml-10 mt-2">
+        <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clip-rule="evenodd" />
+      </svg>
+      </p>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className="mb-4 p-4 border bg-gray-100 rounded-lg shadow-md mt-6  ml-15 mx-auto w-[40rem]">
-            <div className="flex items-center mb-2 relative -mt-18">
-                <span className="post-date text-gray-600 absolute top-0 right-0 cursor-pointer" >
-                <Ellipsis />
-              </span>
+          <div key={post.id} className="mb-4 p-4 border bg-gray-100 rounded-lg shadow-lg mt-6  ml-15 mx-auto w-[40rem]">
+
+          <div className="flex items-center mb-2 relative -mt-18">
 
               {post.user.profile_picture && (
                 <img src={`http://localhost:8000/storage/${post.user.profile_picture}`} alt="Profile" className="w-10 h-10 rounded-full mr-2" />

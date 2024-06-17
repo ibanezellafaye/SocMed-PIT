@@ -90,13 +90,20 @@ const Header = () => {
       <div className='flex items-center gap-2 mr-2'>
         <Menu as="div" className="relative">
           <div>
-            <Menu.Button className="ml-2 inline-flex rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400">
-              <span className='sr-only'>Open user menu</span>
-              <div
-                className="h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center"
-                style={{ backgroundImage: 'url(https://xsgames.co/randomusers/avatar.php?g=male)' }}>
-                <span className='sr-only'>Johnny Dough</span>
-              </div>
+            <Menu.Button className="ml-2 inline-flex rounded-full focus:outline-none focus:ring-1 focus:ring-cyan-400">
+            <div className="mx-auto h-10 w-10 rounded-full  bg-cover bg-no-repeat bg-center">
+                {user.profile_picture ? (
+                    <img
+                        src={`http://localhost:8000/storage/${user.profile_picture}`}
+                        alt="Profile"
+                        className="w-8 h-8 rounded-lg object-cover mb-2 mx-auto"
+                    />
+                ) : (
+                    <div className="flex items-center justify-center text-white-500 mb-2 h-10 w-10 rounded-lg bg-cyan-500 bg-cover bg-no-repeat bg-center">
+                        No Image
+                    </div>
+                )}
+            </div>
             </Menu.Button>
           </div>
           <Transition

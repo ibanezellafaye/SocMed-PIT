@@ -527,7 +527,7 @@ const PostForm = () => {
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           {editingPost ? 'Update' : 'Submit'}
         </button>
-        {editingPost && <button onClick={handleCancel} type="button" className="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
+        {editingPost && <button onClick={handleCancel} type="button" className="bg-red-500 text-white px-4 py-2 rounded ml-2">Cancel</button>}
       </form>
 
       {loading ? (
@@ -545,6 +545,7 @@ const PostForm = () => {
               <div className="my-2">
                 <img src={`http://localhost:8000/storage/${post.image}`} alt="Post" className="max-w-full h-auto" />
               </div>
+              
             )}
             <Post
               post={post}
