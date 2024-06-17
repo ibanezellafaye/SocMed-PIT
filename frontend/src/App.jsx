@@ -7,6 +7,8 @@ import Layout from './Layout';
 import UsersPage from './UsersPage';
 import PostDetail from './PostDetail';
 import Message from './Message';
+import Following from './Following';
+import UserProfile from './UserProfile';
 
 // Create a context for the theme
 const ThemeContext = createContext();
@@ -49,6 +51,8 @@ const App = () => {
             <Route path="/users" element={<UsersPage />} />
             <Route path='/posts/:postId' element={<PostDetail />} />
             <Route path="/messages/:userId?" element={<Message />} />
+            <Route path='/following' element={<Following/>}/>
+            <Route path='/profile/:userId' element={<UserProfile/>} />
           </Route>
         </Routes>
       </Router>

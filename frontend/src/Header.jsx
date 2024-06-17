@@ -87,7 +87,16 @@ const Header = ({ onLogout }) => {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setNotifications(prevNotifications => prevNotifications.filter(n => n.id !== notification.id));
-      navigate(`/posts/${notification.post_id}`);
+      if (notification.type === 'message') {
+        navigate(`/messages/${notification.related_id}`);
+      } else if (notification.type === 'post' || notification.type === 'like') {
+        navigate(`/posts/${notification.post_id}`);
+      } else if (notification.type === 'comment') {
+        navigate(`/posts/${notification.post_id}`);
+      }else if (notification.type === 'follow') {
+        navigate(`/profile/${notification.related_id}`); // Navigate to the profile of the user who followed
+      }
+      
       setShowNotifications(false);
     } catch (error) {
       console.error('Error deleting notification:', error);

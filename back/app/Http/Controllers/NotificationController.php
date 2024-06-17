@@ -40,6 +40,7 @@ class NotificationController extends Controller
             'type' => $request->type,
             'post_id' => $request->post_id,
             'comment_id' => $request->comment_id,
+            'related_id' => $request->related_id,
         ]);
 
         return response()->json($notification, 201);

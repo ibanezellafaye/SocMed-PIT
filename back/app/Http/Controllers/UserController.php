@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -31,9 +32,21 @@ class UserController extends Controller
         return response()->json(['name' => $user->name]);
     }
 
+    // public function show($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     return response()->json($user);
+    // }
+
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('posts')->findOrFail($id);
         return response()->json($user);
+    }
+
+    public function posts($id)
+    {
+        $posts = Post::where('user_id', $id)->get();
+        return response()->json($posts);
     }
 }

@@ -31,7 +31,7 @@ const Dashboard = () => {
       navigate('/login');
     }
   }, [navigate]);
-
+  
   const fetchPosts = async (authToken, page) => {
     try {
       const response = await axios.get(`http://localhost:8000/api/posts?page=${page}&per_page=5`, {
@@ -250,6 +250,8 @@ const Dashboard = () => {
   if (!user) {
     return <div>Loading...</div>;
   }
+
+  
 
   return (
     <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>

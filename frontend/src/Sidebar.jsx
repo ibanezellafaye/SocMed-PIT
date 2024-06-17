@@ -66,13 +66,13 @@ const Sidebar = () => {
           </li>
           <li className='flex-1'>
             <NavLink 
-              to="/followed" 
+              to="/following" 
               className={({ isActive }) => 
                 isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded-md transition duration-200"
               }
             >
               <HiUserGroup className='mt-1 mr-2' />
-              Followed
+              Following
             </NavLink>
           </li>
         </ul>

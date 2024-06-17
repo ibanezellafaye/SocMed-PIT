@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
@@ -19,6 +20,13 @@ class FollowController extends Controller
         }
 
         $user->follows()->attach($followedUser->id);
+
+        Notification::create([
+            'user_id' => $followedUser->id,
+            'message' => $user->first_name . ' ' . $user->last_name . ' started following you.',
+            'type' => 'follow',
+            'related_id' => $user->id, // This can be the ID of the user who followed
+        ]);
 
         return response()->json(['message' => 'User followed successfully'], 200);
     }

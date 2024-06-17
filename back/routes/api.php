@@ -42,5 +42,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/messages/{userId}', [MessageController::class, 'store']);
 
     Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::get('users/{id}/posts', [UserController::class, 'posts']);
 });
 

@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Notification;
 
 class MessageController extends Controller
 {
@@ -36,6 +37,13 @@ class MessageController extends Controller
             'sender_id' => $user->id,
             'receiver_id' => $userId,
             'content' => $request->content,
+        ]);
+
+        Notification::create([
+            'user_id' => $userId,
+            'message' => "New message from {$user->first_name} {$user->last_name}",
+            'type' => 'message',
+            'related_id' => $user->id, // This is the ID of the sender for the conversation
         ]);
 
         return response()->json($message);
