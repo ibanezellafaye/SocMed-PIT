@@ -28,6 +28,7 @@ class CommentController extends Controller
         ]);
 
         $comment->load('user');
+        $comment->user->profile_image_url = $comment->user->profile_image_url;
 
         // Notify post owner
         if ($post->user_id != Auth::id()) {
@@ -70,6 +71,9 @@ class CommentController extends Controller
         $comment->update([
             'content' => $validated['content'],
         ]);
+
+        $comment->load('user');
+        $comment->user->profile_image_url = $comment->user->profile_image_url;
 
         return response()->json($comment);
     }
