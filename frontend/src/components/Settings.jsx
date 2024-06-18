@@ -159,9 +159,18 @@ const Settings = () => {
               </button>
             </div>
             {error && (
-              <p className="text-red-500 text-sm ml-5">{error}</p>)}
+              <div className="p-2 ml-3 mt-3 text-red-800 rounded-lg bg-red-50 dark:text-red-400">
+                <p className="text-xs font-mono">{error}</p>
+              </div>
+            )}
+
             {success && (
-              <p className="text-green-500 text-sm ml-5">{success}</p>)}
+              <div className=" mt-3 ml-3 p-2 w-36 text-green-800 rounded-lg bg-green-50 dark:text-green-400">
+                <p className=" text-xs font-mono">{success}</p>
+              </div>
+            )}
+
+            
           </div>
         </div>
       </div>
