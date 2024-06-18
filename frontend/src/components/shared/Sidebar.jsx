@@ -110,6 +110,7 @@ function UserProfile({ user }) {
                 {user.profile_picture ? (
                     <img
                         src={`http://localhost:8000/storage/${user.profile_picture}`}
+                        
                         alt="Profile"
                         className="w-20 h-20 rounded-lg object-cover mb-2 mx-auto"
                     />

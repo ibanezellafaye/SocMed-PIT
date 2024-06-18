@@ -89,8 +89,7 @@ import MessageList from './components/MessageList';
 import Notification from './components/Notification'; 
 import Settings from './components/Settings';
 import Layout from './components/shared/Layout';
-import Sidebar from './components/shared/Sidebar';
-
+import EditProfile from './components/EditProfile';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
@@ -135,6 +134,7 @@ const App = () => {
             <Route path="/postform" element={isLoggedIn ? <PostForm /> : <Navigate to="/login" />} />
             <Route path="/profile/:id" element={<ViewProfile setUser={isLoggedIn}/>} />
             <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" />} />
+            <Route path="/editprofile" element={isLoggedIn ? <EditProfile /> : <Navigate to="/login" />} />
             <Route path="/following" element={<FollowingList updateFollowing={updateFollowing} following={following} />} />
             <Route path="/message/:followingId" element={isLoggedIn ? <Message /> : <Navigate to="/login" />} />
             <Route path="/messages" element={isLoggedIn ? <MessageList /> : <Navigate to="/login" />} />

@@ -283,18 +283,27 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Post from './Post';
 import debounce from 'lodash.debounce';
-import { Ellipsis } from "lucide-react"
 
 
-const PostForm = () => {
+const Dashboard = () => {
+  const [user, setUser] = useState(null);
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      // Redirect to login if no user data found
+      navigate('/login');
+      window.location.reload();
+    }
+  }, [navigate]);
 
   useEffect(() => {
     fetchPosts();
@@ -341,10 +350,6 @@ const PostForm = () => {
       setLoading(false);
     }
   }, 300), []);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
 
   const handleContentChange = (e) => {
     setContent(e.target.value);
@@ -524,17 +529,24 @@ const PostForm = () => {
   return (
     <div className="flex flex-row h-[91vh]  overflow-y-scroll ... bg-white-100 justify-center">
       <div className="col-span-2 space-y-4 w-[50rem]">
-        <div className="bg-slate-100 p-4 rounded-lg  justify-center">
-          <div className="flex items-center space-x-4 justify-center focus:outline-none focus:ring-1 focus:ring-cyan-500  ">
-            <img
-              className="w-12 h-12 rounded-full "
-              src="https://xsgames.co/randomusers/avatar.php?g=male"
-              alt="User Avatar"
-            />
+        <div className="bg-gray-100 p-4 rounded-lg  justify-center flex relative ">
+          <div className="focus:outline-none focus:ring-1 focus:ring-cyan-500 mr-3 mt-4">
+            {user && user.profile_picture ? (
+              <img
+                src={`http://localhost:8000/storage/${user.profile_picture}`}
+                alt="Profile"              
+                className="w-10 h-10 rounded-lg object-cover mb-2"
+                />
+              ) : (
+                <div className="flex items-center justify-center text-white-500 mb-2 h-8 w-8 rounded-lg bg-cyan-500 bg-cover bg-no-repeat bg-center">
+                No Image
+              </div>
+            )}
+          </div>
             {error && <p className="text-red-500">{error}</p>}
             <form onSubmit={handleSubmit} className="mb-4 space-y-4 ">
             <input
-              className="flex-grow p-2 bg-slate-50 rounded-lg justify-center px-20 cursor-pointer hover:bg-slate-100 focus:outline-none focus:ring-1 focus:ring-cyan-500 shadow border border-stroke bg-transparent text-dark placeholder-dark-6 outline-none focus:border-primary dark:border-dark-3 dark:placeholder-dark-5"
+              className="  mx-auto flex-grow py-5 px-20 bg-gray-200 rounded-lg justify-center hover:bg-gray-100  focus:ring-1 focus:ring-cyan-500   border-stroke text-dark placeholder-dark-6 outline-none placeholder-gray-500 text-sm focus:outline-none active:outline-none h-11 border border-gray-300 "
               type="text"
               placeholder="What's on your mind?"
               value={content}
@@ -550,15 +562,17 @@ const PostForm = () => {
             
 
       {loading ? (
-        <p className='text-gray-500 font-semibold text-base ml-[20rem] mt-10 mb-10'>Loading posts...<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 ml-10 mt-2">
-        <path fill-rule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clip-rule="evenodd" />
+        <p className='text-gray-500 font-semibold text-base ml-[20rem] mt-10 mb-10'>Loading posts...<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6 ml-10 mt-2">
+        <path fillRule="evenodd" d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z" clipRule="evenodd" />
       </svg>
       </p>
+      ) : error ? (
+        <div className="text-center text-red-500">{error}</div>
       ) : (
         posts.map((post) => (
           <div key={post.id} className="mb-4 p-4 border bg-gray-100 rounded-lg shadow-lg mt-6  ml-15 mx-auto w-[40rem]">
 
-          <div className="flex items-center mb-2 relative -mt-18">
+          <div className=" items-center mb-2 flex relative -mt-18">
 
               {post.user.profile_picture && (
                 <img src={`http://localhost:8000/storage/${post.user.profile_picture}`} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
@@ -587,8 +601,7 @@ const PostForm = () => {
       )}
     </div>
     </div>
-    </div>
   );
 };
 
-export default PostForm;
+export default Dashboard;

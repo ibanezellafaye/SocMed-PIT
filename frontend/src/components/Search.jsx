@@ -410,24 +410,21 @@ const Search = ({ updateFollowing, following }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <div className="mb-4 flex space-x-2">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Back
-        </button>
-        <button
-          onClick={handleBackFollowing}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-        >
-          Go to Following
-        </button>
+    <div className="min-h-screen bg-white text-gray-900 flex flex-row overflow-y-scroll ... bg-white-100 mx-auto">
+      <div className="mb-4 relative ">
+      <button onClick={() => navigate(-1)}  type="button" class="absolute left-0 top-0 ... text-white bg-cyan-500 hover:bg-cyan-700 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                <svg class="w-5 h-5 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                  </svg>
+              </button>
+              
       </div>
-      <h1 className="text-2xl font-bold mb-6">Search Results</h1>
+      <div className="mx-auto max-w-lg">
+
+        <div className="mb-4"></div>
+      <h1 className="text-2xl font-bold mb-6 mx-auto">Search Results</h1>
       {searchResults.length > 0 ? (
-        <ul className="space-y-4">
+        <ul className="space-y-4 mx-auto">
           {searchResults
             .filter((result) => result.id !== loggedInUser.id) // Filter out the logged-in user
             .map((result) => {
@@ -435,7 +432,7 @@ const Search = ({ updateFollowing, following }) => {
               return (
                 <li
                   key={result.id}
-                  className="p-4 border border-gray-700 rounded-md bg-gray-800 flex items-center space-x-4"
+                  className="p-4 border-b border-gray-300 py-4 rounded-md bg-slate-100 flex items-center space-x-4"
                 >
                   <img
                     src={`http://localhost:8000/storage/${result.profile_picture}`}
@@ -443,23 +440,22 @@ const Search = ({ updateFollowing, following }) => {
                     className="w-16 h-16 rounded-full object-cover"
                     onError={(e) => e.target.src = 'https://via.placeholder.com/150'} // Fallback image
                   />
+                  <button onClick={() => handleViewProfile(result)} className="text-lg mb-2 no-underline hover:underline text-gray-900 hover:text-cyan-500 font-semibold">
+                {result.first_name} {result.last_name}
+                </button>
                   <div>
-                    <p><strong>Name:</strong> {result.first_name} {result.last_name}</p>
-                    <p><strong>Address:</strong> {result.address}</p>
-                    <p><strong>Gender:</strong> {result.gender}</p>
-                    <p><strong>Age:</strong> {calculateAge(result.birthdate)}</p>
                     <div className="mt-4">
                       {result.isFollowing ? (
                         <button
                           onClick={() => handleUnfollow(result.id)}
-                          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                          className="h-8 px-3 text-md font-bold text-red-500 border border-red-500 rounded-full hover:bg-red-500 hover:text-white"
                         >
                           Unfollow
                         </button>
                       ) : (
                         <button
                           onClick={() => handleFollow(result.id)}
-                          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md"
+                          className="ml-10 h-8 px-3 text-md font-bold text-cyan-500 border border-cyan-500 rounded-full hover:bg-cyan-500 hover:text-white"
                         >
                           Follow
                         </button>
@@ -473,6 +469,7 @@ const Search = ({ updateFollowing, following }) => {
       ) : (
         <p>No users found.</p>
       )}
+    </div>
     </div>
   );
 };

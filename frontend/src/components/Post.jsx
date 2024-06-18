@@ -179,7 +179,7 @@ const Post = ({ post, onEdit, onDelete, onLike, onUnlike, onCommentSubmit, onCom
                       <Ellipsis />
                     </button>
                     {isPostDropdownOpen && (
-                      <div className="absolute top-full left-0 bg-white rounded-lg w-28 flex py-2">
+                      <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2">
                         <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
                           <li>
                             <a href="#" onClick={onEdit} className=" px-2 py-2 hover:bg-gray-200 dark:hover:text-gray p-2 flex items-center mb-2 relative">
@@ -249,7 +249,7 @@ const Post = ({ post, onEdit, onDelete, onLike, onUnlike, onCommentSubmit, onCom
           <Ellipsis />
         </button>
         {openCommentDropdowns[comment.id] && (
-          <div className="absolute top-full left-0 bg-white rounded-lg w-28 flex py-2  dropdown dropdown-bottom">
+          <div className="absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2  dropdown dropdown-bottom">
             <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
               <li>
                 <a href="#" onClick={() => handleEditComment(comment)} className=" px-2 py-2 hover:bg-gray-200 dark:hover:text-gray p-2 flex items-center mb-2 relative">
@@ -276,7 +276,7 @@ const Post = ({ post, onEdit, onDelete, onLike, onUnlike, onCommentSubmit, onCom
 ))}
 
         {Array.isArray(comments) && comments.length > visibleComments && (
-          <button onClick={handleLoadMoreComments} className=" ml-8 -mt-3 text-gray-900 px-4 py-2 rounded font-semibold post-date flex text-xs">View more comments...</button>
+          <button onClick={handleLoadMoreComments} className=" ml-8 -mt-3 text-cyan-900 px-4 py-2 rounded font-semibold post-date flex text-sm">View more comments...</button>
         )}
       </div>
       <form onSubmit={handleCommentSubmit} className="flex items-center px-14">
@@ -285,7 +285,7 @@ const Post = ({ post, onEdit, onDelete, onLike, onUnlike, onCommentSubmit, onCom
           placeholder="Add a comment"
           value={editingComment ? editedCommentContent : comment}
           onChange={editingComment ? (e) => setEditedCommentContent(e.target.value) : handleCommentChange}
-          className=" mx-auto flex-grow py-2 rounded-lg justify-center px-20 cursor-pointer focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500"
+          className="py-1.5 rounded-lg justify-center px-20 focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500 pl-20 ml-10"
         />
         <button type="submit" className=" bg-cyan-500  ml-3 hover:bg-cyan-600 flex items-center justify-center rounded-lg border border-primary bg-primary px-2 py-2 text-center text-base font-medium text-white">
           {editingComment ? 'Update' : 'Comment'}

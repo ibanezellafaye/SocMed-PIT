@@ -310,10 +310,9 @@ const Profile = () => {
     }
   }, [navigate]);
 
-  const handledashboard = () => {
-    navigate('/dashboard');
+  const handleEditProfile = () => {
+    navigate('/editprofile');
   };
-
   const handleEditToggle = () => {
     setEditing(!editing);
   };
@@ -372,14 +371,12 @@ const Profile = () => {
   }
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-lg p-8 border border-gray-700 rounded">
-        <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
-        <h2 className="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">User Information</h2>
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="mx-auto flex h-screen w-full items-start justify-center bg-white text-sm text-gray-900 p-5">
+      <div className="w-[48rem] shadow mt-24 p-8 bg-gray-100 rounded-lg  justify-center mx-auto ">
+      <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
+        {/* {error && <p className="text-red-500">{error}</p>}
         {editing ? (
-          <form onSubmit={handleFormSubmit} className="space-y-4">
-            
+          <form onSubmit={handleFormSubmit} className="space-y-4"> 
             <div>
               <label className="block text-gray-400">Profile Picture:</label>
               <input
@@ -394,31 +391,39 @@ const Profile = () => {
               <button type="button" onClick={handleEditToggle} className="bg-gray-500 px-4 py-2 rounded">Cancel</button>
             </div>
           </form>
-        ) : (
-          <div className="space-y-4 border border-gray-700 p-4 rounded">
-            <div className="flex justify-center mb-4">
+        ) : ( */}
+          {/* <div className="space-y-4 border border-gray-700 p-4 rounded">
+            <div className="flex justify-center mb-4"> */}
               {user.profile_picture ? (
-                <img src={`http://localhost:8000/storage/${user.profile_picture}`} alt="Profile" className="w-32 h-32 rounded-full object-cover" />
+                <img src={`http://localhost:8000/storage/${user.profile_picture}`} alt="Profile" className="object-cover w-32 h-32 p-1 rounded-full ring-1 dark:ring-cyan-400 mr-5" />
               ) : (
                 <div className="w-32 h-32 rounded-full bg-gray-700 flex items-center justify-center text-gray-500">
                   No Image
                 </div>
               )}
-            </div>
-            <div className='flex justify-center'>
-              <button onClick={handleEditToggle} className="bg-yellow-500 px-4 py-2 rounded just">Change Profile Picture</button>
-            </div>
-            <p><strong>First Name:</strong> {user.first_name}</p>
-            <p><strong>Last Name:</strong> {user.last_name}</p>
-            <p><strong>Address:</strong> {user.address}</p>
-            <p><strong>Birth Date:</strong> {user.birthdate}</p>
-            <p><strong>Gender:</strong> {user.gender}</p>
-          </div>
-        )}
-        <div className="mt-6 text-center">
-          <button onClick={handledashboard} className="bg-gray-700 px-4 py-2 rounded">GoToDashboard</button>
-        </div>
+              <div className="mt-2 text-center sm:text-left">
+                <h2 className="text-xl font-bold tracking-tight">{user.first_name} {user.last_name}</h2>
+              
+            
+            {/* <div className='flex justify-center'>
+               <button onClick={handleEditToggle} className="bg-yellow-500 px-4 py-2 rounded just">Change Profile Picture</button>
+              </div> */}
+
+                <div className="mt-10">
+                  <p><strong>First Name:</strong> {user.first_name}</p>
+                  <p><strong>Last Name:</strong> {user.last_name}</p>
+                  <p><strong>Address:</strong> {user.address}</p>
+                  <p><strong>Birth Date:</strong> {user.birthdate}</p>
+                  <p><strong>Gender:</strong> {user.gender}</p>
+                </div>
+              </div>
+
+              <div className="flex items-start justify-between py-3 px-4 mr-10">                
+                <button onClick={handleEditProfile} className="w-[8rem] h-10  m-2 ml-20 font-bold px-5 py-1.5 font-boldhover:bg-cyan-200 dark:border-cyan-500  transition duration-150 ease-in-out focus:outline-none bg-white rounded-lg border  border-cyan-500 text-cyan-500 hover:text-white dark:hover:bg-cyan-500" >Edit Profile</button>
+              </div>
+      
       </div>
+    </div>
     </div>
   );
 };

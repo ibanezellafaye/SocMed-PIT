@@ -59,10 +59,6 @@ const Header = () => {
     }
   };
 
-  const handleProfile = () => {
-    navigate('/profile');
-    window.location.reload();
-  };
 
   if (!user) {
     return <div>Loading...</div>;
@@ -71,7 +67,7 @@ const Header = () => {
   return (
     <div className='bg-white h-16 px-4 flex justify-between items-center border-b border-gray-200'>
       <div className='flex-1 flex justify-center items-center'>
-        <div className='relative flex'>
+        <div className='relative flex ml-10'>
           <HiOutlineSearch fontSize={20} className='text-gray-400 absolute top-1/2 transform -translate-y-1/2 left-3' />
           <input
             type="text"
@@ -95,7 +91,6 @@ const Header = () => {
                 {user.profile_picture ? (
                     <img
                         src={`http://localhost:8000/storage/${user.profile_picture}`}
-                        alt="Profile"
                         className="w-8 h-8 rounded-lg object-cover mb-2 mx-auto"
                     />
                 ) : (
