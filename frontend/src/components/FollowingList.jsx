@@ -177,16 +177,16 @@ const FollowingList = ({ updateFollowing, following }) => {
   };
 
   return (
-    <div className="mx-auto max-w-lg flex h-screen w-full items-start justify-center bg-white text-sm text-gray-900 p-5">
+    <div className="min-h-screen bg-white text-gray-900 flex flex-row overflow-y-scroll ... bg-white-100 mx-auto">
       <div className="mb-4 relative h-8 w-8">
-        <button onClick={() => navigate(-1)} type="button" className="absolute left-0 top-0 text-white bg-cyan-500 hover:bg-cyan-700 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2">
-          <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
-        </button>
+      <button onClick={() => navigate(-1)}  type="button" class="absolute left-0 top-0 ... text-white font-medium bg-grounded-full text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                <svg className="w-6 h-6 stroke-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                  </svg>
+              </button>
       </div>
       <div className="mx-auto max-w-lg p-6">
-        <h1 className="text-3xl font-semibold mb-4">Following List</h1>
+        <h1 className="text-2xl font-bold mb-6 mx-auto">Following List</h1>
         {error && <p className="text-red-500">{error}</p>}
         {followingDetails.length > 0 ? (
           <ul className="space-y-4">
@@ -200,7 +200,7 @@ const FollowingList = ({ updateFollowing, following }) => {
                 />
                 <button
                   onClick={() => handleViewProfile(item.following.id)}
-                  className="flex leading-snug mb-2 text-gray-900 font-semibold tracking-tight mr-4 hover:text-cyan-500"
+                  className="text-lg mb-2 no-underline hover:underline text-gray-900 hover:text-cyan-500 font-semibold"
                 >
                   {item.following.first_name} {item.following.last_name}
                 </button>
