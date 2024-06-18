@@ -139,7 +139,7 @@ const Settings = () => {
                 className={`mt-0 cursor-pointer border-l-2 text-base px-2 py-2 font-semibold transition 
                   ${openTab === 1 ? 'border-cyan-500 text-cyan-500' : 'border-transparent text-dark bg-gray border-stroke hover:bg-primary hover:text-cyan-500 dark:bg-dark dark:text-dark-6 dark:border-dark-3'}`}
                 onClick={() => handleTabClick(1)}>
-                User information
+                User Information
               </button>
             </div>
             <div className="flex px-3 py-2 font-bold bg-white text-black">
