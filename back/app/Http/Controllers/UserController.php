@@ -25,6 +25,10 @@ class UserController extends Controller
                 }
             })->get();
 
+        $users->each(function ($user) {
+            $user->profile_image_url = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
+        });
+
         return response()->json($users);
     }
 
@@ -112,7 +116,19 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::with('posts')->findOrFail($id);
-        return response()->json($user);
+        $user->profile_image_url = $user->profile_image ? asset('storage/' . $user->profile_image) : null;
+        
+        return response()->json([
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'address' => $user->address,
+            'birthdate' => $user->birthdate,
+            'gender' => $user->gender,
+            'role' => $user->role,
+            'profile_image_url' => $user->profile_image_url,
+            'posts' => $user->posts
+        ]);
     }
 
     public function posts($id)

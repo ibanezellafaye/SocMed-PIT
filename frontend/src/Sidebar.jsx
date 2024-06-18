@@ -27,7 +27,7 @@ const Sidebar = () => {
             No Image
           </div>
         )}
-        <p className="text-center text-xl font-semibold"><strong>{user.first_name} {user.last_name}</strong></p>
+        <p className={`text-center text-xl font-semibold ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}><strong>{user.first_name} {user.last_name}</strong></p>
       </div>
       <nav>
         <ul className="space-y-4">

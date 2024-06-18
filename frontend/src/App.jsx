@@ -4,7 +4,7 @@ import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 import Dashboard from './Dashboard';
 import Layout from './Layout';
-import UsersPage from './UsersPage';
+import Search from './Search';
 import PostDetail from './PostDetail';
 import Message from './Message';
 import Following from './Following';
@@ -52,7 +52,8 @@ const App = () => {
 
           <Route element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/users" element={<UsersPage />} />
+            <Route path="/users" element={<Search />} />
+
             <Route path='/posts/:postId' element={<PostDetail />} />
             <Route path="/messages/:userId?" element={<Message />} />
             <Route path='/following' element={<Following/>}/>
