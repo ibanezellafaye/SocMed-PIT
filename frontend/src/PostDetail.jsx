@@ -185,12 +185,25 @@ const PostDetail = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
   if (!post) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className={`flex-1 flex flex-col ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className='ml-72 mt-20'>
+      <button
+        onClick={handleBack}
+        className="mb-4 mt-2 ml-4 py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white"
+      >
+        Back
+      </button>
+
+    <div className={`flex-1 flex flex-col ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      
       <div className="p-4">
         <div className={`p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
           <div className="flex justify-between items-center mb-4">
@@ -319,6 +332,7 @@ const PostDetail = () => {
         </div>
       </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
+    </div>
     </div>
   );
 };

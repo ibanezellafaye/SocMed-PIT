@@ -9,6 +9,9 @@ import PostDetail from './PostDetail';
 import Message from './Message';
 import Following from './Following';
 import UserProfile from './UserProfile';
+import Settings from './Settings';
+import MyPosts from './MyPosts';
+import { UserProvider } from './UserContext';
 
 // Create a context for the theme
 const ThemeContext = createContext();
@@ -39,6 +42,7 @@ const App = () => {
   };
 
   return (
+    <UserProvider>
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <Router>
         <Routes>
@@ -53,10 +57,13 @@ const App = () => {
             <Route path="/messages/:userId?" element={<Message />} />
             <Route path='/following' element={<Following/>}/>
             <Route path='/profile/:userId' element={<UserProfile/>} />
+            <Route path='/settings' element={<Settings/>} />
+            <Route path="/user-posts" element={<MyPosts />} />
           </Route>
         </Routes>
       </Router>
     </ThemeContext.Provider>
+    </UserProvider>
   );
 };
 

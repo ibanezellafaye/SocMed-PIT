@@ -20,6 +20,7 @@ class User extends Authenticatable
         'address',
         'birthdate',
         'gender',
+        'profile_image',
         'role', // Include role in fillable
     ];
 
@@ -60,6 +61,11 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function getProfileImageUrlAttribute()
+    {
+        return $this->profile_image ? asset('storage/' . $this->profile_image) : null;
     }
 }
 

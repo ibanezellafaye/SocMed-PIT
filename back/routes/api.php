@@ -15,15 +15,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('posts', [PostController::class, 'index']);
     Route::post('posts', [PostController::class, 'store']);
-    Route::get('posts/{post}', [PostController::class, 'show']); // Add this route
+    Route::get('posts/{post}', [PostController::class, 'show']);
     Route::put('posts/{post}', [PostController::class, 'update']);
     Route::delete('posts/{post}', [PostController::class, 'destroy']);
 
     Route::post('/follow', [FollowController::class, 'follow']);
     Route::post('/unfollow', [FollowController::class, 'unfollow']);
     Route::get('/following', [FollowController::class, 'getFollowing']);
-    
-    Route::get('/search', [UserController::class, 'search']);
 
     Route::post('posts/{post}/comments', [CommentController::class, 'store']);
     Route::put('comments/{comment}', [CommentController::class, 'update']);
@@ -35,13 +33,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('notifications/mark-as-read', [NotificationController::class, 'markAsRead']);
     Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
 
-    Route::get('/user', [UserController::class, 'getUser']);
-
     Route::get('/messages/conversations', [MessageController::class, 'conversations']);
     Route::get('/messages/{userId}', [MessageController::class, 'index']);
     Route::post('/messages/{userId}', [MessageController::class, 'store']);
 
+    Route::get('/search', [UserController::class, 'search']);
+    Route::get('/user', [UserController::class, 'getUser']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::get('users/{id}/posts', [UserController::class, 'posts']);
+
+    Route::put('/update', [UserController::class, 'update']);
+    Route::post('/user/change-password', [UserController::class, 'changePassword']);
+    Route::post('/user/upload-profile-image', [UserController::class, 'uploadProfileImage']);
+
+    Route::get('/user/posts', [UserController::class, 'getUserPosts']);
 });
 

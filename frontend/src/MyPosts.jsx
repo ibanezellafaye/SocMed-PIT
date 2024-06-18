@@ -1,13 +1,10 @@
-//Maka View sa Profile sa user ug mga post
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 
-const UserProfile = () => {
-  const { userId } = useParams();
+const MyPosts = () => {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
@@ -17,44 +14,42 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const authToken = localStorage.getItem('authToken');
-      try {
-        const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-        setUser(userResponse.data);
+      const storedUser = localStorage.getItem('user');
+      
+      if (storedUser && authToken) {
+        const currentUser = JSON.parse(storedUser);
+        setUser(currentUser);
 
-        const postsResponse = await axios.get(`http://localhost:8000/api/users/${userId}/posts`, {
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-        setPosts(postsResponse.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setError('Failed to fetch user data. Please try again.');
+        try {
+          const postsResponse = await axios.get(`http://localhost:8000/api/user/posts`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+          });
+          setPosts(postsResponse.data.data || postsResponse.data);
+        } catch (error) {
+          console.error('Error fetching user posts:', error);
+          setError('Failed to fetch user posts. Please try again.');
+        }
+      } else {
+        navigate('/login');
       }
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [navigate]);
 
   const handleViewPost = (postId) => {
     navigate(`/posts/${postId}`);
   };
+
+  
 
   if (!user) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className={`ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <h1 className="text-3xl font-bold mb-4">{user.first_name} {user.last_name}</h1>
-      <p>Email: {user.email}</p>
-      <p>Address: {user.address}</p>
-      <p>Birthdate: {moment(user.birthdate).format('MMMM Do YYYY')}</p>
-      <p>Gender: {user.gender}</p>
-      <p>Role: {user.role}</p>
-      {/* Add other user details as needed */}
-
-      <h2 className="text-2xl font-bold mt-8 mb-4">Posts</h2>
+    <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <h1 className="text-3xl font-bold mb-4">My Posts</h1>
       {posts.length > 0 ? (
         posts.map(post => (
           <div key={post.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
@@ -92,4 +87,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default MyPosts;

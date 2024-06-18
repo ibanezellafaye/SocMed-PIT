@@ -121,12 +121,12 @@ const Header = ({ onLogout }) => {
       <div className="flex space-x-4 ml-4 relative">
         <button
           onClick={toggleNotifications}
-          className="relative py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-md transition duration-200 text-white"
+          className="relative py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200 text-white"
         >
           Notifications {unreadCount > 0 && <span className="bg-red-500 text-white rounded-full px-2 py-1 text-xs absolute top-0 right-0">{unreadCount}</span>}
         </button>
         {showNotifications && (
-          <div ref={dropdownRef} className={`absolute mt-12 w-80 max-h-96 overflow-y-auto ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'} rounded-md shadow-lg`}>
+          <div ref={dropdownRef} className={`absolute mt-14 w-80 max-h-96 overflow-y-auto ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'} rounded-md shadow-lg`}>
             <ul className="p-4">
               {notifications.length === 0 ? (
                 <li className="p-2">No notifications</li>
