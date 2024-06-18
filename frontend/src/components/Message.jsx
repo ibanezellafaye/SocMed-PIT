@@ -406,7 +406,7 @@ const Message = () => {
       </div>
 
       {/* Bottom Container */}
-      <div className="bg-gray-900 p-4 flex items-center w-full fixed bottom-0 z-10">
+      <div className="bg-gray-900 p-4 flex items-center fixed bottom-0 z-10">
         <textarea
           className="flex-grow p-2 mr-2 border border-gray-700 rounded bg-gray-800 text-white"
           placeholder="Type your message here"
