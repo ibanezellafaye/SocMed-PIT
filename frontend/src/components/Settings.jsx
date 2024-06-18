@@ -128,9 +128,9 @@ const Settings = () => {
   }
 
   return (
-    <div className="w-full flex flex-col md:flex-row text-[#161931]">
+    <div className="w-full flex flex-col md:flex-row text-[#161931] h-[89vh]  overflow-y-scroll ... bg-white-100 justify-center">
       {/* Sidebar */}
-      <div className="py-4 md:w-1/4 lg:w-1/5 md:block h-screen ml-10 overflow-y-auto">
+      <div className="py-4 md:w-1/4 lg:w-1/5 md:block h-screen ml-10 overflow-y-auto ">
         <div className="flex flex-col gap-1 p-4 text-sm border-r border-indigo-100">
           <h1 className="pl-3 mb-4 text-2xl font-semibold">Settings</h1>
           <div className="flex flex-wrap mt-1 sm:flex-row justify-start">
@@ -168,9 +168,7 @@ const Settings = () => {
               <div className=" mt-3 ml-3 p-2 w-36 text-green-800 rounded-lg bg-green-50 dark:text-green-400">
                 <p className=" text-xs font-mono">{success}</p>
               </div>
-            )}
-
-            
+            )}  
           </div>
         </div>
       </div>
@@ -219,9 +217,9 @@ const Settings = () => {
         )}
 
           {openTab === 2 && (
-            <div className="max-w-lg">
+            <div className="max-w-lg ">
               <h1 className="text-xl font-semibold mb-7">Edit Profile</h1>
-              <div className="max-w-lg bg-white rounded-lg p-6">
+              <div className="max-w-lg bg-white rounded-lg p-6 ">
                 {editing ? (
                   <form onSubmit={handleFormSubmit} className="space-y-4">
                     <div className="flex flex-col">

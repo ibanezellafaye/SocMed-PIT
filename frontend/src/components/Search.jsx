@@ -412,8 +412,8 @@ const Search = ({ updateFollowing, following }) => {
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-row overflow-y-scroll ... bg-white-100 mx-auto">
       <div className="mb-4 relative ">
-      <button onClick={() => navigate(-1)}  type="button" class="absolute left-0 top-0 ... text-white bg-cyan-500 hover:bg-cyan-700 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 ">
-                <svg class="w-5 h-5 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <button onClick={() => navigate(-1)}  type="button" class="absolute left-0 top-0 ... text-white font-medium bg-grounded-full text-sm p-2.5 text-center inline-flex items-center me-2 ">
+                <svg className="w-6 h-6 stroke-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                   </svg>
               </button>
