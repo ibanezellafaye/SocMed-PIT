@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import HeaderLogo from './Logo 2.png';
+import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai'; 
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -20,11 +22,17 @@ const Login = ({ onLogin }) => {
       localStorage.setItem('user', JSON.stringify(user));
 
       onLogin(); // Call the onLogin prop to update the isLoggedIn state in the App component
-      
+
       navigate('/dashboard'); // Redirect to the dashboard route
       location.reload()
     } catch (error) {
+
       setError(error.response.data.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('Something went wrong. Please try again later.');
+      }
     }
   };
 
@@ -33,38 +41,71 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
-          >
-            Login
-          </button>
-        </form>
-        <button
-          onClick={navigateToRegister}
-          className="w-full mt-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-md transition duration-200"
-        >
-          Go to Register
-        </button>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full md:w-80rem">
+        <div className="flex">
+          {/* Left Side - Login Form */}
+          <div className="w-full md:w-1/2 flex flex-col justify-center items-center md:items-start py-12 px-6 md:px-12">
+            <p className="text-3xl font-bold text-center md:text-left md:text-5xl mb-4">Welcome back</p>
+            <p className="text-center font-medium md:text-left mb-8">Sign in to your account</p>
+
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+
+            <form onSubmit={handleLogin} className="flex flex-col items-stretch w-full max-w-md relative">
+              <div className="relative mb-4">
+                <input
+                  className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <AiOutlineMail className="h-5 w-5 text-gray-400" />
+                </div>
+              </div>
+
+              <div className="relative mb-4">
+                <input
+                  className="w-full px-4 py-2 text-base border-2 rounded-xl bg-white transition focus:outline-none focus:border-indigo-600 pl-10"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <AiOutlineLock className="h-5 w-5 text-gray-400" />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-xl font-semibold text-base transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+                Login
+              </button>
+              <p className="py-8 text-gray-600 text-center">
+                Don't have an account?{' '}
+                <button
+                  type="button"
+                  onClick={navigateToRegister}
+                  className="font-semibold text-center text-gray-900"
+                >
+                  Sign up.
+                </button>
+              </p>
+            </form>
+          </div>
+
+          {/* Right Side - Side Panel */}
+          <div className="hidden md:block w-1/2 bg-indigo-600 bg-gradient-to-br">
+            <img 
+              src={HeaderLogo} 
+              alt='Logo'
+              className="w-auto h-96 mt-12 ml-7"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

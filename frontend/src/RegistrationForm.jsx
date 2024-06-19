@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineUser, AiOutlineLock, AiOutlineHome, AiOutlineCalendar, AiOutlineMail } from 'react-icons/ai'; 
+import HeaderLogo from './Logo 1.png';
 
 const RegistrationForm = () => {
   const [email, setEmail] = useState('');
@@ -25,122 +27,205 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     const formData = {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        address,
-        birthdate,
-        gender,
+      email,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+      address,
+      birthdate,
+      gender,
     };
 
     try {
-        const registrationResponse = await axios.post('http://localhost:8000/api/register', formData);
-        console.log('Registration response:', registrationResponse);
+      const registrationResponse = await axios.post('http://localhost:8000/api/register', formData);
+      console.log('Registration response:', registrationResponse);
 
-        if (registrationResponse.data) {
-            const loginData = { email, password };
-            const loginResponse = await axios.post('http://localhost:8000/api/login', loginData);
-            console.log('Login response:', loginResponse);
+      if (registrationResponse.data) {
+        const loginData = { email, password };
+        const loginResponse = await axios.post('http://localhost:8000/api/login', loginData);
+        console.log('Login response:', loginResponse);
 
-            if (loginResponse.data) {
-                const { token, user } = loginResponse.data;
-                localStorage.setItem('authToken', token);
-                localStorage.setItem('user', JSON.stringify(user));
+        if (loginResponse.data) {
+          const { token, user } = loginResponse.data;
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('user', JSON.stringify(user));
 
-                console.log('Navigating to dashboard...');
-                setError('Registration Successful!');
-                navigate('/dashboard');
-            } else {
-                console.log('Login failed');
-            }
+          console.log('Navigating to dashboard...');
+          setError('Registration Successful!');
+          navigate('/dashboard');
         } else {
-            console.log('Registration failed');
+          console.log('Login failed');
         }
+      } else {
+        console.log('Registration failed');
+      }
     } catch (error) {
-        console.error('Error:', error);
-        setError('Registration or login failed. Please try again.');
+      console.error('Error:', error);
+      setError('Registration or login failed. Please try again.');
     }
   };
-
-
 
   const navigateToLogin = () => navigate('/login');
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center">Registration</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={handleEmailChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={handlePasswordChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="First Name"
-            value={firstName}
-            onChange={handleFirstNameChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            value={lastName}
-            onChange={handleLastNameChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="text"
-            placeholder="Address"
-            value={address}
-            onChange={handleAddressChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <input
-            type="date"
-            placeholder="Birth Date"
-            value={birthdate}
-            onChange={handleBirthdateChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <select
-            value={gender}
-            onChange={handleGenderChange}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <img 
+          src={HeaderLogo} 
+          alt='Logo'
+          className="mx-auto h-14 w-auto"
+        />
+        <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+          Create a new account
+        </h2>
+
+        <p className="mt-2 text-center text-sm leading-5 text-gray-500 max-w">
+          Or
           <button
-            type="submit"
-            className="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+            type="button"
+            className="ml-1 font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150"
+            onClick={navigateToLogin}
           >
-            Register
+            login to your account
           </button>
-        </form>
-        <button
-          onClick={navigateToLogin}
-          className="w-full mt-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-md transition duration-200"
-        >
-          Go to Login
-        </button>
+        </p>
+
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="bg-white py-8 px-4 shadow-xl rounded-2xl sm:px-10">
+            {error && <p className="text-red-500 mb-4">{error}</p>}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={handleEmailChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineMail className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineLock className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="text"
+                    id="first-name"
+                    placeholder="First Name"
+                    value={firstName}
+                    onChange={handleFirstNameChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineUser className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="text"
+                    id="last-name"
+                    placeholder="Last Name"
+                    value={lastName}
+                    onChange={handleLastNameChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineUser className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="text"
+                    id="address"
+                    placeholder="Address"
+                    value={address}
+                    onChange={handleAddressChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineHome className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <input
+                    type="date"
+                    id="birthdate"
+                    placeholder="Birth Date"
+                    value={birthdate}
+                    onChange={handleBirthdateChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  />
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineCalendar className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <select
+                    id="gender"
+                    value={gender}
+                    onChange={handleGenderChange}
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <AiOutlineUser className="h-5 w-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6">
+              <span className="block w-full rounded-md shadow-sm">
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-xl font-semibold text-base transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                >
+                  Create account
+                </button>
+              </span>
+            </div>
+          </form>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
 export default RegistrationForm;
+
