@@ -53,4 +53,12 @@ class FollowController extends Controller
 
         return response()->json($following);
     }
+
+    public function getFollowers()
+    {
+        $user = Auth::user();
+        $followers = $user->followers()->pluck('user_id');
+
+        return response()->json($followers);
+    }
 }
