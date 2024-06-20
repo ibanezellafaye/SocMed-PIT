@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { HiFingerPrint, HiCog, HiChat, HiUserGroup, HiDocumentText  } from "react-icons/hi";
+import { HiFingerPrint, HiCog, HiChat, HiUserGroup, HiDocumentText, HiLogout } from "react-icons/hi";
 import { useTheme } from './App'; 
 import { useUser } from './UserContext'; // Import the UserContext
 
@@ -79,6 +79,9 @@ const Sidebar = () => {
       </nav>
       <div className="mt-20">
         <div>
+        <nav>
+        <ul className="space-y-4">
+          <li className='flex-1'>
           <NavLink 
             to="/settings" 
             className={({ isActive }) => 
@@ -88,6 +91,21 @@ const Sidebar = () => {
             <HiCog className='mt-1 mr-2' />
             Settings
           </NavLink>
+          </li>
+          <li className='flex-1'>
+          <NavLink 
+            to="/login" 
+            className={({ isActive }) => 
+              isActive ? "flex items-center py-2 px-4 bg-red-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded-md transition duration-200"
+            }
+          >
+            <HiLogout className='mt-1 mr-2' />
+            Logout
+          </NavLink>
+          </li>
+        </ul>
+      </nav>
+          
         </div>
       </div>
     </div>
