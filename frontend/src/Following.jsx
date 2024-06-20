@@ -23,7 +23,7 @@
 //           const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
 //             headers: { Authorization: `Bearer ${authToken}` }
 //           });
-//           return userResponse.data;
+//           return { ...userResponse.data, id: userId }; // Ensure each user has a unique id
 //         }));
 
 //         setFollowing(userDetails);
@@ -61,8 +61,19 @@
 //       {following.length > 0 ? (
 //         following.map((user) => (
 //           <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
-//             <p className="font-bold">{user.first_name} {user.last_name}</p>
-//             <p className="text-gray-600">{user.email}</p>
+//             <div className="flex items-center">
+//               {user.profile_image_url ? (
+//                 <img src={user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
+//               ) : (
+//                 <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-500 mr-4">
+//                   No Image
+//                 </div>
+//               )}
+//               <div>
+//                 <p className="font-bold">{user.first_name} {user.last_name}</p>
+//                 <p className="text-gray-600">{user.email}</p>
+//               </div>
+//             </div>
 //             <div className="flex space-x-2 mt-2">
 //               <button
 //                 onClick={() => handleUnfollow(user.id)}
@@ -95,6 +106,7 @@
 // export default Following;
 
 
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -102,34 +114,51 @@ import { useTheme } from './App'; // Import the theme context
 
 const Following = () => {
   const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
   const { theme } = useTheme(); // Get the current theme
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchFollowing = async () => {
+    const fetchFollowingAndFollowers = async () => {
       const authToken = localStorage.getItem('authToken');
       try {
         // Fetch the IDs of the users the current user is following
-        const response = await axios.get('http://localhost:8000/api/following', {
+        const followingResponse = await axios.get('http://localhost:8000/api/following', {
           headers: { Authorization: `Bearer ${authToken}` }
         });
-        const userIds = response.data;
+        const followingUserIds = followingResponse.data;
 
         // Fetch details of each followed user
-        const userDetails = await Promise.all(userIds.map(async (userId) => {
+        const followingDetails = await Promise.all(followingUserIds.map(async (userId) => {
           const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` }
           });
           return { ...userResponse.data, id: userId }; // Ensure each user has a unique id
         }));
 
-        setFollowing(userDetails);
+        setFollowing(followingDetails);
+
+        // Fetch the IDs of the users following the current user
+        const followersResponse = await axios.get('http://localhost:8000/api/followers', {
+          headers: { Authorization: `Bearer ${authToken}` }
+        });
+        const followersUserIds = followersResponse.data;
+
+        // Fetch details of each follower
+        const followersDetails = await Promise.all(followersUserIds.map(async (userId) => {
+          const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
+            headers: { Authorization: `Bearer ${authToken}` }
+          });
+          return { ...userResponse.data, id: userId }; // Ensure each user has a unique id
+        }));
+
+        setFollowers(followersDetails);
       } catch (error) {
-        console.error('Error fetching following users:', error);
+        console.error('Error fetching following or followers:', error);
       }
     };
 
-    fetchFollowing();
+    fetchFollowingAndFollowers();
   }, []);
 
   const handleUnfollow = async (userId) => {
@@ -154,7 +183,7 @@ const Following = () => {
 
   return (
     <div className={`ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <h1 className="text-3xl font-bold mb-4">Following Users</h1>
+      <h1 className="text-3xl font-bold mb-4">Following Users ({following.length})</h1>
       {following.length > 0 ? (
         following.map((user) => (
           <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
@@ -196,9 +225,45 @@ const Following = () => {
       ) : (
         <p>You are not following any users.</p>
       )}
+
+      <h1 className="text-3xl font-bold mt-8 mb-4">Followers ({followers.length})</h1>
+      {followers.length > 0 ? (
+        followers.map((user) => (
+          <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
+            <div className="flex items-center">
+              {user.profile_image_url ? (
+                <img src={user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-500 mr-4">
+                  No Image
+                </div>
+              )}
+              <div>
+                <p className="font-bold">{user.first_name} {user.last_name}</p>
+                <p className="text-gray-600">{user.email}</p>
+              </div>
+            </div>
+            <div className="flex space-x-2 mt-2">
+              <button
+                onClick={() => handleViewProfile(user.id)}
+                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white"
+              >
+                View Profile
+              </button>
+              <button
+                onClick={() => handleMessage(user.id)}
+                className="py-1 px-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white"
+              >
+                Message
+              </button>
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>You have no followers.</p>
+      )}
     </div>
   );
 };
 
 export default Following;
-
