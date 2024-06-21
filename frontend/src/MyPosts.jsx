@@ -71,7 +71,7 @@ const MyPosts = () => {
 
       {posts.length > 0 ? (
         posts.map(post => (
-          <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-200 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
+          <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-300 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
             <div className="flex justify-between items-center mb-4">
             
               <div className="text-sm mb-5">
