@@ -356,7 +356,7 @@ const Dashboard = () => {
                     <input
                       value={editContent}
                       onChange={handleEditContentChange}
-                      className={`w-full h-20 px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                      className={`w-full h-20 px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
                     />
                     <div className="flex space-x-2 mt-2">
                       <button
@@ -379,7 +379,7 @@ const Dashboard = () => {
                 <div className="flex space-x-2 mt-2">
                   <button
                     onClick={() => handleLike(post.id)}
-                    className={`rounded-full text-white ${post.liked ? 'stroke-red-500 text-red-200 flex items-center ' : 'flex items-center'}`}
+                    className={`rounded-xl text-white ${post.liked ? 'stroke-red-500 text-red-200 flex items-center ' : 'flex items-center'}`}
                   >
                     {post.liked ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-10 fill-red-600 stroke-red-600 hover:bg-red-200 rounded-full px-2 py-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
@@ -391,7 +391,7 @@ const Dashboard = () => {
                 </div>
                 <div className="mt-4 space-y-2">
                   {(post.comments || []).map((comment) => (
-                    <div key={comment.id} className={`p-2 comment border-t border-gray-500${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-md`}>
+                    <div key={comment.id} className={`p-2 comment border-t border-gray-500${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-xl`}>
                       <div className="flex items-center">
                         {comment.user.profile_image_url ? (
                           <img src={comment.user.profile_image_url} alt="Profile" className="w-8 h-8 rounded-full mr-4" />
@@ -406,13 +406,13 @@ const Dashboard = () => {
                         </div>
                           <div className=" flex space-x-2 ml-auto relative ">
                      <button 
-                      className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center "
+                      className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-xl text-sm px-1 py-1 text-center inline-flex items-center "
                       onClick={(e) => { e.stopPropagation(); toggleCommentDropdown(comment.id); }}
                     >
                       <Ellipsis />
                     </button>
                     {openCommentDropdowns[comment.id] && (
-                      <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2">
+                      <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-xl w-28 flex py-2">
                         {user && comment.user_id === user.id && (
                     <>
                         <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
@@ -440,7 +440,7 @@ const Dashboard = () => {
                           <input
                             value={editCommentContent}
                             onChange={handleEditCommentContentChange}
-                            className={`w-full px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2`}
+                            className={`w-full px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2`}
                           />
                           <div className="flex space-x-2 mt-2">
                             <button
@@ -471,7 +471,7 @@ const Dashboard = () => {
                         placeholder="Add a comment..."
                         value={commentContent[post.id] || ''}
                         onChange={(e) => handleCommentChange(e, post.id)}
-                        className={`py-1.5 rounded-lg justify-center px-32 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500 pl-20${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                        className={`py-1.5 rounded-xl justify-center px-32 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500 pl-20${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
                       />
                       <button
                         type="submit"

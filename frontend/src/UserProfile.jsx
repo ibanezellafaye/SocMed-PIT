@@ -141,7 +141,7 @@ const UserProfile = () => {
 
   return (
     <div className={`ml-72 mt-5 p-6 h-[91vh]  overflow-y-scroll ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <div className="flex flex-col items-center mb-4 max-w-lg mx-auto my-10 bg-white rounded-lg shadow-md p-5">
+      <div className="flex flex-col items-center mb-4 max-w-lg mx-auto my-10 bg-white rounded-xl shadow-md p-5">
         {user.profile_image_url ? (
           <img src={user.profile_image_url} alt="Profile" className="w-24 h-24 rounded-full" />
         ) : (
@@ -180,15 +180,15 @@ const UserProfile = () => {
       </div>
     </div>
 
-      <h2 className="text-2xl font-bold mt-8 mb-4">Posts</h2>
+      <h2 className="text-3xl font-bold mt-8 mb-4">Posts</h2>
       <div className="space-y-4">
 
       {posts.length > 0 ? (
         posts.map(post => (
-          <div key={post.id} className={`mb-4 p-4 bg-gray-100 rounded-lg shadow-lg mt-6  ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
+          <div key={post.id} className={`mb-4 p-4 bg-gray-100 rounded-xl shadow-lg mt-6  ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl shadow-md`}>
             <div className="items-center mb-2 flex  -mt-18">
               
-              <div className="mb-3">
+              <div className="text-sm mb-3">
               <p className={`font-bold text-lg	${theme === 'dark' ? ' text-white' : ' text-black'}`}> {user.first_name} {user.last_name}</p> 
               <p className={`text-xs ${theme === 'dark' ? ' text-gray-50' : ' text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
               </div>

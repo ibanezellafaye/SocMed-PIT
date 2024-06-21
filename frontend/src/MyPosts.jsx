@@ -49,27 +49,32 @@ const MyPosts = () => {
 
   return (
     <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="flex flex-row  justify-center">
+        <div className="col-span-2 space-y-4 w-[50rem]">
+
       <h1 className="text-3xl font-bold mb-4">My Posts</h1>
       {posts.length > 0 ? (
         posts.map(post => (
-          <div key={post.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
+          <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-200 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
             <div className="flex justify-between items-center mb-4">
-              <div className="text-sm">
-                {`${user.first_name} ${user.last_name} on ${moment(post.created_at).format('MMMM Do YYYY, h:mm:ss a')}`}
+            
+              <div className="text-sm mb-5">
+                <p className={`font-bold text-lg	${theme === 'dark' ? ' text-white' : ' text-black'}`}> {user.first_name} {user.last_name}</p> 
+                    <p className={`text-xs		${theme === 'dark' ? ' text-gray-50' : ' text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
               </div>
             </div>
             <p>{post.content}</p>
             <div className="flex space-x-2 mt-2">
               <button
                 onClick={() => handleViewPost(post.id)}
-                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-md text-white"
+                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white ml-auto"
               >
                 View Post
               </button>
             </div>
             <div className="mt-4 space-y-2">
               {(post.comments || []).map((comment) => (
-                <div key={comment.id} className={`p-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-md`}>
+                <div key={comment.id} className={`p-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-xl`}>
                   <div className="text-sm">
                     {comment.user && `${comment.user.first_name} ${comment.user.last_name} on ${moment(comment.created_at).format('MMMM Do YYYY, h:mm:ss a')}`}
                   </div>
@@ -83,6 +88,8 @@ const MyPosts = () => {
         <p>No posts found</p>
       )}
       {error && <p className="text-red-500">{error}</p>}
+    </div>
+    </div>
     </div>
   );
 };

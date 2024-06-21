@@ -102,7 +102,7 @@ const RegistrationForm = () => {
                     placeholder="Email"
                     value={email}
                     onChange={handleEmailChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineMail className="h-5 w-5 text-gray-400" />
@@ -118,7 +118,7 @@ const RegistrationForm = () => {
                     placeholder="Password"
                     value={password}
                     onChange={handlePasswordChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineLock className="h-5 w-5 text-gray-400" />
@@ -134,7 +134,7 @@ const RegistrationForm = () => {
                     placeholder="First Name"
                     value={firstName}
                     onChange={handleFirstNameChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineUser className="h-5 w-5 text-gray-400" />
@@ -150,7 +150,7 @@ const RegistrationForm = () => {
                     placeholder="Last Name"
                     value={lastName}
                     onChange={handleLastNameChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineUser className="h-5 w-5 text-gray-400" />
@@ -166,7 +166,7 @@ const RegistrationForm = () => {
                     placeholder="Address"
                     value={address}
                     onChange={handleAddressChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineHome className="h-5 w-5 text-gray-400" />
@@ -182,7 +182,7 @@ const RegistrationForm = () => {
                     placeholder="Birth Date"
                     value={birthdate}
                     onChange={handleBirthdateChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <AiOutlineCalendar className="h-5 w-5 text-gray-400" />
@@ -196,7 +196,7 @@ const RegistrationForm = () => {
                     id="gender"
                     value={gender}
                     onChange={handleGenderChange}
-                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10"
+                    className="w-full px-4 py-2 text-base border-2 rounded-xl transition bg-white  focus:outline-none focus:border-indigo-600 pl-10 text-black"
                   >
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
