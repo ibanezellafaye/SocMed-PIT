@@ -49,10 +49,26 @@ const MyPosts = () => {
 
   return (
     <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <div className="flex flex-row  justify-center">
+      <div className='bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border border-gray-200 ml-15 mx-auto w-[40rem]'>
+      </div>
+        <div className="mx-auto w-40 h-40 -mt-16 border-4 border-white rounded-full overflow-hidden">
+              <img className="object-cover object-center h-40" src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ' alt='Woman looking front' />
+        </div>
+        <div className="text-center mt-2">
+                <h2 className="font-semibold">{user.first_name} {user.last_name}</h2> 
+                <p className="text-gray-500">{user.email}</p>
+        </div>
+
+        <nav class="flex items-center rounded-xl justify-center text-lg bg-gray-100 mt-7 p-4 mx-auto w-[40rem]">
+        <div>
+            <a className="text-gray-700 hover:text-gray-900 font-extrabold  ">My Post</a>
+          </div>
+        <div>
+        </div>
+        </nav>
+      <div className="flex flex-row mt-0 justify-center">
         <div className="col-span-2 space-y-4 w-[50rem]">
 
-      <h1 className="text-3xl font-bold mb-4">My Posts</h1>
       {posts.length > 0 ? (
         posts.map(post => (
           <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-200 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
@@ -67,7 +83,7 @@ const MyPosts = () => {
             <div className="flex space-x-2 mt-2">
               <button
                 onClick={() => handleViewPost(post.id)}
-                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white ml-auto"
+                className="py-1 px-2 bg-indigo-600 hover:bg-indigo-700 rounded-xl text-white ml-auto"
               >
                 View Post
               </button>

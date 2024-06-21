@@ -7,6 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import moment from 'moment';
 import { Ellipsis } from 'lucide-react';
+import { FaArrowLeft } from "react-icons/fa";
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -228,12 +229,12 @@ const PostDetail = () => {
   return (
  
     <div className='ml-72 mt-20'>
-      <button
-        onClick={handleBack}
-        className="mb-4 mt-2 ml-4 py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white"
-      >
-        Back
-      </button>
+    <button
+      onClick={handleBack}
+      className="flex items-center mb-4 mt-2 ml-4 py-2 px-4 bg-white rounded-md text-slate-700 hover:bg-white"
+    >
+      <FaArrowLeft className="mr-2 mt-4 text-gray-400 w-5 h-5" />
+    </button>
 
       <div className={`flex-1 flex flex-col ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className="flex flex-row  justify-center">
