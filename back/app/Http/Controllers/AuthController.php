@@ -81,7 +81,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users',
-            'password' => ['required', 'min:6', new StrongPassword],
+            'password' => ['required', 'min:8', new StrongPassword],
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -142,6 +142,7 @@ class AuthController extends Controller
             ], 200);
         }
 
-        return response()->json(['message' => 'Invalid credentials'], 401);
+        return response()->json(['errors' => ['email' => ['Invalid credentials']]], 401);
     }
+
 }
