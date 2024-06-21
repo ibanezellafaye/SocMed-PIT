@@ -5,6 +5,7 @@ import { useTheme } from './App';
 import moment from 'moment';
 import { Ellipsis } from "lucide-react";
 import axiosInstance from './axiosConfig';
+import {Helmet} from 'react-helmet'
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -279,13 +280,19 @@ const Dashboard = () => {
   }
 
   return (
+    <div>
+      <Helmet>
+      <title>Dashboard</title>
+      </Helmet>
+      
     <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      
       <div className="flex flex-row  justify-center">
         <div className="col-span-2 space-y-4 w-[50rem]">
-            <div className={` justify-center flex ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <div className={` justify-center flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
               
             <form onSubmit={handleSubmit} className={`mb-4 space-y-4 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-            <div className='flex items-start'>
+            <div className={`flex items-start bg-gray-900 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
               <img src="profile-image.jpg" alt="Profile" className="w-14 h-14 rounded-full mt-2 bg-black" />
               <div className='flex-grow'>
                 <div className="relative">
@@ -293,11 +300,11 @@ const Dashboard = () => {
                     placeholder="What's on your mind?"
                     value={content}
                     onChange={handleContentChange}
-                    className={`py-9 px-52 ml-4 bg-gray-100 rounded-xl hover:bg-gray-100 focus:ring-1 focus:ring-indigo-500 border-stroke text-dark placeholder-dark-6 outline-none placeholder-gray-500 text-sm focus:outline-none active:outline-none h-11 border border-gray-300 ${theme === 'dark' ? 'bg-gray-800 border-gray-600 text-white' : 'bg-gray-100 text-black border-gray-300'} rounded-md focus:ring-2 focus:ring-blue-500`}
+                    className={`py-9 px-52 ml-4 bg-gray-100 rounded-xl hover:bg-gray-100 focus:ring-1 focus:ring-indigo-500 border-stroke text-dark placeholder-dark-6 outline-none placeholder-gray-500 text-sm focus:outline-none active:outline-none h-11 border border-gray-300 ${theme === 'dark' ? 'bg-gray-800 border-gray-600 text-white' : 'bg-gray-100 text-black border-gray-300'} rounded-md focus:ring-2 focus:ring-indigo-500`}
                   />
                   <button
                     type="submit"
-                    className="transition duration-200 p-2 bg-indigo-500 absolute right-4 top-1/2 transform -translate-y-1/2 hover:bg-indigo-600 inline-flex items-center justify-center rounded-xl border border-primary bg-primary px-4 py-2 text-center text-base font-medium text-white"
+                    className="transition duration-200 p-2 bg-indigo-500 absolute right-4 top-1/2 transform -translate-y-1/2 hover:bg-indigo-600 inline-flex items-center justify-center rounded-xl bg-primary px-4 py-2 text-center text-base font-medium text-white"
                   >
                     Post
                   </button>
@@ -310,7 +317,7 @@ const Dashboard = () => {
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="space-y-4">
             {posts.map((post, index) => (
-              <div key={post.id} ref={index === posts.length - 1 ? lastPostElementRef : null} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-200 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
+              <div key={post.id} ref={index === posts.length - 1 ? lastPostElementRef : null} className={`mb-4 p-4 rounded-xl mt-6 ml-15 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
                 <div className="items-center mb-2 flex  mt-18">
                   {post.user.profile_image_url ? (
                     <img src={post.user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
@@ -357,7 +364,7 @@ const Dashboard = () => {
                     <input
                       value={editContent}
                       onChange={handleEditContentChange}
-                      className={`w-full h-20 px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                      className={`w-full h-20 px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                     />
                     <div className="flex space-x-2 mt-2">
                       <button
@@ -441,7 +448,7 @@ const Dashboard = () => {
                           <input
                             value={editCommentContent}
                             onChange={handleEditCommentContentChange}
-                            className={`w-full px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2`}
+                            className={`w-full px-3 py-2 ${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 mt-2`}
                           />
                           <div className="flex space-x-2 mt-2">
                             <button
@@ -472,11 +479,11 @@ const Dashboard = () => {
                         placeholder="Add a comment..."
                         value={commentContent[post.id] || ''}
                         onChange={(e) => handleCommentChange(e, post.id)}
-                        className={`py-1.5 rounded-xl justify-center px-32 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500 pl-20${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                        className={`py-1.5 rounded-xl justify-center px-32 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-primary bg-gray-200 text-gray-700 placeholder:text-gray-500 pl-20${theme === 'dark' ? 'bg-gray-700 border border-gray-600' : 'bg-gray-200 border border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500`}
                       />
                       <button
                         type="submit"
-                        className="bg-indigo-500 hover:bg-indigo-600 ml-2 flex items-center justify-center rounded-xl border border-primary bg-primary px-2 py-2 text-center text-base font-medium text-white"
+                        className="bg-indigo-500 hover:bg-indigo-600 ml-2 flex items-center justify-center rounded-xl bg-primary px-2 py-2 text-center text-base font-medium text-white"
                       >
                         Comment
                       </button>
@@ -487,6 +494,7 @@ const Dashboard = () => {
             ))}
           </div>
         </div>
+      </div>
       </div>
       </div>
   );

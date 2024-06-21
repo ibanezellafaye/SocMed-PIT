@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
 import axiosInstance from './axiosConfig';
+import { Helmet } from 'react-helmet';
 
 const Following = () => {
   const [following, setFollowing] = useState([]);
@@ -77,11 +78,17 @@ const Following = () => {
   };
 
   return (
-    <div className={`ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <h1 className="text-3xl font-bold mb-4">Following Users ({following.length})</h1>
-      {following.length > 0 ? (
-        following.map((user) => (
-          <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl shadow-md`}>
+    
+    <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+  <Helmet>
+      <title>Friends</title>
+      </Helmet>
+  <div className="mx-auto max-w-lg p-6">
+    <h1 className="text-base  font-bold mb-4">Following Users ({following.length})</h1>
+    {following.length > 0 ? (
+      following.map((user) => (
+        <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl shadow-md`}>
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               {user.profile_image_url ? (
                 <img src={user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
@@ -91,10 +98,15 @@ const Following = () => {
                 </div>
               )}
               <div>
-                <button onClick={() => handleViewProfile(user.id)} className={`text-lg no-underline hover:underline hover:text-cyan-500 font-semibold ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'}`}>
+                <button
+                  onClick={() => handleViewProfile(user.id)}
+                  className={`text-lg no-underline hover:underline font-semibold ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'}`}
+                >
                   {user.first_name} {user.last_name}
                 </button>
-                <p className={`text-gray-600 ${theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-900'}`}>{user.email}</p>
+                <p className={`text-gray-600 ${theme === 'dark' ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-900'}`}>
+                  {user.email}
+                </p>
               </div>
             </div>
             <div className="flex space-x-2">
@@ -112,15 +124,17 @@ const Following = () => {
               </button>
             </div>
           </div>
-        ))
-      ) : (
-        <p>You are not following any users.</p>
-      )}
+        </div>
+      ))
+    ) : (
+      <p>You are not following any users.</p>
+    )}
 
-      <h1 className="text-3xl font-bold mt-8 mb-4">Followers ({followers.length})</h1>
-      {followers.length > 0 ? (
-        followers.map((user) => (
-          <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl shadow-md`}>
+    <h1 className="text-base font-bold mt-8 mb-4">Followers ({followers.length})</h1>
+    {followers.length > 0 ? (
+      followers.map((user) => (
+        <div key={user.id} className={`mb-4 p-4 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl shadow-md`}>
+          <div className="flex items-center justify-between">
             <div className="flex items-center">
               {user.profile_image_url ? (
                 <img src={user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-full mr-4" />
@@ -130,30 +144,32 @@ const Following = () => {
                 </div>
               )}
               <div>
-                <p className="font-bold">{user.first_name} {user.last_name}</p>
+              <button
+                  onClick={() => handleViewProfile(user.id)}
+                  className={`text-lg no-underline hover:underline font-semibold ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900'}`}
+                >
+                  {user.first_name} {user.last_name}
+                </button>
                 <p className="text-gray-600">{user.email}</p>
               </div>
             </div>
-            <div className="flex space-x-2 mt-2">
-              <button
-                onClick={() => handleViewProfile(user.id)}
-                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white"
-              >
-                View Profile
-              </button>
+            <div className="flex space-x-2">
+              
               <button
                 onClick={() => handleMessage(user.id)}
-                className="py-1 px-2 bg-purple-600 hover:bg-purple-700 rounded-xl text-white"
+                className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white"
               >
                 Message
               </button>
             </div>
           </div>
-        ))
-      ) : (
-        <p>You have no followers.</p>
-      )}
-    </div>
+        </div>
+      ))
+    ) : (
+      <p>You have no followers.</p>
+    )}
+  </div>
+</div>
   );
 };
 

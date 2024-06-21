@@ -3,6 +3,7 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import axiosInstance from './axiosConfig';
+import { Helmet } from 'react-helmet';
 
 const MyPosts = () => {
   const [user, setUser] = useState(null);
@@ -71,7 +72,7 @@ const MyPosts = () => {
 
       {posts.length > 0 ? (
         posts.map(post => (
-          <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 border border-gray-300 bg-white ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl`}>
+          <div key={post.id} className={`mb-4 p-4 rounded-xl mt-6 ml-15 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
             <div className="flex justify-between items-center mb-4">
             
               <div className="text-sm mb-5">

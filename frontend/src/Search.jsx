@@ -197,7 +197,7 @@ const Search = () => {
   return (
     <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
   <div className="mx-auto max-w-lg p-6">
-    <h1 className="text-3xl font-bold mb-4">Search Result</h1>
+    <h1 className="text-base font-bold mb-4">Search Result</h1>
     {users.length > 0 ? (
       users.map((user) => (
         <div key={user.id} className={`mb-4 px-5 py-5 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
@@ -211,7 +211,7 @@ const Search = () => {
                 </div>
               )}
               <div>
-                <button onClick={() => handleViewProfile(user.id)} className={`text-lg no-underline hover:underline hover:text-cyan-500 font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                <button onClick={() => handleViewProfile(user.id)} className={`text-lg no-underline hover:underline font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {user.first_name} {user.last_name}
                 </button>
                 <p className="text-gray-600">{user.email}</p>

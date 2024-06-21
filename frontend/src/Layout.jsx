@@ -9,9 +9,9 @@ const Layout = ({ onLogout }) => {
 
   return (
     <div className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <Sidebar />
+      <Sidebar onLogout={onLogout}/>
       <div className="flex-1 flex flex-col">
-        <Header onLogout={onLogout} />
+        <Header/>
         <div className="flex-1">
           <Outlet />
         </div>
