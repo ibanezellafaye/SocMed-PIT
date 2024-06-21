@@ -854,7 +854,7 @@ const Settings = () => {
                       onClick={() => document.getElementById('profileImageInput').click()}
                       className="text-white bg-indigo-700 hover:bg-indigo-900 focus:outline-none font-medium rounded-lg text-sm px-6 py-2 text-center"
                     >
-                      Change Profile
+                      Upload Image
                     </button>
                     <button
                       type="submit"
