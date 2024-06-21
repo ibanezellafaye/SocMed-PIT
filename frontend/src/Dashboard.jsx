@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import moment from 'moment';
 import { Ellipsis } from "lucide-react";
+import axiosInstance from './axiosConfig';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -37,7 +38,7 @@ const Dashboard = () => {
 
   const fetchPosts = async (authToken, page) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/posts?page=${page}&per_page=5`, {
+      const response = await axiosInstance.get(`/posts?page=${page}&per_page=5`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       if (response.data.data.length > 0) {
@@ -77,8 +78,8 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await axios.post(
-        'http://localhost:8000/api/posts',
+      const response = await axiosInstance.post(
+        '/posts',
         { content },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -101,8 +102,8 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/posts/${postId}`,
+      const response = await axiosInstance.put(
+        `/posts/${postId}`,
         { content: editContent },
         {
           headers: {
@@ -133,7 +134,7 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+      await axiosInstance.delete(`/posts/${postId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setPosts(posts.filter(post => post.id !== postId));
@@ -150,8 +151,8 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/posts/${postId}/comments`,
+      const response = await axiosInstance.post(
+        `/posts/${postId}/comments`,
         { content: commentContent[postId] },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -176,8 +177,8 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/comments/${commentId}`,
+      const response = await axiosInstance.put(
+        `/comments/${commentId}`,
         { content: editCommentContent },
         {
           headers: {
@@ -216,7 +217,7 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      await axios.delete(`http://localhost:8000/api/comments/${commentId}`, {
+      await axiosInstance.delete(`/comments/${commentId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setPosts(posts.map(post =>
@@ -234,8 +235,8 @@ const Dashboard = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/posts/${postId}/like`,
+      const response = await axiosInstance.post(
+        `/posts/${postId}/like`,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );

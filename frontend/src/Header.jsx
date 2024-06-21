@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
 import axios from 'axios';
+import axiosInstance from './axiosConfig';
 
 const Header = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Header = ({ onLogout }) => {
   const fetchNotifications = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.get('http://localhost:8000/api/notifications', {
+      const response = await axiosInstance.get('/notifications', {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setNotifications(response.data);
@@ -42,7 +43,7 @@ const Header = ({ onLogout }) => {
   const markNotificationsAsRead = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      await axios.post('http://localhost:8000/api/notifications/mark-as-read', {}, {
+      await axiosInstance.post('/notifications/mark-as-read', {}, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       fetchNotifications();
@@ -83,7 +84,7 @@ const Header = ({ onLogout }) => {
   const handleNotificationClick = async (notification) => {
     const authToken = localStorage.getItem('authToken');
     try {
-      await axios.delete(`http://localhost:8000/api/notifications/${notification.id}`, {
+      await axiosInstance.delete(`/notifications/${notification.id}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setNotifications(prevNotifications => prevNotifications.filter(n => n.id !== notification.id));

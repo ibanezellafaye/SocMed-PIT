@@ -12,6 +12,7 @@ import UserProfile from './UserProfile';
 import Settings from './Settings';
 import MyPosts from './MyPosts';
 import { UserProvider } from './UserContext';
+import ForgotPassword from './ForgotPassword';
 
 // Create a context for the theme
 const ThemeContext = createContext();
@@ -49,6 +50,7 @@ const App = () => {
           <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <RegistrationForm />} />
           <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginForm onLogin={handleLogin} />} />
           <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+          <Route path='/forgot-password' element={isLoggedIn ? <Navigate to="dashboard" /> : <ForgotPassword />} />
 
           <Route element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" />}>
             <Route path="/dashboard" element={<Dashboard />} />

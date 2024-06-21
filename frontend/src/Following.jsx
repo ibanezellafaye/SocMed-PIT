@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
+import axiosInstance from './axiosConfig';
 
 const Following = () => {
   const [following, setFollowing] = useState([]);
@@ -17,14 +18,14 @@ const Following = () => {
       const authToken = localStorage.getItem('authToken');
       try {
         // Fetch the IDs of the users the current user is following
-        const followingResponse = await axios.get('http://localhost:8000/api/following', {
+        const followingResponse = await axiosInstance.get('/following', {
           headers: { Authorization: `Bearer ${authToken}` }
         });
         const followingUserIds = followingResponse.data;
 
         // Fetch details of each followed user
         const followingDetails = await Promise.all(followingUserIds.map(async (userId) => {
-          const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
+          const userResponse = await axiosInstance.get(`/users/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` }
           });
           return { ...userResponse.data, id: userId }; // Ensure each user has a unique id
@@ -33,14 +34,14 @@ const Following = () => {
         setFollowing(followingDetails);
 
         // Fetch the IDs of the users following the current user
-        const followersResponse = await axios.get('http://localhost:8000/api/followers', {
+        const followersResponse = await axiosInstance.get('/followers', {
           headers: { Authorization: `Bearer ${authToken}` }
         });
         const followersUserIds = followersResponse.data;
 
         // Fetch details of each follower
         const followersDetails = await Promise.all(followersUserIds.map(async (userId) => {
-          const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
+          const userResponse = await axiosInstance.get(`/users/${userId}`, {
             headers: { Authorization: `Bearer ${authToken}` }
           });
           return { ...userResponse.data, id: userId }; // Ensure each user has a unique id
@@ -58,7 +59,7 @@ const Following = () => {
   const handleUnfollow = async (userId) => {
     const authToken = localStorage.getItem('authToken');
     try {
-      await axios.post(`http://localhost:8000/api/unfollow`, { user_id: userId }, {
+      await axiosInstance.post(`/unfollow`, { user_id: userId }, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       setFollowing(following.filter(user => user.id !== userId));

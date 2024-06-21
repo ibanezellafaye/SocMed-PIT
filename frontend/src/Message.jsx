@@ -153,6 +153,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
+import axiosInstance from './axiosConfig';
 
 const Message = () => {
   const { userId } = useParams();
@@ -169,7 +170,7 @@ const Message = () => {
       const authToken = localStorage.getItem('authToken');
       const currentUserId = currentUser.id;
       try {
-        const response = await axios.get('http://localhost:8000/api/messages/conversations', {
+        const response = await axiosInstance.get('/messages/conversations', {
           headers: { Authorization: `Bearer ${authToken}` }
         });
         const filteredConversations = response.data.filter(user => user.id !== currentUserId);
@@ -182,7 +183,7 @@ const Message = () => {
             fetchMessages(user.id);
           } else {
             // Fetch user info if not in conversations
-            const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
+            const userResponse = await axiosInstance.get(`/users/${userId}`, {
               headers: { Authorization: `Bearer ${authToken}` }
             });
             setSelectedUser(userResponse.data);
@@ -204,7 +205,7 @@ const Message = () => {
   const fetchMessages = async (userId) => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.get(`http://localhost:8000/api/messages/${userId}`, {
+      const response = await axiosInstance.get(`/messages/${userId}`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       setMessages(response.data);
@@ -223,8 +224,8 @@ const Message = () => {
   const handleSendMessage = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/messages/${selectedUser.id}`,
+      const response = await axiosInstance.post(
+        `/messages/${selectedUser.id}`,
         { content: newMessage },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );

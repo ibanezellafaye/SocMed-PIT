@@ -1,13 +1,10 @@
-
-
-
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import moment from 'moment';
 import { Ellipsis } from 'lucide-react';
 import { FaArrowLeft } from "react-icons/fa";
+import axiosInstance from './axiosConfig';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -37,7 +34,7 @@ const PostDetail = () => {
 
   const fetchPost = async (authToken) => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/posts/${postId}`, {
+      const response = await axiosInstance.get(`/posts/${postId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setPost(response.data);
@@ -57,8 +54,8 @@ const PostDetail = () => {
   const handleUpdatePost = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/posts/${postId}`,
+      const response = await axiosInstance.put(
+        `/posts/${postId}`,
         { content: editPostContent },
         {
           headers: {
@@ -88,7 +85,7 @@ const PostDetail = () => {
   const handleDeletePost = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      await axios.delete(`http://localhost:8000/api/posts/${postId}`, {
+      await axiosInstance.delete(`/posts/${postId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       navigate('/dashboard');
@@ -104,8 +101,8 @@ const PostDetail = () => {
     e.preventDefault();
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/posts/${postId}/comments`,
+      const response = await axiosInstance.post(
+        `/posts/${postId}/comments`,
         { content: commentContent },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -127,8 +124,8 @@ const PostDetail = () => {
   const handleUpdateComment = async (commentId) => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.put(
-        `http://localhost:8000/api/comments/${commentId}`,
+      const response = await axiosInstance.put(
+        `/comments/${commentId}`,
         { content: editCommentContent },
         {
           headers: {
@@ -161,7 +158,7 @@ const PostDetail = () => {
   const handleDeleteComment = async (commentId) => {
     const authToken = localStorage.getItem('authToken');
     try {
-      await axios.delete(`http://localhost:8000/api/comments/${commentId}`, {
+      await axiosInstance.delete(`/comments/${commentId}`, {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setPost(prevPost => ({
@@ -176,8 +173,8 @@ const PostDetail = () => {
   const handleLike = async () => {
     const authToken = localStorage.getItem('authToken');
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/posts/${postId}/like`,
+      const response = await axiosInstance.post(
+        `/posts/${postId}/like`,
         {},
         { headers: { Authorization: `Bearer ${authToken}` } }
       );

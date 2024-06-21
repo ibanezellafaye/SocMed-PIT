@@ -1,6 +1,7 @@
 // UserContext.js connected in settings kung magchange kag information automatic ma change tanan across pages
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import axiosInstance from './axiosConfig';
 
 const UserContext = createContext();
 
@@ -14,7 +15,7 @@ export const UserProvider = ({ children }) => {
       const authToken = localStorage.getItem('authToken');
       if (authToken) {
         try {
-          const response = await axios.get('http://localhost:8000/api/user', {
+          const response = await axiosInstance.get('/user', {
             headers: { Authorization: `Bearer ${authToken}` },
           });
           setUser(response.data);

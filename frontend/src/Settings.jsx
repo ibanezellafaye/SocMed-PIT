@@ -688,6 +688,7 @@ import { useTheme } from './App';
 import { useUser } from './UserContext';
 import { HiOutlineSaveAs } from "react-icons/hi";
 import Swal from 'sweetalert2';
+import axiosInstance from './axiosConfig';
 
 const Settings = () => {
   const { theme } = useTheme();
@@ -736,7 +737,7 @@ const Settings = () => {
     setErrors({}); // Clear previous errors
 
     try {
-      await axios.put('http://localhost:8000/api/update', {
+      await axiosInstance.put('/update', {
         firstName: editInfo.firstName,
         lastName: editInfo.lastName,
         email: editInfo.email,
@@ -748,7 +749,7 @@ const Settings = () => {
       });
       Swal.fire('Success', 'Information updated successfully', 'success');
       // Optionally refetch user data to ensure the latest info is displayed
-      const response = await axios.get('http://localhost:8000/api/user', {
+      const response = await axiosInstance.get('/user', {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setUser(response.data);
@@ -774,7 +775,7 @@ const Settings = () => {
     }
 
     try {
-      await axios.post('http://localhost:8000/api/user/change-password', {
+      await axiosInstance.post('/user/change-password', {
         currentPassword: passwords.currentPassword,
         newPassword: passwords.newPassword,
         newPassword_confirmation: passwords.confirmPassword
@@ -800,7 +801,7 @@ const Settings = () => {
     formData.append('profile_image', profileImage);
 
     try {
-      await axios.post('http://localhost:8000/api/user/upload-profile-image', formData, {
+      await axiosInstance.post('/user/upload-profile-image', formData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
           'Content-Type': 'multipart/form-data',
@@ -808,7 +809,7 @@ const Settings = () => {
       });
       Swal.fire('Success', 'Profile image uploaded successfully', 'success');
       // Refresh user data to get updated profile image URL
-      const response = await axios.get('http://localhost:8000/api/user', {
+      const response = await axiosInstance.get('/user', {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setUser(response.data);

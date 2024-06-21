@@ -100,6 +100,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
+import axiosInstance from './axiosConfig';
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -113,12 +114,12 @@ const UserProfile = () => {
     const fetchUserData = async () => {
       const authToken = localStorage.getItem('authToken');
       try {
-        const userResponse = await axios.get(`http://localhost:8000/api/users/${userId}`, {
+        const userResponse = await axiosInstance.get(`/users/${userId}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         setUser(userResponse.data);
 
-        const postsResponse = await axios.get(`http://localhost:8000/api/users/${userId}/posts`, {
+        const postsResponse = await axiosInstance.get(`/users/${userId}/posts`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         setPosts(postsResponse.data);

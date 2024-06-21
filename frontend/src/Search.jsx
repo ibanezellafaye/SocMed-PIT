@@ -122,6 +122,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
+import axiosInstance from './axiosConfig';
 
 const Search = () => {
   const [users, setUsers] = useState([]);
@@ -137,7 +138,7 @@ const Search = () => {
         const authToken = localStorage.getItem('authToken');
 
         // Fetch users based on search query
-        const response = await axios.get(`http://localhost:8000/api/search?query=${searchQuery}`, {
+        const response = await axiosInstance.get(`/search?query=${searchQuery}`, {
           headers: {
             Authorization: `Bearer ${authToken}`
           }
@@ -145,7 +146,7 @@ const Search = () => {
         setUsers(response.data);
 
         // Fetch users that the current user is following
-        const followingResponse = await axios.get(`http://localhost:8000/api/following`, {
+        const followingResponse = await axiosInstance.get(`/following`, {
           headers: {
             Authorization: `Bearer ${authToken}`
           }
@@ -162,7 +163,7 @@ const Search = () => {
   const handleFollow = async (userId) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.post(`http://localhost:8000/api/follow`, { user_id: userId }, {
+      await axiosInstance.post(`/follow`, { user_id: userId }, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }
@@ -176,7 +177,7 @@ const Search = () => {
   const handleUnfollow = async (userId) => {
     try {
       const authToken = localStorage.getItem('authToken');
-      await axios.post(`http://localhost:8000/api/unfollow`, { user_id: userId }, {
+      await axiosInstance.post(`/unfollow`, { user_id: userId }, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }

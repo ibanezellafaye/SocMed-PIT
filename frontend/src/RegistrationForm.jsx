@@ -234,6 +234,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineLock, AiOutlineHome, AiOutlineCalendar, AiOutlineMail } from 'react-icons/ai'; 
 import HeaderLogo from './Logo 1.png';
+import axiosInstance from './axiosConfig';
 
 const RegistrationForm = () => {
   const [email, setEmail] = useState('');
@@ -268,12 +269,12 @@ const RegistrationForm = () => {
     };
 
     try {
-      const registrationResponse = await axios.post('http://localhost:8000/api/register', formData);
+      const registrationResponse = await axiosInstance.post('/register', formData);
       console.log('Registration response:', registrationResponse);
 
       if (registrationResponse.data) {
         const loginData = { email, password };
-        const loginResponse = await axios.post('http://localhost:8000/api/login', loginData);
+        const loginResponse = await axiosInstance.post('/login', loginData);
         console.log('Login response:', loginResponse);
 
         if (loginResponse.data) {
@@ -281,8 +282,9 @@ const RegistrationForm = () => {
           localStorage.setItem('authToken', token);
           localStorage.setItem('user', JSON.stringify(user));
 
-          console.log('Navigating to dashboard...');
-          navigate('/dashboard');
+          console.log('Registration Successful!');
+          setErrors({ general: 'Registration Successful!' });
+          // navigate('/dashboard');
         } else {
           console.log('Login failed');
         }

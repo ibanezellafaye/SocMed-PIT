@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
+import axiosInstance from './axiosConfig';
 
 const MyPosts = () => {
   const [user, setUser] = useState(null);
@@ -21,7 +21,7 @@ const MyPosts = () => {
         setUser(currentUser);
 
         try {
-          const postsResponse = await axios.get(`http://localhost:8000/api/user/posts`, {
+          const postsResponse = await axiosInstance.get(`/user/posts`, {
             headers: { Authorization: `Bearer ${authToken}` },
           });
           setPosts(postsResponse.data.data || postsResponse.data);
