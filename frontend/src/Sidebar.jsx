@@ -1,19 +1,25 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { HiFingerPrint, HiCog, HiChat, HiUserGroup, HiDocumentText, HiLogout } from "react-icons/hi";
 import { useTheme } from './App'; 
 import { useUser } from './UserContext'; // Import the UserContext
 
-const Sidebar = () => {
+const Sidebar = ({ onLogout }) => {
   const { user } = useUser(); // Use the user context
   const { theme } = useTheme(); 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onLogout();
+    navigate('/login');
+  };
 
   if (!user) {
-    return;
+    return null;
   }
 
   return (
-    <div className={`fixed w-72 p-6 flex flex-col justify-between h-full shadow-lg ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-white'}`}>
+    <div className={`fixed w-72 p-6 flex flex-col justify-between h-full shadow-lg ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
       <h1 className="text-3xl font-bold text-center">Space Rants</h1>
       <div className="flex flex-col items-center">
         {user.profile_image_url ? (
@@ -79,33 +85,30 @@ const Sidebar = () => {
       </nav>
       <div className="mt-20">
         <div>
-        <nav>
-        <ul className="space-y-4">
-          <li className='flex-1'>
-          <NavLink 
-            to="/settings" 
-            className={({ isActive }) => 
-              isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
-            }
-          >
-            <HiCog className='mt-1 mr-2' />
-            Settings
-          </NavLink>
-          </li>
-          <li className='flex-1'>
-          <NavLink 
-            to="/login" 
-            className={({ isActive }) => 
-              isActive ? "flex items-center py-2 px-4 bg-red-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded-md transition duration-200"
-            }
-          >
-            <HiLogout className='mt-1 mr-2' />
-            Logout
-          </NavLink>
-          </li>
-        </ul>
-      </nav>
-          
+          <nav>
+            <ul className="space-y-4">
+              <li className='flex-1'>
+                <NavLink 
+                  to="/settings" 
+                  className={({ isActive }) => 
+                    isActive ? "flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                  }
+                >
+                  <HiCog className='mt-1 mr-2' />
+                  Settings
+                </NavLink>
+              </li>
+              <li className='flex-1'>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded-md transition duration-200"
+                >
+                  <HiLogout className='mt-1 mr-2' />
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
