@@ -150,12 +150,12 @@ const Header = ({ onLogout }) => {
             </ul>
           </div>
         )}
-        {/* <button
+        <button
           onClick={handleLogout}
           className="py-2 px-4 bg-red-600 hover:bg-red-700 rounded-md transition duration-200 text-white"
         >
           Logout
-        </button> */}
+        </button>
         <button
           onClick={toggleTheme}
           className={`py-2 px-4 bg-gray-600 rounded-full transition duration-200 text-white ${theme === 'dark' ? ' text-white  bg-slate-200 hover:bg-slate-300' : 'bg-gray-900 text-black hover:bg-slate-200  '} rounded-full shadow-lg`}
