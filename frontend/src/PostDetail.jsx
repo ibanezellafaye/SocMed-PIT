@@ -227,12 +227,6 @@ const PostDetail = () => {
   return (
  
     <div className='ml-72 mt-20'>
-    <button
-      onClick={handleBack}
-      className="flex items-center mb-4 mt-2 ml-4 py-2 px-4 bg-white rounded-md text-slate-700 hover:bg-white"
-    >
-      <FaArrowLeft className="mr-2 mt-4 text-gray-400 w-5 h-5" />
-    </button>
       <Helmet>
       <title>View Post</title>
       </Helmet>
