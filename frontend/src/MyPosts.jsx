@@ -169,7 +169,7 @@ const MyPosts = () => {
         <div className="flex flex-row justify-center"></div>
         <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-white text-black '}`}>
         </div>
-        <div className="relative mx-auto -mt-16 w-32 h-32 rounded-full border-4 border-white overflow-hidden">
+        <div className="mx-auto -mt-16 w-32 h-32 rounded-full border-4 border-white overflow-hidden">
           {user.profile_image_url ? (
             <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover" />
           ) : (
@@ -180,7 +180,7 @@ const MyPosts = () => {
         </div>
 
         <div className="text-center mt-4">
-          <h2 className="font-semibold">{user.first_name} {user.last_name}</h2>
+          <h2 className="font-semibold text-2xl">{user.first_name} {user.last_name}</h2>
           <p className="text-gray-500">{user.email}</p>
         </div>
 
@@ -223,7 +223,7 @@ const MyPosts = () => {
                 </div>
               ))
             ) : (
-              <p>No posts found</p>
+              <p className={`text-gray-700 flex items-center justify-center font-extrabold mt-20 ${theme === 'dark' ? ' text-white ' : ' text-black '}`}>No posts found</p>
             )}
             {error && <p className="text-red-500">{error}</p>}
           </div>

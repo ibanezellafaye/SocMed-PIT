@@ -68,7 +68,7 @@ const UserProfile = () => {
         <div className="mt-2">
 
         <div className="text-center mt-2">
-                <h2 className="font-semibold">{user.first_name} {user.last_name}</h2> 
+                <h2 className="font-semibold text-2xl">{user.first_name} {user.last_name}</h2> 
                 <p className="text-gray-500">{user.email}</p>
         </div>
           
@@ -131,7 +131,7 @@ const UserProfile = () => {
           </div>
         ))
       ) : (
-        <p>No posts found</p>
+        <p className={`text-gray-700 flex items-center justify-center font-extrabold mt-20 ${theme === 'dark' ? ' text-white ' : ' text-black '}`}>No posts found</p>
       )}
       {error && <p className="text-red-500">{error}</p>}
     </div>

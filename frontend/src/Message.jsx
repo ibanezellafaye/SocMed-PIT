@@ -279,7 +279,7 @@ const Message = () => {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>Dashboard</title>
+      <title>Messages</title>
       </Helmet>
       <div className={`flex h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
         <div className={`ml-72 w-1/4 p-4 border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'}`}>
