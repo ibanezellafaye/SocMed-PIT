@@ -807,7 +807,7 @@ const Dashboard = () => {
                         value={content}
                         onChange={handleContentChange}
                         rows="3"
-                        className={`py-2 px-4 w-full bg-gray-100 rounded-xl hover:bg-slate-700 focus:ring-1 focus:ring-indigo-500 border-stroke text-dark placeholder-dark-6 outline-none placeholder-gray-500 text-sm focus:outline-none active:outline-none border border-gray-300 ${theme === 'dark' ? 'bg-gray-800 border-gray-600 text-white' : 'bg-gray-100 text-black border-gray-300'} rounded-md focus:ring-2 focus:ring-indigo-500`}
+                        className={`py-2 px-4 w-full rounded-xl focus:ring-1 focus:ring-indigo-500 border-stroke text-dark placeholder-dark-6 outline-none placeholder-gray-500 text-sm focus:outline-none active:outline-none border border-gray-300 ${theme === 'dark' ? 'bg-gray-800 border-gray-600 text-white' : 'bg-gray-100 text-black border-gray-300'} rounded-md focus:ring-2 focus:ring-indigo-500`}
                       />
                       <button
                         type="submit"

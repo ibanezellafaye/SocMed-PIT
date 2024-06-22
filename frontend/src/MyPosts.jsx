@@ -167,7 +167,7 @@ const MyPosts = () => {
 
       <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
         <div className="flex flex-row justify-center"></div>
-        <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-white text-black '}`}>
+        <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-slate-100 text-black '}`}>
         </div>
         <div className="mx-auto -mt-16 w-32 h-32 rounded-full border-4 border-white overflow-hidden">
           {user.profile_image_url ? (

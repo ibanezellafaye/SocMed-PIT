@@ -214,7 +214,7 @@ const Settings = () => {
                   name="lastName"
                   value={editInfo.lastName}
                   onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transitionfocus:outline-none focus:border-indigo-600 shadow-sm ${
+                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
                     theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                   }`}
                 />
