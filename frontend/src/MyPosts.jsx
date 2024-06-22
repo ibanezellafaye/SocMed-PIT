@@ -119,8 +119,8 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
 import { useUser } from './UserContext'; // Import the UserContext
+import {Helmet, HelmetProvider} from 'react-helmet-async'
 
 const MyPosts = () => {
   const { user } = useUser(); // Use the user context
@@ -160,24 +160,38 @@ const MyPosts = () => {
   }
 
   return (
-    <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    
+    <HelmetProvider>
       <Helmet>
-        <title>My Posts</title>
+      <title>{user.first_name} {user.last_name}</title>
       </Helmet>
-      <div className='bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border border-gray-200 ml-15 mx-auto w-[40rem]'>
+
+    <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="flex flex-row  justify-center"></div>
+      <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border  ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-white text-black '}`}>
       </div>
       <div className="mx-auto w-40 h-40 -mt-16 border-4 border-white rounded-full overflow-hidden">
-        <img className="object-cover object-center h-40" src={user.profile_image_url || 'https://via.placeholder.com/150'} alt='Profile' />
-      </div>
+        {user.profile_image_url ? (
+          <img src={user.profile_image_url} alt="Profile" className="w-24 h-24 rounded-full" />
+        ) : (
+          <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-200">
+            No Image
+          </div>
+        )}
+        </div>
+        <div className="mt-2">
+
       <div className="text-center mt-2">
         <h2 className="font-semibold">{user.first_name} {user.last_name}</h2> 
         <p className="text-gray-500">{user.email}</p>
       </div>
+      </div>
 
-      <nav className="flex items-center rounded-xl justify-center text-lg bg-gray-100 mt-7 p-4 mx-auto w-[40rem]">
+        <nav className={`flex items-center rounded-xl justify-center text-lg bg-gray-100 mt-7 p-4 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white ' : 'bg-gray-200 text-black '}`}>
         <div>
-          <a className="text-gray-700 hover:text-gray-900 font-extrabold">My Post</a>
-        </div>
+            <a className={`text-gray-700  font-extrabold  ${theme === 'dark' ? ' text-white ' : ' text-black '}`} >My Post</a>
+          </div>
+        
         <div></div>
       </nav>
       
@@ -219,7 +233,8 @@ const MyPosts = () => {
           {error && <p className="text-red-500">{error}</p>}
         </div>
       </div>
-    </div>
+      </div>
+    </HelmetProvider>
   );
 };
 

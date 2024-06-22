@@ -331,15 +331,17 @@ const Dashboard = () => {
                     <p className={`text-xs		${theme === 'dark' ? ' text-gray-50' : ' text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                   </div>
                     <div className=" flex space-x-2 ml-auto relative">
+                    {user && post.user_id === user.id && (
+
                      <button 
                       className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center "
                       onClick={(e) => { e.stopPropagation(); togglePostDropdown(post.id); }}
                     >
                       <Ellipsis />
                     </button>
+                    )}
                     {openPostDropdowns[post.id] && (
                       <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2">
-                        {user && post.user_id === user.id && (
                     <>
                         <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
                           <li>
@@ -354,7 +356,7 @@ const Dashboard = () => {
                           </li>
                         </ul>
                       </>
-                    )}
+                    
                     </div>
                   )}
                 </div>
@@ -413,15 +415,17 @@ const Dashboard = () => {
                           <p className="text-gray-500 text-xs "> {moment(comment.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                         </div>
                           <div className=" flex space-x-2 ml-auto relative ">
+                          {user && comment.user_id === user.id && (
+
                      <button 
                       className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-xl text-sm px-1 py-1 text-center inline-flex items-center "
                       onClick={(e) => { e.stopPropagation(); toggleCommentDropdown(comment.id); }}
                     >
                       <Ellipsis />
                     </button>
+                          )}
                     {openCommentDropdowns[comment.id] && (
                       <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-xl w-28 flex py-2">
-                        {user && comment.user_id === user.id && (
                     <>
                         <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
                           <li>
@@ -431,20 +435,20 @@ const Dashboard = () => {
                             </a>
                           </li>
                           <li>
-                            <a href="#"  onClick={() => handleDeleteComment(comment.id, post.id)} className=" px-2 py-2 hover:bg-gray-200 dark:hover:text-gray p-2 flex items-center mb-2 relative">
+                            <a href='#' onClick={() => handleDeleteComment(comment.id, post.id)} className=" px-2 py-2 hover:bg-gray-200 dark:hover:text-gray p-2 flex items-center mb-2 relative">
                               Delete
                             </a>
                           </li>
                         </ul>
                       </>
-                    )}
+                    
                     </div>
                   )}
                 </div>
                 </div>
  
                       {editingCommentId === comment.id ? (
-                        <div>
+                        <>
                           <input
                             value={editCommentContent}
                             onChange={handleEditCommentContentChange}
@@ -464,7 +468,7 @@ const Dashboard = () => {
                               Cancel
                             </button>
                           </div>
-                        </div>
+                        </>
                       ) : (
                         <p className="mt-2 ml-10">{comment.content}</p>
                       )}

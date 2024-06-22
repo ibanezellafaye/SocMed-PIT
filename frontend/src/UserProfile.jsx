@@ -6,8 +6,7 @@ import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
-
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -48,11 +47,16 @@ const UserProfile = () => {
   }
 
   return (
-    <div className={`ml-72 mt-5 p-6 h-[91vh]  overflow-y-scroll ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <HelmetProvider>
       <Helmet>
       <title>{user.first_name} {user.last_name}</title>
       </Helmet>
-      <div className={`flex flex-col items-center mb-4 max-w-lg mx-auto my-10 rounded-xl shadow-md p-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+
+    <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="flex flex-row  justify-center"></div>
+      <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border  ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-white text-black '}`}>
+      </div>
+        <div className="mx-auto w-40 h-40 -mt-16 border-4 border-white rounded-full overflow-hidden">
         {user.profile_image_url ? (
           <img src={user.profile_image_url} alt="Profile" className="w-24 h-24 rounded-full" />
         ) : (
@@ -60,39 +64,40 @@ const UserProfile = () => {
             No Image
           </div>
         )}
-        <div className="mt-4">
+        </div>
+        <div className="mt-2">
 
-          <h1 className="text-center text-2xl font-semibold mt-3">{user.first_name} {user.last_name}</h1>
+        <div className="text-center mt-2">
+                <h2 className="font-semibold">{user.first_name} {user.last_name}</h2> 
+                <p className="text-gray-500">{user.email}</p>
+        </div>
           
           <div className={`mt-2 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-            <ul className={`divide-y w-96 mx-auto rounded  py-2 px-3 text-gray-600  ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-black'}`}>
+            <ul className={`divide-y w-64 mx-auto rounded  py-2 px-3 text-gray-500  shadow-md ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-gray-100 text-black'}`}>
               <li className="flex items-center py-3 text-sm">
-                  <span>Email</span>
-                  <span className="ml-auto"> {user.email}</span>
+                  <span className='mx-auto'>Email: {user.email}</span>
               </li>
               <li className="flex items-center py-3 text-sm">
-                <span>Address</span>
-                <span className="ml-auto">{user.address}</span>
+                <span className='mx-auto'>Address: {user.address}</span>
               </li>
               <li className="flex items-center py-3 text-sm">
-                <span>Birthday</span>
-                <span className="ml-auto"> {moment(user.birthdate).format('MMMM Do YYYY')}</span>
+                <span className='mx-auto'>Birthday: {moment(user.birthdate).format('MMMM Do YYYY')}</span>
               </li>
               <li className="flex items-center py-3 text-sm">
-                <span>Gender</span>
-                <span className="ml-auto"> {user.gender}</span>
-              </li>
-              <li className="flex items-center py-3 text-sm">
-                <span>Role</span>
-                <span className="ml-auto"> {user.role}</span>
+                <span className='mx-auto'>Gender: {user.gender}</span>
               </li>
             </ul>
         </div>
       </div>
-    </div>
-
-      <h2 className="text-3xl font-bold mt-8 mb-4">Posts</h2>
-      <div className="space-y-4">
+    <nav className={`flex items-center rounded-xl justify-center text-lg bg-gray-100 mt-7 p-4 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white ' : 'bg-gray-200 text-black '}`}>
+        <div>
+            <a className={`text-gray-700  font-extrabold  ${theme === 'dark' ? ' text-white ' : ' text-black '}`} >My Post</a>
+          </div>
+        <div>
+        </div>
+        </nav>
+      <div className="flex flex-row mt-0 justify-center">
+      <div className="col-span-2 space-y-4 w-[50rem]">
 
       {posts.length > 0 ? (
         posts.map(post => (
@@ -131,6 +136,8 @@ const UserProfile = () => {
       {error && <p className="text-red-500">{error}</p>}
     </div>
     </div>
+    </div>
+    </HelmetProvider>
   );
 };
 

@@ -7,7 +7,7 @@ import { useUser } from './UserContext';
 import { HiOutlineSaveAs } from "react-icons/hi";
 import Swal from 'sweetalert2';
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Settings = () => {
   const { theme } = useTheme();
@@ -139,10 +139,11 @@ const Settings = () => {
   };
 
   return (
-    <div className={`p-6 ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <HelmetProvider>
       <Helmet>
       <title>Settings</title>
       </Helmet>
+    <div className={`p-6 ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-3xl font-bold mb-4">Settings</h1>
       <div className="border-t border-gray-300 my-7"></div>
 
@@ -348,6 +349,7 @@ const Settings = () => {
         <div>Loading...</div>
       )}
     </div>
+    </HelmetProvider>
   );
 };
 

@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Ellipsis } from 'lucide-react';
 import { FaArrowLeft } from "react-icons/fa";
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider} from 'react-helmet-async';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -225,11 +225,17 @@ const PostDetail = () => {
   }
 
   return (
- 
-    <div className='ml-72 mt-20'>
+    <HelmetProvider>
       <Helmet>
-      <title>View Post</title>
+      <title>View Posts</title>
       </Helmet>
+ 
+    <button
+      onClick={handleBack}
+      className="flex items-center mb-4 mt-2 ml-4 py-2 px-4 bg-white rounded-md text-slate-700 hover:bg-white"
+    >
+      <FaArrowLeft className="mr-2 mt-4 text-gray-400 w-5 h-5" />
+    </button>
       <button
         onClick={handleBack}
         className="mb-4 mt-2 ml-4 py-2 px-4   text-white"
@@ -433,7 +439,7 @@ const PostDetail = () => {
     </div>
     </div>
     </div>
-    </div>
+    </HelmetProvider>
   );
 };
 

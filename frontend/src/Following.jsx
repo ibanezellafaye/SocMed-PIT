@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider} from 'react-helmet-async';
 
 const Following = () => {
   const [following, setFollowing] = useState([]);
@@ -78,11 +78,12 @@ const Following = () => {
   };
 
   return (
-    
-    <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-  <Helmet>
+    <HelmetProvider>
+      <Helmet>
       <title>Friends</title>
       </Helmet>
+    
+    <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
   <div className="mx-auto max-w-lg p-6">
     <h1 className="text-base  font-bold mb-4">Following Users ({following.length})</h1>
     {following.length > 0 ? (
@@ -170,6 +171,7 @@ const Following = () => {
     )}
   </div>
 </div>
+</HelmetProvider>
   );
 };
 

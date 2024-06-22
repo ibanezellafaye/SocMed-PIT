@@ -33,7 +33,7 @@ const Sidebar = ({ onLogout }) => {
             No Image
           </div>
         )}
-        <p className={`text-center text-xl font-semibold  mb-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}><strong>{user.first_name} {user.last_name}</strong></p>
+        <p className={`text-center text-xl  mb-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}><strong>{user.first_name} {user.last_name}</strong></p>
       </div>
       <nav>
         <ul className="space-y-4">
@@ -41,7 +41,7 @@ const Sidebar = ({ onLogout }) => {
             <NavLink 
               to="/dashboard" 
               className={({ isActive }) => 
-                isActive ? "text-white font-semibold flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : " text-white flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : " text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
               }
             >
               <HiFingerPrint className='mt-1 mr-2'/>
@@ -52,7 +52,7 @@ const Sidebar = ({ onLogout }) => {
             <NavLink 
               to="/messages" 
               className={({ isActive }) => 
-                isActive ? "text-white font-semibold flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
               }
             >
               <HiChat className='mt-1 mr-2'/>
@@ -63,7 +63,7 @@ const Sidebar = ({ onLogout }) => {
             <NavLink 
               to="/following" 
               className={({ isActive }) => 
-                isActive ? "text-white font-semibold flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
               }
             >
               <HiUserGroup className='mt-1 mr-2' />
@@ -74,7 +74,7 @@ const Sidebar = ({ onLogout }) => {
             <NavLink 
               to="/user-posts" 
               className={({ isActive }) => 
-                isActive ? "text-white font-semibold flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
               }
             >
               <HiDocumentText className='mt-1 mr-2' />
@@ -91,7 +91,7 @@ const Sidebar = ({ onLogout }) => {
                 <NavLink 
                   to="/settings" 
                   className={({ isActive }) => 
-                    isActive ? "text-white font-semibold flex items-center py-2 px-4 bg-blue-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md transition duration-200"
+                    isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
                   }
                 >
                   <HiCog className='mt-1 mr-2' />
@@ -101,7 +101,7 @@ const Sidebar = ({ onLogout }) => {
               <li className='flex-1'>
                 <NavLink
                   onClick={handleLogout}
-                  className="text-white font-semibold flex items-center py-2 px-4 bg-red-600 hover:bg-red-700 rounded-md transition duration-200 "
+                  className="text-white flex items-center py-2 px-4 bg-red-500 hover:bg-red-700 rounded-md transition duration-200 "
                 >
                   <HiLogout className='mt-1 mr-2' />
                   Logout

@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
+import {Helmet, HelmetProvider} from 'react-helmet-async'
 
 const Message = () => {
   const { userId } = useParams();
@@ -94,10 +94,11 @@ const Message = () => {
   };
 
   return (
-    <div className={`flex h-screen -mb-5 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <HelmetProvider>
       <Helmet>
-      <title>Messages</title>
+      <title>Dashboard</title>
       </Helmet>
+    <div className={`flex h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className={`ml-72 w-1/4 p-4 border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'}`}>
         <h2 className="mt-20 text-2xl font-bold mb-4">Conversations</h2>
         <div className="overflow-y-auto space-y-4">
@@ -124,11 +125,11 @@ const Message = () => {
       <div className="flex-1 flex flex-col">
         {selectedUser ? (
           <>
-            <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+            <div className={`mt-20 border-b px-6 py-3 flex items-center justify-between ${theme === 'dark' ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-gray-900'}`}>
               <div className="text-lg font-bold">{selectedUser.first_name} {selectedUser.last_name}</div>
             </div>
-            <div className={`flex-col h-full  px-6 py-3 flex ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-              <div className={`flex-grow p-4 flex-1 overflow-y-scroll bg-gray-50 px-6 py-4 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+            <div className={`flex-col h-screen  px-6 py-3 flex ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+              <div className={`mt-5 flex-grow p-4 flex-1 overflow-y-scroll bg-gray-50 px-6 py-4 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
                 {messages.map((message, index) => (
                   <div key={index} className={`mb-2 flex ${message.sender_id === currentUser.id ? 'justify-end' : 'justify-start'}`}>
                     {message.sender_id !== currentUser.id && (
@@ -141,7 +142,7 @@ const Message = () => {
                 ))}
                 <div ref={messagesEndRef} />
               </div>
-              <div className={`p-4  px-6 py-3 flex items-center ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+              <div className={`p-4 px-6 py-3 flex items-center ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
                 <input
                   type="text"
                   value={newMessage}
@@ -165,6 +166,7 @@ const Message = () => {
         )}
       </div>
     </div>
+    </HelmetProvider>
   );
 };
 

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineUser, AiOutlineLock, AiOutlineHome, AiOutlineCalendar, AiOutlineMail } from 'react-icons/ai'; 
 import HeaderLogo from './Logo 1.png';
 import axiosInstance from './axiosConfig';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider} from 'react-helmet-async';
 
 const RegistrationForm = () => {
   const [email, setEmail] = useState('');
@@ -75,10 +75,11 @@ const RegistrationForm = () => {
   const navigateToLogin = () => navigate('/login');
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <HelmetProvider>
       <Helmet>
       <title>Registration</title>
       </Helmet>
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <img 
           src={HeaderLogo} 
@@ -241,6 +242,7 @@ const RegistrationForm = () => {
         </div>
       </div>
     </div>
+    </HelmetProvider>
   );
 };
 

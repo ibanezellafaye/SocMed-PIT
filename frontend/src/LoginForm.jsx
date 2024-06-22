@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from './axiosConfig';
 import HeaderLogo from './Logo 2.png';
 import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider} from 'react-helmet-async';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -48,10 +48,11 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <HelmetProvider>
       <Helmet>
       <title>Login</title>
       </Helmet>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full md:w-80rem">
         <div className="flex">
           {/* Left Side - Login Form */}
@@ -129,6 +130,7 @@ const Login = ({ onLogin }) => {
         </div>
       </div>
     </div>
+    </HelmetProvider>
   );
 };
 
