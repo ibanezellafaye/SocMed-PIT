@@ -1,10 +1,7 @@
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTheme } from './App';
 import { useUser } from './UserContext';
-import { HiOutlineSaveAs } from "react-icons/hi";
 import Swal from 'sweetalert2';
 import axiosInstance from './axiosConfig';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -12,6 +9,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 const Settings = () => {
   const { theme } = useTheme();
   const { user, setUser } = useUser();
+  const [openTab, setOpenTab] = useState(1);
   const [editInfo, setEditInfo] = useState({
     firstName: '',
     lastName: '',
@@ -48,6 +46,10 @@ const Settings = () => {
 
   const handleProfileImageChange = (e) => {
     setProfileImage(e.target.files[0]);
+  };
+
+  const handleTabClick = (tabNumber) => {
+    setOpenTab(tabNumber);
   };
 
   const handleEditInfoSubmit = async (e) => {
@@ -141,214 +143,230 @@ const Settings = () => {
   return (
     <HelmetProvider>
       <Helmet>
-      <title>Settings</title>
+        <title>Settings</title>
       </Helmet>
-    <div className={`p-6 ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <h1 className="text-3xl font-bold mb-4">Settings</h1>
-      <div className="border-t border-gray-300 my-7"></div>
 
-      {user ? (
-        <>
-          <h2 className="text-2xl ml-10 mb-0 mt-7">Edit Profile</h2>
-          <div className="max-w-lg mx-auto overflow-hidden">
-            <div className={`p-4 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-              <form onSubmit={handleProfileImageSubmit} className="mb-6 ml-16">
-                <div className="mb-4 flex items-center">
-                  <input
-                    id="profileImageInput"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleProfileImageChange}
-                    className="hidden"
-                  />
-                  <div>
+      <div className="w-full flex flex-col md:flex-row ml-96 mt-32 text-[#161931]">
+      <div className="flex flex-col md:w-1/4 lg:w-1/5 bg-white text-black p-6">
+        <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
+        <button
+          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+            ${openTab === 1 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+          onClick={() => handleTabClick(1)}
+        >
+          Profile Picture
+        </button>
+        <button
+          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+            ${openTab === 2 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+          onClick={() => handleTabClick(2)}
+        >
+          Edit Profile
+        </button>
+        <button
+          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+            ${openTab === 3 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+          onClick={() => handleTabClick(3)}
+        >
+          Change Password
+        </button>
+      </div>
+
+        <div className="border-l mt-3 h-64 border-gray-300 ml-1"></div>
+
+        <div className="flex-grow p-6 white ">
+          {user ? (
+            <>
+              {openTab === 1 && (
+                <div>
+                  <h2 className="text-xl mb-8 mt-0 pl-3 ml-8 font-semibold">Profile Picture</h2>
+                  <div className="bg-white p-6 max-w-lg ml-16">
                     {user.profile_image_url && (
-                      <div className="mb-4">
+                      <div className="ml-40 mt-0">
                         <img
                           src={user.profile_image_url}
                           alt="Profile"
-                          className="mx-auto w-36 h-36 mt-4 object-cover p-1 rounded-full ring-2 ring-indigo-300"
+                          className="w-40 h-40 rounded-full object-cover border border-indigo-500"
                         />
                       </div>
                     )}
+                    <form onSubmit={handleProfileImageSubmit} className="mt-1 space-y-4">
+                      <div className="flex flex-col bg-white p-6 max-w-lg">
+                        <input
+                          id="profileImageInput"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleProfileImageChange}
+                          className="w-full px-3 py-2 mt-1 bg-gray-100 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        />
+                        <div className="flex items-center justify-between max-w-lg ml-0 mt-6">
+                          <button
+                            type="submit"
+                            className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                              theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                            }`}
+                          >
+                            Upload
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
-                  <div className="ml-5 flex space-x-2">
-                    <button
-                      type="button"
-                      onClick={() => document.getElementById('profileImageInput').click()}
-                      className="text-white bg-indigo-700 hover:bg-indigo-900 focus:outline-none font-medium rounded-lg text-sm px-6 py-2 text-center"
-                    >
-                      Upload Image
-                    </button>
+                </div>
+              )}
+
+              {openTab === 2 && (
+                <div>
+                <div className="bg-white p-0 max-w-lg">
+                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold ml-8">Edit Profile</h2>
+                    <form onSubmit={handleEditInfoSubmit} className="space-y-4 ml-24">
+                      <div className={`flex flex-col space-y-4 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                        <label className="text-base font-medium">First Name</label>
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={editInfo.firstName}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        />
+                        {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName[0]}</p>}
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <label className="text-base font-medium">Last Name</label>
+                        <input
+                          type="text"
+                          name="lastName"
+                          value={editInfo.lastName}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        />
+                        {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName[0]}</p>}
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <label className="text-base font-medium">Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={editInfo.email}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email[0]}</p>}
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <label className="text-base font-medium">Address</label>
+                        <input
+                          type="text"
+                          name="address"
+                          value={editInfo.address}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        />
+                        {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address[0]}</p>}
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <label className="text-base font-medium">Birthdate</label>
+                        <input
+                          type="date"
+                          name="birthdate"
+                          value={editInfo.birthdate}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        />
+                        {errors.birthdate && <p className="text-red-500 text-sm mt-1">{errors.birthdate[0]}</p>}
+                      </div>
+                      <div className="flex flex-col space-y-4">
+                        <label className="text-base font-medium">Gender</label>
+                        <select
+                          name="gender"
+                          value={editInfo.gender}
+                          onChange={handleInputChange}
+                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                            theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
+                          }`}
+                        >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
+                        {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender[0]}</p>}
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <button
+                          type="submit"
+                          className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                            theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                          }`}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+
+
+              {openTab === 3 && (
+                <div className="bg-white p-0 max-w-lg">
+                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold ml-8">Change Password</h2>
+                  <form onSubmit={handleChangePasswordSubmit} className="space-y-4 ml-24">
+                    <div className="flex flex-col space-y-4">
+                      <label className="text-base font-medium">Current Password</label>
+                      <input
+                        id="currentPassword"
+                        name="currentPassword"
+                        type="password"
+                        value={passwords.currentPassword}
+                        onChange={handlePasswordChange}
+                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      />
+                      <label className="text-base font-medium">New Password</label>
+                      <input
+                        id="newPassword"
+                        name="newPassword"
+                        type="password"
+                        value={passwords.newPassword}
+                        onChange={handlePasswordChange}
+                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      />
+                      <label className="text-base font-medium">Confirm New Password</label>
+                      <input
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        type="password"
+                        value={passwords.confirmPassword}
+                        onChange={handlePasswordChange}
+                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      />
+                    </div>
                     <button
                       type="submit"
-                      className={`text-white focus:outline-none font-medium rounded-lg text-sm px-6 py-2 text-center ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+                      className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                        theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                      }`}
                     >
-                      <HiOutlineSaveAs className="inline-block w-6 h-6 stroke-slate-500" />
+                      Save
                     </button>
-                  </div>
+                  </form>
                 </div>
-              </form>
-            </div>
-          </div>
-
-          <div className={`max-w-lg mx-auto overflow-hidden ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-            <form onSubmit={handleEditInfoSubmit} className={`mb-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-              <div className={`mb-4 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-                <label className="block mb-1 text-sm font-semibold">First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={editInfo.firstName}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                />
-                {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName[0]}</p>}
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1 text-sm font-semibold">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={editInfo.lastName}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                />
-                {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName[0]}</p>}
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1 text-sm font-semibold">Email</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={editInfo.email}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email[0]}</p>}
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1 text-sm font-semibold">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={editInfo.address}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                />
-                {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address[0]}</p>}
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1 text-sm font-semibold">Birthdate</label>
-                <input
-                  type="date"
-                  name="birthdate"
-                  value={editInfo.birthdate}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                />
-                {errors.birthdate && <p className="text-red-500 text-sm mt-1">{errors.birthdate[0]}</p>}
-              </div>
-              <div className="mb-4">
-                <label className="block mb-1 text-sm font-semibold">Gender</label>
-                <select
-                  name="gender"
-                  value={editInfo.gender}
-                  onChange={handleInputChange}
-                  className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition  focus:outline-none focus:border-indigo-600 shadow-sm ${
-                    theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                  }`}
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender[0]}</p>}
-              </div>
-              <div className='flex justify-end'>
-                <button
-                  type="submit"
-                  className={`text-white bg-indigo-700 hover:bg-indigo-800 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                    theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
-                  }`}
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className="border-t border-gray-300 my-6">
-            <h2 className="text-2xl mt-7 ml-10 mb-10">Change Password</h2>
-            <div className={`max-w-lg mx-auto overflow-hidden ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-              <form onSubmit={handleChangePasswordSubmit} className={`mb-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-                <div className="mb-4">
-                  <label className="block mb-1 text-sm font-semibold">Current Password</label>
-                  <input
-                    type="password"
-                    name="currentPassword"
-                    value={passwords.currentPassword}
-                    onChange={handlePasswordChange}
-                    className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                      theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                    }`}
-                  />
-                  {errors.currentPassword && <p className="text-red-500 text-sm mt-1">{errors.currentPassword[0]}</p>}
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-1 text-sm font-semibold">New Password</label>
-                  <input
-                    type="password"
-                    name="newPassword"
-                    value={passwords.newPassword}
-                    onChange={handlePasswordChange}
-                    className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                      theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                    }`}
-                  />
-                  {errors.newPassword && <p className="text-red-500 text-sm mt-1">{errors.newPassword[0]}</p>}
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-1 text-sm font-semibold">Confirm New Password</label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={passwords.confirmPassword}
-                    onChange={handlePasswordChange}
-                    className={`w-full px-4 py-2 text-base h-12 border-2 rounded-lg transition focus:outline-none focus:border-indigo-600 shadow-sm ${
-                      theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
-                    }`}
-                  />
-                  {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword[0]}</p>}
-                </div>
-                <div className='flex justify-end'>
-                  <button
-                    type="submit"
-                    className={`text-white bg-indigo-700 hover:bg-indigo-800 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ${
-                      theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
-                    }`}
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div>Loading...</div>
-      )}
-    </div>
+              )}
+            </>
+          ) : (
+            <p>Loading user information...</p>
+          )}
+        </div>
+      </div>
     </HelmetProvider>
   );
 };
