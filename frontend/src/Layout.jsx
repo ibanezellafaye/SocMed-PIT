@@ -4,14 +4,14 @@
 // import Header from './Header';
 // import { useTheme } from './App'; // Import the theme context
 
-// const Layout = ({ onLogout }) => {
+// const Layout = ({ onLogout, toggleSidebar, isSidebarOpen }) => {
 //   const { theme } = useTheme(); // Get the current theme
 
 //   return (
 //     <div className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-//       <Sidebar onLogout={onLogout}/>
+//       <Sidebar onLogout={onLogout} isOpen={isSidebarOpen}/>
 //       <div className="flex-1 flex flex-col">
-//         <Header/>
+//         <Header onLogout={onLogout} toggleSidebar={toggleSidebar} />
 //         <div className="flex-1">
 //           <Outlet />
 //         </div>
@@ -23,20 +23,39 @@
 // export default Layout;
 
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { useTheme } from './App'; // Import the theme context
 
-const Layout = ({ onLogout, toggleSidebar, isSidebarOpen }) => {
+const Layout = ({ onLogout, toggleSidebar, isSidebarOpen, sidebarRef }) => {
   const { theme } = useTheme(); // Get the current theme
+  const layoutRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (
+      sidebarRef.current && !sidebarRef.current.contains(event.target) &&
+      layoutRef.current && !layoutRef.current.contains(event.target)
+    ) {
+      if (isSidebarOpen) {
+        toggleSidebar(); // Only close the sidebar if it's open
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSidebarOpen]);
 
   return (
-    <div className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <Sidebar onLogout={onLogout} isOpen={isSidebarOpen}/>
+    <div ref={layoutRef} className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <Sidebar ref={sidebarRef} onLogout={onLogout} isOpen={isSidebarOpen} />
       <div className="flex-1 flex flex-col">
-        <Header onLogout={onLogout} toggleSidebar={toggleSidebar} />
+        <Header onLogout={onLogout} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} isSidebarOpen={isSidebarOpen} />
         <div className="flex-1">
           <Outlet />
         </div>
@@ -46,4 +65,3 @@ const Layout = ({ onLogout, toggleSidebar, isSidebarOpen }) => {
 };
 
 export default Layout;
-

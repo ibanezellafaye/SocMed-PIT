@@ -78,6 +78,7 @@ const RegistrationForm = () => {
     <HelmetProvider>
       <Helmet>
       <title>Registration</title>
+      <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">

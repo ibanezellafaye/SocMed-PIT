@@ -466,6 +466,7 @@ const Message = () => {
     <HelmetProvider>
       <Helmet>
       <title>Messages</title>
+      <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
       <div className={`flex flex-col md:flex-row h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
         <div className={`md:ml-72 md:w-1/4 p-4 border-b md:border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} overflow-y-auto`}>

@@ -4,7 +4,7 @@
 // import { useTheme } from './App'; 
 // import { useUser } from './UserContext'; // Import the UserContext
 
-// const Sidebar = ({ onLogout }) => {
+// const Sidebar = ({ onLogout, isOpen }) => {
 //   const navigate = useNavigate();
 //   const { user } = useUser(); // Use the user context
 //   const { theme } = useTheme(); 
@@ -19,7 +19,7 @@
 //   }
 
 //   return (
-//     <div className={`fixed w-72 p-6 flex flex-col justify-between h-full shadow-lg ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+//     <div className={`fixed z-10 top-0 left-0 h-full w-72 p-6 flex flex-col justify-between shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
 //       <h1 className="text-3xl font-bold text-center">Space Rants</h1>
 //       <div className="flex flex-col items-center">
 //         {user.profile_image_url ? (
@@ -33,7 +33,7 @@
 //             No Image
 //           </div>
 //         )}
-//         <p className={`text-center text-xl  mb-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}><strong>{user.first_name} {user.last_name}</strong></p>
+//         <p className={`text-center text-xl mb-5 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}><strong>{user.first_name} {user.last_name}</strong></p>
 //       </div>
 //       <nav>
 //         <ul className="space-y-4">
@@ -41,7 +41,7 @@
 //             <NavLink 
 //               to="/dashboard" 
 //               className={({ isActive }) => 
-//                 isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : " text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
+//                 isActive ? "text-white flex items-center py-2 px-4 bg-indigo-700 rounded-md transition duration-200" : "text-white flex items-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 rounded-md transition duration-200"
 //               }
 //             >
 //               <HiFingerPrint className='mt-1 mr-2'/>
@@ -117,14 +117,13 @@
 
 // export default Sidebar;
 
-
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { HiFingerPrint, HiCog, HiChat, HiUserGroup, HiDocumentText, HiLogout } from "react-icons/hi";
 import { useTheme } from './App'; 
 import { useUser } from './UserContext'; // Import the UserContext
 
-const Sidebar = ({ onLogout, isOpen }) => {
+const Sidebar = forwardRef(({ onLogout, isOpen }, ref) => {
   const navigate = useNavigate();
   const { user } = useUser(); // Use the user context
   const { theme } = useTheme(); 
@@ -139,7 +138,7 @@ const Sidebar = ({ onLogout, isOpen }) => {
   }
 
   return (
-    <div className={`fixed z-10 top-0 left-0 h-full w-72 p-6 flex flex-col justify-between shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
+    <div ref={ref} className={`fixed z-10 top-0 left-0 h-full w-72 p-6 flex flex-col justify-between shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
       <h1 className="text-3xl font-bold text-center">Space Rants</h1>
       <div className="flex flex-col items-center">
         {user.profile_image_url ? (
@@ -233,7 +232,6 @@ const Sidebar = ({ onLogout, isOpen }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Sidebar;
-

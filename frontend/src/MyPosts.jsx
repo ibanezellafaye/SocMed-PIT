@@ -163,6 +163,7 @@ const MyPosts = () => {
     <HelmetProvider>
       <Helmet>
         <title>{user.first_name} {user.last_name}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
       <div className={`flex-1 flex flex-col ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>

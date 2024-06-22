@@ -82,6 +82,7 @@ const Search = () => {
     <HelmetProvider>
       <Helmet>
       <title>Search Results</title>
+      <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
     
     <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>

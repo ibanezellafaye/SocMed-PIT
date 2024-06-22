@@ -228,6 +228,7 @@ const PostDetail = () => {
     <HelmetProvider>
       <Helmet>
       <title>View Posts</title>
+      <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
  
     <button

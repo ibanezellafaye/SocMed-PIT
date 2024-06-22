@@ -22,6 +22,7 @@
 // const App = () => {
 //   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
 //   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+//   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
 //   useEffect(() => {
 //     localStorage.setItem('theme', theme);
@@ -42,30 +43,32 @@
 //     setIsLoggedIn(false);
 //   };
 
+//   const toggleSidebar = () => {
+//     setSidebarOpen(!isSidebarOpen);
+//   };
+
 //   return (
 //     <UserProvider>
-//     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-//       <Router>
-//         <Routes>
-//           <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <RegistrationForm />} />
-//           <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginForm onLogin={handleLogin} />} />
-//           <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-//           <Route path='/forgot-password' element={isLoggedIn ? <Navigate to="dashboard" /> : <ForgotPassword />} />
-
-//           <Route element={isLoggedIn ? <Layout onLogout={handleLogout} /> : <Navigate to="/login" />}>
-//             <Route path="/dashboard" element={<Dashboard />} />
-//             <Route path="/users" element={<Search />} />
-
-//             <Route path='/posts/:postId' element={<PostDetail />} />
-//             <Route path="/messages/:userId?" element={<Message />} />
-//             <Route path='/following' element={<Following/>}/>
-//             <Route path='/profile/:userId' element={<UserProfile/>} />
-//             <Route path='/settings' element={<Settings/>} />
-//             <Route path="/user-posts" element={<MyPosts />} />
-//           </Route>
-//         </Routes>
-//       </Router>
-//     </ThemeContext.Provider>
+//       <ThemeContext.Provider value={{ theme, toggleTheme }}>
+//         <Router>
+//           <Routes>
+//             <Route path="/register" element={isLoggedIn ? <Navigate to="/dashboard" /> : <RegistrationForm />} />
+//             <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginForm onLogin={handleLogin} />} />
+//             <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+//             <Route path='/forgot-password' element={isLoggedIn ? <Navigate to="dashboard" /> : <ForgotPassword />} />
+//             <Route element={isLoggedIn ? <Layout onLogout={handleLogout} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} /> : <Navigate to="/login" />}>
+//               <Route path="/dashboard" element={<Dashboard />} />
+//               <Route path="/users" element={<Search />} />
+//               <Route path='/posts/:postId' element={<PostDetail />} />
+//               <Route path="/messages/:userId?" element={<Message />} />
+//               <Route path='/following' element={<Following/>}/>
+//               <Route path='/profile/:userId' element={<UserProfile/>} />
+//               <Route path='/settings' element={<Settings/>} />
+//               <Route path="/user-posts" element={<MyPosts />} />
+//             </Route>
+//           </Routes>
+//         </Router>
+//       </ThemeContext.Provider>
 //     </UserProvider>
 //   );
 // };
@@ -73,7 +76,7 @@
 // export default App;
 
 
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, createContext, useContext, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
@@ -97,7 +100,8 @@ export const useTheme = () => useContext(ThemeContext);
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('authToken'));
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isSidebarOpen, setSidebarOpen] = useState(false); // Initially set to false
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -131,7 +135,7 @@ const App = () => {
             <Route path="/login" element={isLoggedIn ? <Navigate to="/dashboard" /> : <LoginForm onLogin={handleLogin} />} />
             <Route path="/" element={isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
             <Route path='/forgot-password' element={isLoggedIn ? <Navigate to="dashboard" /> : <ForgotPassword />} />
-            <Route element={isLoggedIn ? <Layout onLogout={handleLogout} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} /> : <Navigate to="/login" />}>
+            <Route element={isLoggedIn ? <Layout onLogout={handleLogout} toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} sidebarRef={sidebarRef} /> : <Navigate to="/login" />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/users" element={<Search />} />
               <Route path='/posts/:postId' element={<PostDetail />} />
@@ -149,3 +153,4 @@ const App = () => {
 };
 
 export default App;
+

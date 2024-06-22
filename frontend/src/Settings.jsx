@@ -142,6 +142,7 @@ const Settings = () => {
     <HelmetProvider>
       <Helmet>
       <title>Settings</title>
+      <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
     <div className={`p-6 ml-72 mt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <h1 className="text-3xl font-bold mb-4">Settings</h1>

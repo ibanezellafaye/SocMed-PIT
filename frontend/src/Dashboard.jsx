@@ -283,6 +283,7 @@ const Dashboard = ({ isOpen }) => {
     <HelmetProvider>
       <Helmet>
         <title>Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
       
       <div className={`flex-1 flex flex-col md:ml-72 md:mt-20 p-6 ${isOpen ? 'ml-72' : ''} ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
