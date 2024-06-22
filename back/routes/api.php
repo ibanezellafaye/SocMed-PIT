@@ -9,8 +9,14 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\MessageController;
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('posts', [PostController::class, 'index']);
@@ -48,5 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/upload-profile-image', [UserController::class, 'uploadProfileImage']);
 
     Route::get('/user/posts', [UserController::class, 'getUserPosts']);
+
 });
 
