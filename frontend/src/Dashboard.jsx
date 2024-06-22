@@ -5,7 +5,7 @@ import { useTheme } from './App';
 import moment from 'moment';
 import { Ellipsis } from "lucide-react";
 import axiosInstance from './axiosConfig';
-import {Helmet} from 'react-helmet'
+import {Helmet, HelmetProvider} from 'react-helmet-async'
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -280,7 +280,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
+    <HelmetProvider>
       <Helmet>
       <title>Dashboard</title>
       </Helmet>
@@ -496,7 +496,7 @@ const Dashboard = () => {
         </div>
       </div>
       </div>
-      </div>
+      </HelmetProvider>
   );
 };
 
