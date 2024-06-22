@@ -174,46 +174,46 @@ const Settings = () => {
 
         <div className="border-l mt-3 h-64 border-gray-300 ml-1"></div>
 
-        <div className="flex-grow p-6 white ">
-          {user ? (
-            <>
-              {openTab === 1 && (
-                <div>
-                  <h2 className="text-xl mb-8 mt-0 pl-3 ml-8 font-semibold">Profile Picture</h2>
-                  <div className="bg-white p-6 max-w-lg ml-16">
-                    {user.profile_image_url && (
-                      <div className="ml-40 mt-0">
-                        <img
-                          src={user.profile_image_url}
-                          alt="Profile"
-                          className="w-40 h-40 rounded-full object-cover border border-indigo-500"
-                        />
-                      </div>
-                    )}
-                    <form onSubmit={handleProfileImageSubmit} className="mt-1 space-y-4">
-                      <div className="flex flex-col bg-white p-6 max-w-lg">
-                        <input
-                          id="profileImageInput"
-                          type="file"
-                          accept="image/*"
-                          onChange={handleProfileImageChange}
-                          className="w-full px-3 py-2 mt-1 bg-gray-100 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                        />
-                        <div className="flex items-center justify-between max-w-lg ml-0 mt-6">
-                          <button
-                            type="submit"
-                            className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
-                              theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
-                            }`}
-                          >
-                            Upload
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+        <div className="flex-grow p-6 white">
+  {user ? (
+    <>
+      {openTab === 1 && (
+        <div>
+          <h2 className="text-xl mb-8 mt-0 pl-3 ml-8 font-semibold">Profile Picture</h2>
+          <div className="bg-white p-6 max-w-lg ml-16">
+            {user.profile_image_url && (
+              <div className="flex justify-center">
+                <img
+                  src={user.profile_image_url}
+                  alt="Profile"
+                  className="w-40 h-40 rounded-full object-cover border border-indigo-500"
+                />
+              </div>
+            )}
+            <form onSubmit={handleProfileImageSubmit} className="mt-6 space-y-4">
+              <div className="flex flex-col">
+                <input
+                  id="profileImageInput"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleProfileImageChange}
+                  className="w-full px-3 py-2 mt-1 bg-gray-100 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                />
+                <div className="flex justify-end mt-4">
+                  <button
+                    type="submit"
+                    className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                      theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                    }`}
+                  >
+                    Upload
+                  </button>
                 </div>
-              )}
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
               {openTab === 2 && (
                 <div>
@@ -301,7 +301,7 @@ const Settings = () => {
                         </select>
                         {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender[0]}</p>}
                       </div>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-end">
                         <button
                           type="submit"
                           className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
@@ -350,16 +350,19 @@ const Settings = () => {
                         className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       />
                     </div>
+                    <div className="flex items-center justify-end">
                     <button
                       type="submit"
-                      className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                      className={`px-4 py-2 text-white bg-indigo-500 rounded-md justify-end focus:outline-none hover:bg-indigo-600 ${
                         theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
                       }`}
                     >
                       Save
                     </button>
+                    </div>
                   </form>
                 </div>
+
               )}
             </>
           ) : (
