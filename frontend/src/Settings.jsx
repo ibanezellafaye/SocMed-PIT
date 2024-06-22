@@ -150,21 +150,21 @@ const Settings = () => {
       <div className="flex flex-col md:w-1/4 lg:w-1/5 bg-white text-black p-6">
         <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
         <button
-          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
             ${openTab === 1 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
           onClick={() => handleTabClick(1)}
         >
           Profile Picture
         </button>
         <button
-          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
             ${openTab === 2 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
           onClick={() => handleTabClick(2)}
         >
           Edit Profile
         </button>
         <button
-          className={`cursor-pointer text-left w-full mb-2 px-3 py-2 font-semibold transition 
+          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
             ${openTab === 3 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
           onClick={() => handleTabClick(3)}
         >
