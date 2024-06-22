@@ -29,9 +29,9 @@
 //   return (
 //     <div ref={layoutRef} className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
 //       <Sidebar ref={sidebarRef} onLogout={onLogout} isOpen={isSidebarOpen} />
-//       <div className="flex-1 flex flex-col">
+//       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'ml-72' : 'ml-0'}`}>
 //         <Header onLogout={onLogout} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} isSidebarOpen={isSidebarOpen} />
-//         <div className="flex-1">
+//         <div className="flex-1 p-4">
 //           <Outlet />
 //         </div>
 //       </div>
@@ -73,7 +73,7 @@ const Layout = ({ onLogout, toggleSidebar, isSidebarOpen, sidebarRef }) => {
   return (
     <div ref={layoutRef} className={`flex min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <Sidebar ref={sidebarRef} onLogout={onLogout} isOpen={isSidebarOpen} />
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'ml-72' : 'ml-0'}`}>
+      <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
         <Header onLogout={onLogout} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} isSidebarOpen={isSidebarOpen} />
         <div className="flex-1 p-4">
           <Outlet />
