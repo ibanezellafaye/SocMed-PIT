@@ -56,11 +56,11 @@ const UserProfile = () => {
       <div className="flex flex-row  justify-center"></div>
       <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6 border  ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-white text-black '}`}>
       </div>
-        <div className="mx-auto w-40 h-40 -mt-16 border-4 border-white rounded-full overflow-hidden">
+        <div className="mx-auto w-32 h-32 -mt-16 border-4 border-white rounded-full overflow-hidden">
         {user.profile_image_url ? (
-          <img src={user.profile_image_url} alt="Profile" className="w-24 h-24 rounded-full" />
+          <img src={user.profile_image_url} alt="Profile" className="w-full h-full rounded-full" />
         ) : (
-          <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-200">
+          <div className="w-full h-full rounded-full flex items-center justify-center bg-gray-200">
             No Image
           </div>
         )}
