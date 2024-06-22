@@ -5,7 +5,7 @@
 // import HeaderLogo from './Logo 3.png';
 // import HeaderLogo2 from './Logo 1.png';
 
-// const Header = ({ onLogout, toggleSidebar, sidebarRef }) => {
+// const Header = ({ onLogout, toggleSidebar, sidebarRef, isSidebarOpen }) => {
 //   const navigate = useNavigate();
 //   const { theme, toggleTheme } = useTheme();
 //   const [searchQuery, setSearchQuery] = useState('');
@@ -64,11 +64,17 @@
 //   const handleClickOutside = (event) => {
 //     if (
 //       dropdownRef.current && !dropdownRef.current.contains(event.target) &&
-//       headerRef.current && !headerRef.current.contains(event.target) &&
-//       sidebarRef.current && !sidebarRef.current.contains(event.target)
+//       headerRef.current && !headerRef.current.contains(event.target)
 //     ) {
 //       setShowNotifications(false);
-//       toggleSidebar();
+//     }
+//     if (
+//       sidebarRef.current && !sidebarRef.current.contains(event.target) &&
+//       headerRef.current && !headerRef.current.contains(event.target)
+//     ) {
+//       if (isSidebarOpen) {
+//         toggleSidebar(); // Close the sidebar if it's open
+//       }
 //     }
 //   };
 
@@ -78,11 +84,10 @@
 
 //   useEffect(() => {
 //     document.addEventListener('mousedown', handleClickOutside);
-
 //     return () => {
 //       document.removeEventListener('mousedown', handleClickOutside);
 //     };
-//   }, []);
+//   }, [isSidebarOpen]); // Only re-run the effect if isSidebarOpen changes
 
 //   const handleNotificationClick = async (notification) => {
 //     const authToken = localStorage.getItem('authToken');
@@ -109,7 +114,7 @@
 
 //   return (
 //     <div ref={headerRef} className={`fixed w-full flex items-center justify-between p-4 shadow-md z-30 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
-//       <button onClick={toggleSidebar} className="md:hidden text-2xl">
+//       <button onClick={toggleSidebar} className="sidebar-toggle-button md:hidden text-2xl">
 //         ☰
 //       </button>
 //       <div className="text-3xl font-bold text-center">
@@ -181,6 +186,8 @@
 // };
 
 // export default Header;
+
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
@@ -307,13 +314,13 @@ const Header = ({ onLogout, toggleSidebar, sidebarRef, isSidebarOpen }) => {
           className="w-auto h-14 mt-0 ml-2 rounded-xl"
         />
       </div>
-      <form onSubmit={handleSearch} className="hidden md:flex items-center relative flex-grow max-w-xl mx-4 md:ml-96">
+      <form onSubmit={handleSearch} className="flex items-center relative flex-grow max-w-xl mx-4 md:ml-96">
         <input
           type="text"
           placeholder="Search users..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="pl-8 pr-32 w-[28rem] py-2 border rounded-xl flex items-center justify-between"
+          className="pl-8 pr-32 py-2 border rounded-xl flex-grow"
         />
         <button type="submit" className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 rounded-xl transition duration-200 text-white ml-2">
           Search
