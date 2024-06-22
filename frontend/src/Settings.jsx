@@ -525,8 +525,8 @@ const Settings = () => {
         <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
-      <div className="w-full p-6 ml-60 mt-20 flex flex-col md:flex-row text-[#161931]">
-        <div className="flex flex-col md:w-1/4 lg:w-1/5 bg-white text-black p-6">
+      <div className={`{w-full p-6 ml-60 mt-20 flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className={`flex flex-col md:w-1/4 lg:w-1/5 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
           <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
           <button
             className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
@@ -557,7 +557,7 @@ const Settings = () => {
               {openTab === 1 && (
                 <div>
                   <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold">Profile Picture</h2>
-                  <div className="bg-white p-6 max-w-lg">
+                  <div className="bg-white text-black p-6 max-w-lg rounded-md">
                     {user.profile_image_url && (
                       <div className="flex justify-center">
                         <img
@@ -594,7 +594,7 @@ const Settings = () => {
 
               {openTab === 2 && (
                 <div>
-                  <div className="bg-white p-0 max-w-lg">
+                  <div className={`p-0 max-w-lg ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
                     <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold">Edit Profile</h2>
                     <form onSubmit={handleEditInfoSubmit} className="space-y-4">
                       <div className="flex flex-col space-y-4">
@@ -694,8 +694,8 @@ const Settings = () => {
               )}
 
               {openTab === 3 && (
-                <div className="bg-white p-0 max-w-lg">
-                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold">Change Password</h2>
+                <div className={`p-0 max-w-lg ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                  <h2 className="text-xl mb-8 mt-0 font-semibold">Change Password</h2>
                   <form onSubmit={handleChangePasswordSubmit} className="space-y-4">
                     <div className="flex flex-col space-y-4">
                       <label className="text-base font-medium">Current Password</label>
@@ -705,25 +705,25 @@ const Settings = () => {
                         type="password"
                         value={passwords.currentPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
-                      <label className="text-base font-medium">New Password</label>
+                      <label className={`text-base font-medium ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>New Password</label>
                       <input
                         id="newPassword"
                         name="newPassword"
                         type="password"
                         value={passwords.newPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
-                      <label className="text-base font-medium">Confirm New Password</label>
+                      <label className={`text-base font-medium ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>Confirm New Password</label>
                       <input
                         id="confirmPassword"
                         name="confirmPassword"
                         type="password"
                         value={passwords.confirmPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
                     </div>
                     <div className="flex items-center justify-end">
