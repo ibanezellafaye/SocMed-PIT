@@ -1,5 +1,5 @@
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useTheme } from './App';
 import { useUser } from './UserContext';
 import Swal from 'sweetalert2';
@@ -144,90 +144,89 @@ const Settings = () => {
     <HelmetProvider>
       <Helmet>
         <title>Settings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
-      <div className="w-full flex flex-col md:flex-row ml-96 mt-32 text-[#161931]">
-      <div className="flex flex-col md:w-1/4 lg:w-1/5 bg-white text-black p-6">
-        <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
-        <button
-          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
-            ${openTab === 1 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
-          onClick={() => handleTabClick(1)}
-        >
-          Profile Picture
-        </button>
-        <button
-          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
-            ${openTab === 2 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
-          onClick={() => handleTabClick(2)}
-        >
-          Edit Profile
-        </button>
-        <button
-          className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
-            ${openTab === 3 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
-          onClick={() => handleTabClick(3)}
-        >
-          Change Password
-        </button>
-      </div>
-
-        <div className="border-l mt-3 h-64 border-gray-300 ml-1"></div>
-
-        <div className="flex-grow p-6 white">
-  {user ? (
-    <>
-      {openTab === 1 && (
-        <div>
-          <h2 className="text-xl mb-8 mt-0 pl-3 ml-8 font-semibold">Profile Picture</h2>
-          <div className="bg-white p-6 max-w-lg ml-16">
-            {user.profile_image_url && (
-              <div className="flex justify-center">
-                <img
-                  src={user.profile_image_url}
-                  alt="Profile"
-                  className="w-40 h-40 rounded-full object-cover border border-indigo-500"
-                />
-              </div>
-            )}
-            <form onSubmit={handleProfileImageSubmit} className="mt-6 space-y-4">
-              <div className="flex flex-col">
-                <input
-                  id="profileImageInput"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleProfileImageChange}
-                  className="w-full px-3 py-2 mt-1 bg-gray-100 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-                <div className="flex justify-end mt-4">
-                  <button
-                    type="submit"
-                    className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
-                      theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
-                    }`}
-                  >
-                    Upload
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
+      <div className={`{w-full p-6 ml-60 mt-20 flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className={`flex flex-col md:w-1/4 lg:w-1/5 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+          <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
+          <button
+            className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
+              ${openTab === 1 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+            onClick={() => handleTabClick(1)}
+          >
+            Profile Picture
+          </button>
+          <button
+            className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
+              ${openTab === 2 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+            onClick={() => handleTabClick(2)}
+          >
+            Edit Profile
+          </button>
+          <button
+            className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
+              ${openTab === 3 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+            onClick={() => handleTabClick(3)}
+          >
+            Change Password
+          </button>
         </div>
-      )}
+
+        <div className="flex-grow p-6 ml-0 md:ml-20 lg:ml-40">
+          {user ? (
+            <>
+              {openTab === 1 && (
+                <div>
+                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold">Profile Picture</h2>
+                  <div className={` p-6 max-w-lg rounded-md ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                    {user.profile_image_url && (
+                      <div className="flex justify-center">
+                        <img
+                          src={user.profile_image_url}
+                          alt="Profile"
+                          className="w-40 h-40 rounded-full object-cover border border-indigo-500"
+                        />
+                      </div>
+                    )}
+                    <form onSubmit={handleProfileImageSubmit} className="mt-6 space-y-4">
+                      <div className="flex flex-col">
+                        <input
+                          id="profileImageInput"
+                          type="file"
+                          accept="image/*"
+                          onChange={handleProfileImageChange}
+                          className={`w-[20rem] px-3 py-2 mt-1  mx-auto items-center border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-200 text-black'}`}
+                        />
+                        <div className="flex justify-end mt-4">
+                          <button
+                            type="submit"
+                            className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                              theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                            }`}
+                          >
+                            Upload
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
 
               {openTab === 2 && (
                 <div>
-                <div className="bg-white p-0 max-w-lg">
-                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold ml-8">Edit Profile</h2>
-                    <form onSubmit={handleEditInfoSubmit} className="space-y-4 ml-24">
-                      <div className={`flex flex-col space-y-4 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                  <div className={`p-0 max-w-lg ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                    <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold">Edit Profile</h2>
+                    <form onSubmit={handleEditInfoSubmit} className="space-y-4">
+                      <div className="flex flex-col space-y-4">
                         <label className="text-base font-medium">First Name</label>
                         <input
                           type="text"
                           name="firstName"
                           value={editInfo.firstName}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         />
@@ -240,7 +239,7 @@ const Settings = () => {
                           name="lastName"
                           value={editInfo.lastName}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         />
@@ -253,7 +252,7 @@ const Settings = () => {
                           name="email"
                           value={editInfo.email}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         />
@@ -266,7 +265,7 @@ const Settings = () => {
                           name="address"
                           value={editInfo.address}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         />
@@ -279,7 +278,7 @@ const Settings = () => {
                           name="birthdate"
                           value={editInfo.birthdate}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         />
@@ -291,7 +290,7 @@ const Settings = () => {
                           name="gender"
                           value={editInfo.gender}
                           onChange={handleInputChange}
-                          className={`"w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" ${
+                          className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${
                             theme === 'dark' ? 'bg-gray-800 text-white border-gray-700' : 'bg-white text-black border-gray-300'
                           }`}
                         >
@@ -316,11 +315,10 @@ const Settings = () => {
                 </div>
               )}
 
-
               {openTab === 3 && (
-                <div className="bg-white p-0 max-w-lg">
-                  <h2 className="text-xl mb-8 mt-0 pl-3 font-semibold ml-8">Change Password</h2>
-                  <form onSubmit={handleChangePasswordSubmit} className="space-y-4 ml-24">
+                <div className={`p-0 max-w-lg ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                  <h2 className="text-xl mb-8 mt-0 font-semibold">Change Password</h2>
+                  <form onSubmit={handleChangePasswordSubmit} className="space-y-4">
                     <div className="flex flex-col space-y-4">
                       <label className="text-base font-medium">Current Password</label>
                       <input
@@ -329,40 +327,39 @@ const Settings = () => {
                         type="password"
                         value={passwords.currentPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
-                      <label className="text-base font-medium">New Password</label>
+                      <label className={`text-base font-medium ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>New Password</label>
                       <input
                         id="newPassword"
                         name="newPassword"
                         type="password"
                         value={passwords.newPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
-                      <label className="text-base font-medium">Confirm New Password</label>
+                      <label className={`text-base font-medium ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>Confirm New Password</label>
                       <input
                         id="confirmPassword"
                         name="confirmPassword"
                         type="password"
                         value={passwords.confirmPassword}
                         onChange={handlePasswordChange}
-                        className="w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className={`w-full px-3 py-2 bg-gray-100 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
                       />
                     </div>
                     <div className="flex items-center justify-end">
-                    <button
-                      type="submit"
-                      className={`px-4 py-2 text-white bg-indigo-500 rounded-md justify-end focus:outline-none hover:bg-indigo-600 ${
-                        theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
-                      }`}
-                    >
-                      Save
-                    </button>
+                      <button
+                        type="submit"
+                        className={`px-4 py-2 text-white bg-indigo-500 rounded-md focus:outline-none hover:bg-indigo-600 ${
+                          theme === 'dark' ? 'bg-gray-800' : 'bg-indigo-700'
+                        }`}
+                      >
+                        Save
+                      </button>
                     </div>
                   </form>
                 </div>
-
               )}
             </>
           ) : (

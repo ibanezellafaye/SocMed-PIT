@@ -51,7 +51,8 @@ const MyPosts = () => {
   return (
     <HelmetProvider>
       <Helmet>
-        <title>{`${user.first_name} ${user.last_name}`}</title>
+        <title>{user.first_name} {user.last_name}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
       <div className={`ml-72 mt-20 flex-1 flex flex-col ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
@@ -73,7 +74,7 @@ const MyPosts = () => {
         </div>
 
         {/* Header */}
-        <div className="py-4 bg-gray-100 shadow-md mt-10 w-[39rem] ml-[16rem] rounded-xl">
+        <div className="py-4 bg-gray-100 shadow-md mt-10 w-[39rem] ml-[15rem] rounded-xl">
           <div className="flex justify-between items-center px-4 md:px-10">
             <div className="flex space-x-4">
               <button
