@@ -249,14 +249,14 @@ const PostDetail = () => {
 
       <div className={`flex-1 flex flex-col ml-80 mt-0 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className="flex flex-row  justify-center">
-      <div className="col-span-2 space-y-4 w-[50rem]">
+      <div className="col-span-2 w-[50rem]">
       <div className={` justify-center flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
 
 
-          <div className="space-y-4">
-            <div className={`mb-4 p-4 rounded-xl mt-6 ml-15 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+          <div>
+            <div className={`p-4 rounded-xl ml-15 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
 
-              <div className="items-center mb-2 flex  mt-18">
+              <div className="items-center mb-2 flex mt-1">
                 {post.user.profile_image_url ? (
                   <img src={post.user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-xl mr-4" />
                 ) : (
