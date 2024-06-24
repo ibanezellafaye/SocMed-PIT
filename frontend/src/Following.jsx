@@ -80,7 +80,7 @@ const Following = () => {
         <title>Friends</title>
         <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
-      <div className={`min-h-screen text-gray-900 flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className={`h-[91vh] text-gray-900 flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
         <div className="container mx-auto p-6 flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-8">
           <div className={`flex-1 p-6 overflow-auto ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
             <h1 className="text-xl font-bold mb-4">Following ({following.length})</h1>

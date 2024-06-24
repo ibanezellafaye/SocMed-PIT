@@ -33,7 +33,7 @@ const Layout = ({ onLogout, toggleSidebar, isSidebarOpen, sidebarRef }) => {
       <Sidebar ref={sidebarRef} onLogout={onLogout} isOpen={isSidebarOpen} />
       <div className={`flex-1 flex flex-col transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
         <Header onLogout={onLogout} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} isSidebarOpen={isSidebarOpen} />
-        <div className="flex-1 p-4">
+        <div className="flex-1">
           <Outlet />
         </div>
       </div>

@@ -61,7 +61,7 @@ const UserProfile = () => {
       <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6   ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : ' text-black '}`}>
       </div>
       <div className={`mx-auto -mt-16 w-32 h-32 rounded-full border-4  overflow-hidden  ${theme === 'dark' ? 'bg-gray-900 text-white border-gray-900' : 'bg-slate-100 text-black border-gray-200'}`}>
-      {user.profile_image_url ? (
+        {user.profile_image_url ? (
             <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover bg-white" />
           ) : (
             <div className={`w-full h-full flex items-center justify-center   ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-slate-100 text-black '}`}>

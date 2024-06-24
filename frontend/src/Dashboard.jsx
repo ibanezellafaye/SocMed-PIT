@@ -286,10 +286,9 @@ const Dashboard = ({ isOpen }) => {
         <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
       
-      <div className={`flex flex-row h-screen overflow-auto bg-white-100 justify-center  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className={`flex flex-row h-[91vh] overflow-auto bg-white-100 justify-center  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
         <div className="col-span-2 space-y-4 w-[50rem]">
           <div className="md:col-span-2 space-y-4 w-full md:w-[50rem]">
-            
             <div className={`justify-center flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
               <form onSubmit={handleSubmit} className={`mb-4 space-y-4 w-full md:w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
                 <div className={`flex items-start -mt-14 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>

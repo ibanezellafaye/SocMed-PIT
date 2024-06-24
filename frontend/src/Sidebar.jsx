@@ -163,7 +163,7 @@ const Sidebar = forwardRef(({ onLogout, isOpen }, ref) => {
     };
 
     if (!user) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
 
     return (
@@ -255,16 +255,12 @@ function UserProfile({ user }) {
         <div>
             <div className="h-24 w-24 rounded-full bg-cover bg-no-repeat bg-center mx-auto">
                 {user.profile_image_url ? (
-                    <img
-                        src={`http://localhost:8000/storage/${user.profile_image_url}`}
-                        alt="Profile"
-                        className="w-24 h-24 rounded-full object-cover p-1 ring-2 ring-gray-200 "
-                    />
-                ) : (
-                    <div className="flex items-center justify-center text-white mb-2 h-24 w-24 rounded-full bg-cover bg-no-repeat bg-center">
+                <img src={user.profile_image_url} alt="Profile" className="w-24 h-24 rounded-full object-cover p-1 ring-2 ring-gray-200" />
+                    ) : (
+                        <div className={`flex items-center justify-center text-white mb-2 h-24 w-24 rounded-full bg-cover bg-no-repeat bg-center ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-slate-100 text-black '}`}>
                         No Image
-                    </div>
-                )}
+                        </div>
+                    )}
             </div>
             <div className="flex justify-between overflow-hidden transition-all w-52 ml-18 rounded-lg">
                 <div className="leading-4 text-center mx-auto">
