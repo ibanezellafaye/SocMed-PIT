@@ -154,7 +154,7 @@ const MyPosts = () => {
                 </li>
                 <li className="flex items-center py-3 text-sm">
                   <span>Birthday</span>
-                  <span className="ml-auto">{user.birthdate}</span>
+                  <span className="ml-auto">{moment(user.birthdate).format('MMMM Do YYYY')}</span>
                 </li>
                 <li className="flex items-center py-3 text-sm">
                   <span>Gender</span>

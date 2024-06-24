@@ -135,7 +135,7 @@ const Message = () => {
             ))}
           </div>
         </div>
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col mt-4">
           {selectedUser ? (
             <>
               <div className={`border-b px-6 py-3 flex items-center justify-between ${theme === 'dark' ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-gray-900'}`}>
