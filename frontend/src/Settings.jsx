@@ -146,9 +146,9 @@ const Settings = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
-      <div className={`w-full p-6 mt-20 ml-96 flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-        <div className={`flex flex-col md:w-1/4 lg:w-1/5 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-          <h1 className="mb-8 text-2xl ml-3 font-semibold">Settings</h1>
+      <div className={`{w-full h-screen flex flex-col md:flex-row ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className={`flex flex-col lg:w-1/5  p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+          <h1 className="mb-8 text-2xl font-semibold">Settings</h1>
           <button
             className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
               ${openTab === 1 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}

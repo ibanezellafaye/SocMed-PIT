@@ -7,6 +7,7 @@ import axiosInstance from './axiosConfig';
 import HeaderLogo from './Logo 2.png';
 import { AiOutlineLock, AiOutlineMail } from 'react-icons/ai';
 import { Helmet, HelmetProvider} from 'react-helmet-async';
+import Swal from 'sweetalert2';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -34,7 +35,7 @@ const Login = ({ onLogin }) => {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
       } else {
-        setErrors({ general: 'Something went wrong. Please try again later.' });
+        Swal.fire('Error', 'Something went wrong. Please try again later.', 'error');
       }
     }
   };

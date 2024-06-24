@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from './App'; // Import the theme context
 import axiosInstance from './axiosConfig';
 import { Helmet, HelmetProvider} from 'react-helmet-async';
+import { FaArrowLeft } from "react-icons/fa";
+
 
 
 const Search = () => {
@@ -85,12 +87,22 @@ const Search = () => {
       <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
     
-    <div className={`min-h-screen ml-72 mt-20 p-6 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-  <div className="mx-auto max-w-lg p-6">
+    <div className={`h-screen flex flex-row  mx-auto ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+    <div className="mb-4 onClick={() => navigate(-1)}relative">
+    <button
+      onClick={() => navigate(-1)}
+      className={`flex items-center mb-4 mt-2 ml-4 py-2 px-2 rounded-full  ${theme === 'dark' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
+    >
+      <FaArrowLeft className=" text-gray-400 w-5 h-5" />
+    </button>
+      </div>
+
+      <div className="mx-auto  w-1/2 p-6 overflow-auto">
+
     <h1 className="text-base font-bold mb-4">Search Result</h1>
     {users.length > 0 ? (
       users.map((user) => (
-        <div key={user.id} className={`mb-4 px-5 py-5 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
+        <div key={user.id} className={`mb-4 px-5 py-5 w-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'} rounded-md shadow-md`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               {user.profile_image_url ? (
@@ -111,14 +123,14 @@ const Search = () => {
               {isFollowing(user.id) ? (
                 <button
                   onClick={() => handleUnfollow(user.id)}
-                  className="py-1 px-2 bg-red-600 hover:bg-red-700 rounded-full text-white"
+                  className="py-1 px-2 bg-red-600 hover:bg-red-700 rounded-xl text-white"
                 >
                   Unfollow
                 </button>
               ) : (
                 <button
                   onClick={() => handleFollow(user.id)}
-                  className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-full text-white"
+                  className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white"
                 >
                   Follow
                 </button>
