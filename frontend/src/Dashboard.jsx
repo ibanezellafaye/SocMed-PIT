@@ -286,15 +286,15 @@ const Dashboard = ({ isOpen }) => {
         <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
       
-      <div className={`flex flex-row h-screen overflow-auto bg-white-100 justify-center  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-        <div className="col-span-2 space-y-4 w-[50rem]">
+      <div className={`flex-1 flex flex-col md:ml-72 md:mt-20 p-6 ${isOpen ? 'ml-72' : ''} ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+        <div className="flex flex-col md:flex-row justify-center">
           <div className="md:col-span-2 space-y-4 w-full md:w-[50rem]">
             
             <div className={`justify-center flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
               <form onSubmit={handleSubmit} className={`mb-4 space-y-4 w-full md:w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-                <div className={`flex items-start -mt-14 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                <div className={`flex items-start ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
                   <div className="flex-grow mt-20">
-                    <div className="">
+                    <div className="relative">
                       <textarea
                         placeholder="What's on your mind?"
                         value={content}
@@ -332,12 +332,12 @@ const Dashboard = ({ isOpen }) => {
                     )}
                     <div className="text-sm mb-5">
                       <p className={`font-bold text-lg ${theme === 'dark' ? 'text-white' : 'text-black'}`}> {post.user.first_name} {post.user.last_name}</p> 
-                      <p className={`text-xs ${theme === 'dark' ? 'text-gray-50' : 'text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY @ h:mm A')}</p>
+                      <p className={`text-xs ${theme === 'dark' ? 'text-gray-50' : 'text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                     </div>
                     <div className="flex space-x-2 ml-auto relative">
                       {user && post.user_id === user.id && (
                         <button 
-                          className={`post-date text-gray-600 cursor-pointer font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center ${theme === 'dark' ? ' text-white' : ' text-black'}`}
+                          className="post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center"
                           onClick={(e) => { e.stopPropagation(); togglePostDropdown(post.id); }}
                         >
                           <Ellipsis />
@@ -401,7 +401,7 @@ const Dashboard = ({ isOpen }) => {
                   </div>
                   <div className="mt-4 space-y-2">
                     {(post.comments || []).map((comment) => (
-                      <div key={comment.id} className={`p-2 comment border-t border-gray-500${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-xl`}>
+                      <div key={comment.id} className={`p-2 comment border-t border-gray-500 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'} rounded-xl`}>
                         <div className="flex items-center">
                           {comment.user.profile_image_url ? (
                             <img src={comment.user.profile_image_url} alt="Profile" className="w-8 h-8 rounded-full mr-4" />
@@ -412,13 +412,13 @@ const Dashboard = ({ isOpen }) => {
                           )}
                           <div className="text-sm">
                             <p className="font-bold text-base"> {comment.user.first_name} {comment.user.last_name}</p> 
-                            <p className="text-gray-500 text-xs"> {moment(comment.created_at).fromNow()}</p>
+                            <p className="text-gray-500 text-xs"> {moment(comment.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                           </div>
                           <div className="flex space-x-2 ml-auto relative">
                             {user && comment.user_id === user.id && (
                               <button 
-                              className={`post-date text-gray-600 cursor-pointer font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center ${theme === 'dark' ? ' text-white' : ' text-black'}`}
-                              onClick={(e) => { e.stopPropagation(); toggleCommentDropdown(comment.id); }}
+                                className="post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-xl text-sm px-1 py-1 text-center inline-flex items-center"
+                                onClick={(e) => { e.stopPropagation(); toggleCommentDropdown(comment.id); }}
                               >
                                 <Ellipsis />
                               </button>

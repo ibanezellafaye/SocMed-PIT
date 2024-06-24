@@ -233,11 +233,11 @@ const PostDetail = () => {
  
     <button
       onClick={handleBack}
-      className={`flex items-center mb-4 mt-2 ml-4 py-2 px-2 rounded-full  ${theme === 'dark' ? 'bg-gray-900 text-white hover:bg-gray-800' : 'bg-white text-black hover:bg-gray-200'}`}
+      className={`flex items-center mb-4 mt-20 ml-72 py-2 px-4 rounded-md ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}
     >
-      <FaArrowLeft className=" text-gray-400 w-5 h-5" />
+      <FaArrowLeft className="mr-2 mt-4 text-gray-400 w-5 h-5" />
     </button>
-      {/* <button
+      <button
         onClick={handleBack}
         className="mb-0 mt-2 ml-4 py-2 px-4   text-white"
       >
@@ -245,17 +245,17 @@ const PostDetail = () => {
           <path fillRule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z" clipRule="evenodd" />
         </svg>
 
-      </button> */}
+      </button>
 
-      <div className={`flex-1 flex flex-col mt-0 overflow-y-auto ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className={`flex-1 flex flex-col ml-80 mt-0 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
       <div className="flex flex-row  justify-center">
       <div className="col-span-2 w-[50rem]">
       <div className={` justify-center flex ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
 
 
           <div>
-            <div className={` p-4 rounded-xl mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
-        
+            <div className={`p-4 rounded-xl ml-15 mx-auto w-[40rem] shadow-md ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+
               <div className="items-center mb-2 flex mt-1">
                 {post.user.profile_image_url ? (
                   <img src={post.user.profile_image_url} alt="Profile" className="w-10 h-10 rounded-xl mr-4" />
@@ -266,22 +266,20 @@ const PostDetail = () => {
                 )}
                 <div className="text-sm mb-5">
                   <p className={`font-bold text-lg	${theme === 'dark' ? ' text-white' : ' text-black'}`}> {post.user.first_name} {post.user.last_name}</p> 
-                  <p className={`text-xs		${theme === 'dark' ? ' text-gray-50' : ' text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY @ h:mm A')}</p>
+                  <p className={`text-xs		${theme === 'dark' ? ' text-gray-50' : ' text-gray-500'}`}> {moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                 </div>
 
                 <div className=" flex space-x-2 ml-auto relative">
-                {post.user_id === user.id && !editingPost && (
-
                 <button 
-                className={`post-date text-gray-600 cursor-pointer font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center ${theme === 'dark' ? ' text-white' : ' text-black'}`}
-                onClick={(e) => { e.stopPropagation(); togglePostDropdown(post.id); }}
+                      className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center "
+                      onClick={(e) => { e.stopPropagation(); togglePostDropdown(post.id); }}
                     >
                       <Ellipsis />
                     </button>
-                )}
                     {openPostDropdowns[post.id] && (
                       <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2">
-                
+              {post.user_id === user.id && !editingPost && (
+                <>
                     <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
                       <li>
                         <a href='#'
@@ -300,10 +298,10 @@ const PostDetail = () => {
                   </a>
                   </li>
                   </ul>
-                  </div>
-
+                </>
               )}
-                    
+            </div>
+                    )}
                     </div>
                     </div>
             {editingPost ? (
@@ -357,23 +355,19 @@ const PostDetail = () => {
                       )}
                       <div className="text-sm">
                         <p className="font-bold text-base	"> {comment.user.first_name} {comment.user.last_name}</p> 
-                        <p className="text-gray-500 text-xs "> {moment(comment.created_at).fromNow()}</p>
+                        <p className="text-gray-500 text-xs "> {moment(comment.created_at).format('MMMM Do YYYY, h:mm a')}</p>
                       </div>
                       <div className=" flex space-x-2 ml-auto relative ">
-                      {/* {openCommentDropdowns[comment.id] && ( */}
-
-                      {comment.user_id === user.id && editingCommentId !== comment.id && (
-
                       <button 
-                      className={`post-date text-gray-600 cursor-pointer font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center ${theme === 'dark' ? ' text-white' : ' text-black'}`}
+                      className=" post-date text-gray-600 cursor-pointer hover:bg-gray-200 font-medium rounded-lg text-sm px-1 py-1 text-center inline-flex items-center "
                       onClick={(e) => { e.stopPropagation(); toggleCommentDropdown(comment.id); }}
                     >
                       <Ellipsis />
                     </button>
-                      )}
-                      {openCommentDropdowns[comment.id] && (
-
+                    {openCommentDropdowns[comment.id] && (
                       <div className=" absolute top-full left-0 bg-white border border-gray-300 rounded-lg w-28 flex py-2">
+                        {comment.user_id === user.id && editingCommentId !== comment.id && (
+                    <>
                         <ul className="text-sm text-gray-700 dark:text-gray-500 w-28 items-center ">
                           <li>
                             <a href="#" onClick={() => handleEditComment(comment.id, comment.content)} className=" px-2 py-2 hover:bg-gray-200 dark:hover:text-gray p-2 flex items-center mb-2 relative">
@@ -387,14 +381,15 @@ const PostDetail = () => {
                             </a>
                           </li>
                         </ul>
-                      </div>
+                      </>
                     )}
-                  
+                    </div>
+                  )}
                     </div>
                     </div>
                      
                   {editingCommentId === comment.id ? (
-                    <>
+                    <div>
                       <input
                         value={editCommentContent}
                         onChange={handleEditCommentContentChange}
@@ -414,7 +409,7 @@ const PostDetail = () => {
                           Cancel
                         </button>
                       </div>
-                    </>
+                    </div>
                   ) : (
                     <p className="mt-2">{comment.content}</p>
                   )}
