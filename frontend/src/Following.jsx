@@ -73,7 +73,7 @@ const Following = () => {
   const handleMessage = (userId) => {
     navigate(`/messages/${userId}`);
   };
-
+  
   return (
     <HelmetProvider>
       <Helmet>
@@ -120,6 +120,12 @@ const Following = () => {
                     >
                       Message
                     </button>
+                    <button
+                      onClick={() => handleViewProfile(user.id)}
+                      className="py-1 px-2 bg-green-600 hover:bg-green-700 rounded-xl text-white"
+                    >
+                      View Profile
+                    </button>
                   </div>
                 </div>
               </div>
@@ -157,6 +163,12 @@ const Following = () => {
                       className="py-1 px-2 bg-blue-600 hover:bg-blue-700 rounded-xl text-white"
                     >
                       Message
+                    </button>
+                    <button
+                      onClick={() => handleViewProfile(user.id)}
+                      className="py-1 px-2 bg-green-600 hover:bg-green-700 rounded-xl text-white"
+                    >
+                      View Profile
                     </button>
                   </div>
                 </div>
