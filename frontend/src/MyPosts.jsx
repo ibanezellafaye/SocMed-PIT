@@ -57,12 +57,12 @@ const MyPosts = () => {
 
       <div className={`ml-72 mt-20 flex-1 flex flex-col ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
         {/* Profile Section */}
-        <div className="bg-gray-200 p-4 h-56 rounded-2xl mt-6 mx-auto w-[39rem]"></div>
+        <div className={`p-4 h-56 rounded-2xl mt-6 mx-auto w-[39rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}></div>
         <div className="mx-auto -mt-16 w-32 h-32 rounded-full border-4 border-white overflow-hidden">
           {user.profile_image_url ? (
-            <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover bg-white" />
+            <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center  text-gray-500">
+            <div className={`w-full h-full flex items-center justify-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
               No Image
             </div>
           )}
@@ -74,17 +74,17 @@ const MyPosts = () => {
         </div>
 
         {/* Header */}
-        <div className="py-4 bg-gray-100 shadow-md mt-10 w-[39rem] ml-[15rem] rounded-xl">
+        <div className={`py-4 shadow-md mt-10 w-[39rem] mx-auto rounded-xl ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
           <div className="flex justify-between items-center px-4 md:px-10">
             <div className="flex space-x-4">
               <button
-                className={`px-3 py-2 font-bold text-base transition ${openTab === 1 ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-black hover:text-indigo-600'}`}
+                className={`px-3 py-2 font-bold text-base transition ${openTab === 1 ? 'text-indigo-600 border-b-2 border-indigo-600' : `${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-indigo-600`}`}
                 onClick={() => handleTabClick(1)}
               >
                 Posts
               </button>
               <button
-                className={`px-3 py-2 font-bold text-base transition ${openTab === 2 ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-black hover:text-indigo-600'}`}
+                className={`px-3 py-2 font-bold text-base transition ${openTab === 2 ? 'text-indigo-600 border-b-2 border-indigo-600' : `${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-indigo-600`}`}
                 onClick={() => handleTabClick(2)}
               >
                 About
@@ -95,11 +95,11 @@ const MyPosts = () => {
 
         {/* Posts Section */}
         {openTab === 1 && (
-          <div className="justify-center flex flex-col md:flex-row mt-2 ml-[0rem]">
+          <div className="justify-center flex flex-col md:flex-row mt-2 mx-auto">
             <div className="col-span-2 space-y-4 w-[50rem]">
               {posts.length > 0 ? (
                 posts.map(post => (
-                  <div key={post.id} className={`mb-4 p-4 rounded-xl mt-4 mx-auto w-[39rem] shadow-md bg-gray-100 text-black ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+                  <div key={post.id} className={`mb-4 p-4 rounded-xl mt-4 mx-auto w-[39rem] shadow-md text-black ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
                     <div className="flex justify-between items-center mb-4">
                       <div className="text-sm mb-5">
                         <p className={`font-bold text-lg ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{`${user.first_name} ${user.last_name}`}</p>
@@ -137,9 +137,9 @@ const MyPosts = () => {
 
         {/* About Section */}
         {openTab === 2 && (
-          <div className="justify-center flex flex-col md:flex-row mt-2 ml-[0rem]">
+          <div className="justify-center flex flex-col md:flex-row mt-2 mx-auto">
             <div className="col-span-2 space-y-4 w-[50rem]">
-              <ul className="divide-y mx-auto w-[39rem] rounded-xl mt-3 bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
+              <ul className={`divide-y mx-auto w-[39rem] rounded-xl mt-3 py-2 px-3 shadow-sm ${theme === 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-600'}`}>
                 <li className="flex items-center py-3 text-sm">
                   <span>First Name</span>
                   <span className="ml-auto"> {user.first_name}</span>
