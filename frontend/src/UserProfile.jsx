@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTheme } from './App';
