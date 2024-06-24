@@ -6,6 +6,8 @@ import { AiOutlineUser, AiOutlineLock, AiOutlineHome, AiOutlineCalendar, AiOutli
 import HeaderLogo from './Logo 1.png';
 import axiosInstance from './axiosConfig';
 import { Helmet, HelmetProvider} from 'react-helmet-async';
+import Swal from 'sweetalert2';
+
 
 const RegistrationForm = () => {
   const [email, setEmail] = useState('');
@@ -54,20 +56,20 @@ const RegistrationForm = () => {
           localStorage.setItem('user', JSON.stringify(user));
 
           console.log('Registration Successful!');
-          setErrors({ general: 'Registration Successful!' });
-          // navigate('/dashboard');
+          Swal.fire('Success', 'Registration Successful!', 'success' );
+          navigate('/login');
         } else {
           console.log('Login failed');
         }
       } else {
-        console.log('Registration failed');
+        Swal.fire('Error', 'Registration failed.', 'error');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.errors) {
         setErrors(error.response.data.errors);
       } else {
         console.error('Error:', error);
-        setErrors({ general: 'Registration or login failed. Please try again.' });
+        Swal.fire('Error', 'Registration or login failed. Please try again.', 'error');
       }
     }
   };

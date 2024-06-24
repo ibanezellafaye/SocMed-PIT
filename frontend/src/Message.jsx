@@ -112,8 +112,8 @@ const Message = () => {
       <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
       <div className={`flex flex-col md:flex-row h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-        <div className={`md:ml-72 md:w-1/4 p-4 border-b md:border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} overflow-y-auto`}>
-          <h2 className="mt-20 text-2xl font-bold mb-4">Conversations</h2>
+        <div className={`md:w-1/4 p-4 border-b md:border-r ${theme === 'dark' ? 'border-gray-700' : 'border-gray-300'} overflow-y-auto`}>
+          <h2 className="text-2xl font-bold mb-4">Conversations</h2>
           <div className="space-y-4">
             {conversations.map(user => (
               <div
@@ -135,7 +135,7 @@ const Message = () => {
             ))}
           </div>
         </div>
-        <div className="flex-1 flex flex-col mt-4">
+        <div className="flex-1 flex flex-col">
           {selectedUser ? (
             <>
               <div className={`border-b px-6 py-3 flex items-center justify-between ${theme === 'dark' ? 'border-gray-700 bg-gray-800 text-white' : 'border-gray-300 bg-white text-gray-900'}`}>

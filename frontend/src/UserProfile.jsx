@@ -56,14 +56,15 @@ const UserProfile = () => {
       <meta name="viewport" content="width=device-width, initial-scale=0.50, maximum-scale=1.0, user-scalable=yes" />
       </Helmet>
 
-      <div className={`ml-72 mt-20 flex-1 flex flex-col ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
-        {/* Profile Section */}
-        <div className={`p-4 h-56 rounded-2xl mt-6 mx-auto w-[39rem] ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}></div>
-        <div className="mx-auto -mt-16 w-32 h-32 rounded-full border-4 border-white overflow-hidden">
-          {user.profile_image_url ? (
-            <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover" />
+      <div className={`h-[91vh] overflow-auto ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <div className="flex flex-row justify-center"></div>
+      <div className={`bg-indigo-400 p-4 h-56 rounded-2xl mt-6   ml-15 mx-auto w-[40rem] ${theme === 'dark' ? 'bg-gray-900 text-white ' : ' text-black '}`}>
+      </div>
+      <div className={`mx-auto -mt-16 w-32 h-32 rounded-full border-4  overflow-hidden  ${theme === 'dark' ? 'bg-gray-900 text-white border-gray-900' : 'bg-slate-100 text-black border-gray-200'}`}>
+      {user.profile_image_url ? (
+            <img src={user.profile_image_url} alt="Profile" className="w-full h-full object-cover bg-white" />
           ) : (
-            <div className={`w-full h-full flex items-center justify-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'}`}>
+            <div className={`w-full h-full flex items-center justify-center   ${theme === 'dark' ? 'bg-gray-900 text-white ' : 'bg-slate-100 text-black '}`}>
               No Image
             </div>
           )}
@@ -75,17 +76,17 @@ const UserProfile = () => {
         </div>
 
         {/* Header */}
-        <div className={`py-4 shadow-md mt-10 w-[39rem] mx-auto rounded-xl ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+        <div className={`py-4 shadow-md mt-10 w-[39rem] mx-auto rounded-xl ${theme === 'dark' ? 'bg-gray-800 text-white ' : 'bg-gray-100 text-black '}`}>
           <div className="flex justify-between items-center px-4 md:px-10">
-            <div className="flex space-x-4">
-              <button
-                className={`px-3 py-2 font-bold text-base transition ${openTab === 1 ? 'text-indigo-600 border-b-2 border-indigo-600' : `${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-indigo-600`}`}
+          <div className={`flex space-x-4 ${theme === 'dark' ? 'bg-gray-800 text-white ' : 'bg-gray-100 text-black '}`}>
+          <button
+                className={`px-3 py-2 font-bold text-base transition ${openTab === 1 ? 'text-indigo-600 border-b-2 border-indigo-600' : ' hover:text-indigo-600'} ${theme === 'dark' ? ' text-white ' : ' text-black '}`}
                 onClick={() => handleTabClick(1)}
               >
                 Posts
               </button>
               <button
-                className={`px-3 py-2 font-bold text-base transition ${openTab === 2 ? 'text-indigo-600 border-b-2 border-indigo-600' : `${theme === 'dark' ? 'text-white' : 'text-black'} hover:text-indigo-600`}`}
+                className={`px-3 py-2 font-bold text-base transition ${openTab === 2 ? 'text-indigo-600 border-b-2 border-indigo-600' : ' hover:text-indigo-600'}`}
                 onClick={() => handleTabClick(2)}
               >
                 About
@@ -96,15 +97,15 @@ const UserProfile = () => {
 
         {/* Posts Section */}
         {openTab === 1 && (
-          <div className="justify-center flex flex-col md:flex-row mt-2 mx-auto">
+          <div className="justify-center items-center flex flex-col md:flex-row mt-2">
             <div className="col-span-2 space-y-4 w-[50rem]">
               {posts.length > 0 ? (
                 posts.map(post => (
-                  <div key={post.id} className={`mb-4 p-4 rounded-xl mt-4 mx-auto w-[39rem] shadow-md text-black ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+                  <div key={post.id} className={`mb-4 p-4 rounded-xl mt-4 mx-auto w-[39rem] shadow-md bg-gray-100 text-black ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
                     <div className="flex justify-between items-center mb-4">
                       <div className="text-sm mb-5">
                         <p className={`font-bold text-lg ${theme === 'dark' ? 'text-white' : 'text-black'}`}>{`${user.first_name} ${user.last_name}`}</p>
-                        <p className={`text-xs ${theme === 'dark' ? 'text-gray-50' : 'text-gray-500'}`}>{moment(post.created_at).format('MMMM Do YYYY, h:mm a')}</p>
+                        <p className={`text-xs ${theme === 'dark' ? 'text-gray-50' : 'text-gray-500'}`}>{moment(post.created_at).format('MMMM Do YYYY @ h:mm a')}</p>
                       </div>
                     </div>
                     <p>{post.content}</p>
@@ -138,10 +139,10 @@ const UserProfile = () => {
 
         {/* About Section */}
         {openTab === 2 && (
-          <div className="justify-center flex flex-col md:flex-row mt-2 mx-auto">
+          <div className="justify-center flex flex-col md:flex-row mt-2 ml-[0rem]">
             <div className="col-span-2 space-y-4 w-[50rem]">
-              <ul className={`divide-y mx-auto w-[39rem] rounded-xl mt-3 py-2 px-3 shadow-sm ${theme === 'dark' ? 'bg-gray-800 text-gray-200' : 'bg-gray-100 text-gray-600'}`}>
-                <li className="flex items-center py-3 text-sm">
+            <ul className={`divide-y mx-auto w-[39rem] rounded-xl mt-3 py-2 px-3  shadow-md   ${theme === 'dark' ? 'bg-gray-800 text-white ' : 'bg-gray-100 text-black '}`}>
+            <li className="flex items-center py-3 text-sm">
                   <span>First Name</span>
                   <span className="ml-auto"> {user.first_name}</span>
                 </li>
