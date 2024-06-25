@@ -19,6 +19,10 @@ class PostController extends Controller
     //         ->paginate(5);
 
     //     $posts->each(function ($post) use ($user) {
+    //         $post->user->profile_image_url = $post->user->profile_image_url;
+    //         $post->comments->each(function ($comment) {
+    //             $comment->user->profile_image_url = $comment->user->profile_image_url;
+    //         });
     //         $post->likes_count = $post->likes()->count();
     //         $post->liked = $post->likes()->where('user_id', $user->id)->exists();
     //     });
@@ -26,21 +30,12 @@ class PostController extends Controller
     //     return response()->json($posts);
     // }
 
-    // public function show($id)
-    // {
-    //     $post = Post::with(['user', 'comments.user'])
-    //         ->findOrFail($id);
-
-    //     $post->likes_count = $post->likes()->count();
-    //     $post->liked = $post->likes()->where('user_id', Auth::id())->exists();
-
-    //     return response()->json($post);
-    // }
-
     public function index()
     {
         $user = Auth::user();
-        $posts = Post::with(['user', 'comments.user', 'likes'])
+        $posts = Post::with(['user' => function ($query) {
+                $query->where('status', 'active');
+            }, 'comments.user', 'likes'])
             ->whereIn('user_id', $user->follows()->pluck('followed_user_id'))
             ->orWhere('user_id', $user->id)
             ->orderBy('created_at', 'desc')

@@ -139,6 +139,23 @@ const Settings = () => {
     }
   };
 
+  const handleDeactivateAccount = async () => {
+    const authToken = localStorage.getItem('authToken');
+    try {
+      await axiosInstance.put('/user/deactivate', {}, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      Swal.fire('Success', 'Your account has been deactivated', 'success');
+      localStorage.removeItem('authToken');
+      setUser(null);
+      // Redirect to login page
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Error deactivating account:', error);
+      Swal.fire('Error', 'Failed to deactivate account', 'error');
+    }
+  };
+
   return (
     <HelmetProvider>
       <Helmet>
@@ -381,13 +398,13 @@ const Settings = () => {
 
                   <div className="flex items-center justify-end">
                     <button
-                      type="submit"
+                      onClick={handleDeactivateAccount}
                       className={`px-4 py-2 text-white rounded-md focus:outline-none hover:bg-red-600 ${
                         theme === 'dark' ? 'bg-red-800' : 'bg-red-500'
                       }`}
                     >
                       Deactivate Account
-                    </button>
+                  </button>
                   </div>
                 </form>
                 </div>

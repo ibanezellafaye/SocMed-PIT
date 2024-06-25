@@ -119,32 +119,6 @@ class AuthController extends Controller
         }
     }
 
-    // public function login(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'email' => 'required|email',
-    //         'password' => 'required',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-    //     $credentials = $validator->validated();
-
-    //     if (Auth::attempt($credentials)) {
-    //         $user = Auth::user();
-    //         $token = $user->createToken('auth_token')->plainTextToken;
-
-    //         return response()->json([
-    //             'user' => $user,
-    //             'token' => $token,
-    //         ], 200);
-    //     }
-
-    //     return response()->json(['errors' => ['email' => ['Invalid credentials']]], 401);
-    // }
-
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -160,6 +134,14 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+
+            // Check if the user account is inactive
+            if ($user->status === 'inactive') {
+                // Reactivate the user account
+                $user->status = 'active';
+                $user->save();
+            }
+
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([

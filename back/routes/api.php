@@ -18,7 +18,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'check.status'])->group(function () {
     // Admin routes
     Route::middleware('admin')->group(function () {
         Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
@@ -69,4 +69,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/change-password', [UserController::class, 'changePassword']);
     Route::post('/user/upload-profile-image', [UserController::class, 'uploadProfileImage']);
     Route::get('/user/posts', [UserController::class, 'getUserPosts']);
+    Route::put('/user/deactivate', [UserController::class, 'deactivateSelf']);
+    Route::put('/admin/users/{id}/deactivate', [UserController::class, 'deactivate']);
+    Route::put('/admin/users/{id}/activate', [UserController::class, 'activate']);
 });
