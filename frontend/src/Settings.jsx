@@ -170,9 +170,16 @@ const Settings = () => {
           >
             Change Password
           </button>
+          <button
+            className={`cursor-pointer text-left w-full mb-4 px-3 py-2 font-semibold transition 
+              ${openTab === 4 ? 'text-indigo-500 border-l-2 border-indigo-500' : 'text-dark hover:text-indigo-500'}`}
+            onClick={() => handleTabClick(4)}
+          >
+            Manage Account
+          </button>
         </div>
 
-        <div className="h-72 border-gray-300 mt-4 border-l md:ml-0" />
+        <div className="h-80 border-gray-300 mt-4 border-l md:ml-0" />
 
         <div className="flex-grow p-6 md:ml-6">
           {user ? (
@@ -360,6 +367,29 @@ const Settings = () => {
                       </button>
                     </div>
                   </form>
+                </div>
+              )}
+              {openTab === 4 && (
+                <div className={`p-0 max-w-lg  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+                <h2 className="text-xl mb-8 mt-0 font-semibold">Manage Account</h2>
+                <form onSubmit={handleChangePasswordSubmit} className="space-y-4 ml-16">
+                  
+                <div className={`confirmation-message text-black font-medium mb-4
+                  ${theme === 'dark' ? 'text-white' : ''}`}>
+                  Are you sure you want to deactivate your account? This action cannot be undone.
+                </div>
+
+                  <div className="flex items-center justify-end">
+                    <button
+                      type="submit"
+                      className={`px-4 py-2 text-white rounded-md focus:outline-none hover:bg-red-600 ${
+                        theme === 'dark' ? 'bg-red-800' : 'bg-red-500'
+                      }`}
+                    >
+                      Deactivate Account
+                    </button>
+                  </div>
+                </form>
                 </div>
               )}
             </>
