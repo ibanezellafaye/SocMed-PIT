@@ -57,4 +57,22 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'User deleted successfully']);
     }
+
+    public function deactivateUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 'inactive';
+        $user->save();
+
+        return response()->json(['message' => 'User deactivated successfully'], 200);
+    }
+
+        public function activateUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 'active';
+        $user->save();
+
+        return response()->json(['message' => 'User activated successfully'], 200);
+    }
 }

@@ -25,6 +25,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/admin/users', [AdminController::class, 'createUser']);
         Route::put('/admin/users/{id}', [AdminController::class, 'updateUser']);
         Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);
+        Route::put('/admin/users/{id}/deactivate', [AdminController::class, 'deactivateUser']);
+        Route::put('/admin/users/{id}/activate', [AdminController::class, 'activateUser']);
     });
 
     // Post routes
