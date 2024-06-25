@@ -194,6 +194,7 @@ class UserController extends Controller
             'address' => $user->address,
             'birthdate' => $user->birthdate,
             'gender' => $user->gender,
+            'role' => $user->role, // Include role
             'profile_image_url' => $user->profile_image_url,
         ]);
     }
